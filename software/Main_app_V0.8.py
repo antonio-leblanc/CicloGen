@@ -9,6 +9,9 @@ matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
+
+
+WINDOW_TITLE = 'COGEN_SOFTWARE_V_09'
 ##############################################################################################
 ##################                       MAIN PAGE ONE                      ##################
 ##############################################################################################
@@ -41,8 +44,8 @@ class PageOne(Frame):
         ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
         
         # --------------- Cycle Inicializaion ---------------
-        entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68.5', 'p3': '2.45', 'p5': '.07', 
-        'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '10', 'W_process': '30','W_other_equip':'10'}
+        entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68', 'p3': '2.5', 'p5': '.08', 
+        'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '40', 'W_process': '30','W_other_equip':'10'}
         self.left_menu.set_entries(entries_init_values)
         self.cycle = Rankine_cycle()
         self.calculate()
@@ -106,7 +109,7 @@ class Rankine_App(Tk):
     def __init__(self):
     
         Tk.__init__(self)
-        self.title('Ferramenta de otimização de ciclos termodinâmicos')
+        self.title(WINDOW_TITLE)
         
         container = Frame(self)
         container.grid()
