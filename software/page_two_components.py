@@ -30,7 +30,7 @@ class ComponentsMenu(Frame):
         sub_title_style= {'bg':'gray', 'font':("Arial", 8,'bold'), 'pady':2}
         
         property_style= {'bd':1, 'anchor':'w', 'pady':4, 'width':30}
-        value_style= {'bd':1, 'relief':SOLID, 'bg':'#dbdbdb', 'pady':2,'padx':1}
+        value_style= {'bd':1, 'relief':SOLID, 'bg':'gray90', 'pady':2,'padx':1}
         unit_style= {'bd':1, 'pady':4}
 
         property_grid = {'column':0 , 'sticky':'ew'}

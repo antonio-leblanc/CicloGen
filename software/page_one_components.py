@@ -20,7 +20,7 @@ class Head(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
 
-        self.title = Label(self, text='SOFTWARE DE OTIMIZAÇÂO E ANALISE DE CICLOS DE RANKINE [v0.8]',font=("Helvetica", 16,'bold'), width=104, height=2, bg='#244AC6', relief=SOLID)
+        self.title = Label(self, text='SOFTWARE DE OTIMIZAÇÂO E ANALISE DE CICLOS DE RANKINE [v0.9]',font=("Helvetica", 16,'bold'), width=110, height=2, bg='#244AC6', relief=SOLID)
         self.title.grid()
 
 #############################################################################################
@@ -70,13 +70,14 @@ class Parameters_tab(Frame):
         self.entries = {}
                 
         # --------------------- Styles ---------------------
-        title_style= {'font':("Arial", 10,'bold'),'bg':'red', 'pady':4}
-        sub_title_style= {'font':("Arial", 9,'bold'),'bg':'gray', 'pady':3}
-        property_style= {'font':("Arial", 9),'anchor':'w', 'pady':2, 'width':44}
-        unit_style= {'font':'Arial 9', 'pady':2}
+        title_style= {'font':("Arial", 11,'bold'),'bg':'red', 'pady':4}
+        sub_title_style= {'font':"Arial 10 bold",'bg':'gray', 'pady':1}
 
+        property_style= {'font':"Arial 10",'anchor':'w', 'pady':2, 'width':49}
         entry_style= {'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
-        button_style= {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':("Arial", 10,'bold'), 'bg':'white', 'width':14}
+        unit_style= {'font':'Arial 9', 'pady':2}
+        
+        button_style= {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
 
         # --------------------- Title ------------------------------
         Label(self, text="DEFINIÇÂO DOS PARÂMETROS", **title_style).grid(row=0,column=0, columnspan=3, sticky='we')
@@ -219,19 +220,19 @@ class InfoDisplay(Frame):
             self.component[component_att] = StringVar()
 
         # ---------------------- STYLES ----------------------
-        title_style= {'bg':'red', 'font':("Arial", 10,'bold'), 'pady':4}
-        sub_title_style= {'bg':'gray', 'font':("Arial", 8,'bold'), 'pady':2}
+        title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4}
+        sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
-        property_style= {'anchor':'w', 'pady':4}
-        value_style= {'bd':1, 'width':10,'relief':SOLID, 'bg':'#dbdbdb','pady':2,'padx':1}
-        unit_style= {'pady':4, 'width':6}
+        property_style= {'font':'Arial 10' ,'anchor':'w', 'pady':3}
+        value_style= {'font':'Arial 10','bd':1, 'width':11,'relief':SOLID, 'bg':'gray90','pady':1,'padx':1}
+        unit_style= {'font':'Arial 10', 'pady':1, 'width':7}
         # ---------------------- TITLE ----------------------
         Label(self, text='INFORMAÇÕES', **title_style).grid(row=0, column=0, columnspan=4, sticky='ew')
         
         # ---------------------- INFO ESTADO ----------------------
         Label(self, textvariable=self.state['name'], **sub_title_style).grid(row=1, column=0, columnspan=3, sticky='ew')
         
-        Label(self, textvariable=self.state['fluid_state'], **value_style, font=('Arial',8)).grid(row=2, column=1, columnspan=2, sticky='ew')
+        Label(self, textvariable=self.state['fluid_state'], **value_style).grid(row=2, column=1, columnspan=2, sticky='ew')
         
         Label(self, text='Estado', **property_style).grid(row=2, column=0,sticky='ew')
         Label(self, text='Temperatura', **property_style).grid(row=3, column=0,sticky='ew')
@@ -302,12 +303,12 @@ class ResultDisplay(Frame):
             self.results[result] = StringVar()
 
         # ---------------------- Styles ----------------------
-        title_style= {'bg':'red', 'font':("Arial", 10,'bold'),'relief':FLAT, 'pady':4}
-        sub_title_style= {'bg':'gray', 'font':("Arial", 8,'bold'), 'pady':2}
+        title_style= {'bg':'red', 'font':'Arial 11 bold','pady':4}
+        sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
-        property_style= {'bd':1, 'anchor':'w', 'pady':4}
-        value_style= {'bd':1, 'width':9,'relief':SOLID, 'pady':2, 'bg':'#dbdbdb'}
-        unit_style= {'bd':1, 'pady':4}
+        property_style= {'font':'Arial 10', 'bd':1, 'anchor':'w', 'pady':3}
+        value_style= {'font':'Arial 10', 'bd':1, 'width':9,'relief':SOLID, 'pady':1, 'bg':'gray90'}
+        unit_style= {'font':'Arial 10', 'pady':1}
 
 
         # ---------------------- Title ----------------------
