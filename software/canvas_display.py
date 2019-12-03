@@ -25,7 +25,7 @@ class Canvas_turbine:
         
         t_params = {'tags':comp_tag, 'fill':'gray', 'activefill':'black','outline':'black', 'width':2}
         self.canvas.create_polygon(x, y+s, x+3*s, y, x+3*s, y+4*s, x,y+3*s, **t_params)
-        # conseguir mudar o texto da turbina
+
         self.text_id = self.canvas.create_text(x+1.5*s,y+2*s, text=text, tags=comp_tag, font='Arial 8')
 
     def get_in_coords(self):
@@ -75,7 +75,7 @@ class Canvas_boiler:
 #________________________________________________________________________________________      
                 
 class Canvas_box:
-    def __init__(self,canvas, x, y, width=80, height=40, comp_tag='', fill='yellow',activefill='orange', text='Mixer'):
+    def __init__(self,canvas, x, y, width=80, height=40, comp_tag='', fill='yellow',activefill='orange', text='', font='Arial 10'):
         self.canvas = canvas
         self.x=x
         self.y=y
@@ -84,7 +84,7 @@ class Canvas_box:
         self.dy = height/2
 
         self.canvas.create_rectangle(x-self.dx, y-self.dy, x+self.dx, y+self.dy, tags=comp_tag, fill=fill, activefill=activefill, width=2)
-        self.canvas.create_text(x,y, text=text, tags=comp_tag)
+        self.canvas.create_text(x,y, text=text, tags=comp_tag, font=font)
 
     def get_N_coords(self):
         return (self.x, self.y - self.dy)
@@ -97,7 +97,7 @@ class Canvas_box:
 #________________________________________________________________________________________      
 
 class Canvas_condenser:
-    def __init__(self,canvas, x, y, s=20, in_tag='', out_tag='', comp_tag='', text='Condensador',fill='blue', activefill='#00159e'): 
+    def __init__(self,canvas, x, y, s=22, in_tag='', out_tag='', comp_tag='', text='Condensador',fill='deep sky blue', activefill='blue'): 
         self.canvas = canvas
         self.x=x
         self.y=y
@@ -105,7 +105,7 @@ class Canvas_condenser:
         self.canvas.create_line(x, y-2.5*s, x, y-1.5*s, tags = in_tag, **red_line, arrow = 'last')
         self.canvas.create_line(x, y+1.5*s, x, y+2.5*s, tags = in_tag, **blue_line)
         self.canvas.create_oval(x-1.5*s, y-1.5*s, x+1.5*s, y+1.5*s, fill=fill, activefill=activefill, tags=comp_tag, width=2)
-        self.canvas.create_text(x,y, text=text, tags=comp_tag, font='Arial 7')
+        self.canvas.create_text(x,y, text=text, tags=comp_tag, font='Arial 8')
 
     def get_in_coords(self):
         return (self.x,self.y-self.s*2.5+1)

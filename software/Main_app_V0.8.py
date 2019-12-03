@@ -42,7 +42,7 @@ class PageOne(Frame):
         self.canvas = Canvas_cycle(self)
         self.canvas.grid(row=1, column=1,rowspan=2,sticky='new',pady=25)
         
-        ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
+        # ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
         
         # --------------- Cycle Inicializaion ---------------
         entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68', 'p3': '2.5', 'p5': '.08', 
@@ -55,9 +55,9 @@ class PageOne(Frame):
         self.show_component_info('Caldeira')
     
     def calculate(self):
-        cycle_parameters = self.left_menu.get_params()
+        cycle_parameters = self.left_menu.get_cycle_params()
         
-        component_parameters = {'n_b1':1,'n_b2':1, 'n_t1':1, 'n_t2':1} # Buscar component parameters
+        component_parameters = self.left_menu.get_components_params()
         
         self.cycle.calculate(cycle_parameters,component_parameters)
 
