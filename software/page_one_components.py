@@ -18,10 +18,11 @@ TITULO_CICLO_2 = 'Ciclo 2: Turbina de extração-condensação'
 
 class Head(Frame):
     def __init__(self, parent):
-        Frame.__init__(self, parent)
+        Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
 
-        self.title = Label(self, text='SOFTWARE DE OTIMIZAÇÂO E ANALISE DE CICLOS DE RANKINE [v0.9]',font=("Helvetica", 16,'bold'), width=110, height=2, bg='#244AC6', relief=SOLID)
-        self.title.grid()
+        self.title = Label(self, text='SOFTWARE DE SIMULAÇÂO E ANALISE DE CICLOS DE RANKINE COM COGERAÇÂO [v0.9]',font='Helvetica 16 bold',pady=8, bg='#244AC6')
+        self.grid_columnconfigure(0, weight=1)
+        self.title.grid(sticky='ew')
 
 #############################################################################################
 ## 2)       LEFT MENU 
@@ -70,14 +71,13 @@ class Parameters_tab(Frame):
         self.entries = {}
                 
         # --------------------- Styles ---------------------
-        title_style= {'font':("Arial", 11,'bold'),'bg':'red', 'pady':4}
-        sub_title_style= {'font':"Arial 10 bold",'bg':'gray', 'pady':1}
+        title_style= {'font':'Arial 11 bold','bg':'red', 'pady':4}
+        sub_title_style= {'font':'Arial 10 bold','bg':'gray', 'pady':1}
 
-        property_style= {'font':"Arial 10",'anchor':'w', 'pady':2, 'width':49}
+        property_style= {'font':'Arial 11','anchor':'w', 'pady':2}
         entry_style= {'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
-        unit_style= {'font':'Arial 9', 'pady':2}
+        unit_style= {'font':'Arial 11', 'pady':2}
         
-        button_style= {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
 
         # --------------------- Title ------------------------------
         Label(self, text="DEFINIÇÂO DOS PARÂMETROS", **title_style).grid(row=0,column=0, columnspan=3, sticky='we')
@@ -125,8 +125,8 @@ class Parameters_tab(Frame):
         Label(self, text='Vazões', **sub_title_style).grid(row=11, column=0, columnspan=3,sticky='ew')
         Label(self, text=' (1) - Vazão total do ciclo', **property_style).grid(row=12, column=0,sticky='ew')
         Label(self, textvariable =self.label_vazao_2_4, **property_style).grid(row=13, column=0,sticky='ew')
-        Label(self, text='(14) - Fração da vazão de 10 enviada ao Desaerador', **property_style).grid(row=14, column=0,sticky='ew')
-        Label(self, text=' (9) - Fração da vazão de 7 enviada ao Dessuperaquecedor', **property_style).grid(row=15, column=0,sticky='ew')
+        Label(self, text='(14) - Fração de (10) enviada ao Desaerador', **property_style).grid(row=14, column=0,sticky='ew')
+        Label(self, text=' (9) - Fração de (7) enviada ao Dessuperaquecedor', **property_style).grid(row=15, column=0,sticky='ew')
         Label(self, text='ton/h', **unit_style).grid(row=12, column=2,sticky='ew')
         Label(self, text='%', **unit_style).grid(row=13, column=2,sticky='ew')
         Label(self, text='%', **unit_style).grid(row=14, column=2,sticky='ew')
@@ -155,10 +155,6 @@ class Parameters_tab(Frame):
         self.entries['W_process'].grid(row=17,column=1)
         self.entries['W_other_equip'].grid(row=18,column=1)
      
-
-        # --------------------- Button ---------------------
-        # melhorar aparencia dele
-        Button(self, command = lambda: self.parent.calculate(),**button_style).grid(row=20,column=0,columnspan=3,pady=3)
 
         # ------------------ Initialization -------------------
         self.set_cycle_type(1)
@@ -195,7 +191,7 @@ class Parameters_tab(Frame):
 
     def set_cycle_type(self, cycle_config):
         if cycle_config == 1:
-            self.label_vazao_2_4.set(' (2) - Fração da vazão de 1 enviada a Turbina 1')
+            self.label_vazao_2_4.set(' (2) - Fração de (1) enviada a Turbina 1')
         else:
             self.label_vazao_2_4.set(' (10) - Fração de extração da Turbina')
 
@@ -223,9 +219,9 @@ class InfoDisplay(Frame):
         title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4}
         sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
-        property_style= {'font':'Arial 10' ,'anchor':'w', 'pady':3}
+        property_style= {'font':'Arial 11' ,'anchor':'w', 'pady':3}
         value_style= {'font':'Arial 10','bd':1, 'width':11,'relief':SOLID, 'bg':'gray90','pady':1,'padx':1}
-        unit_style= {'font':'Arial 10', 'pady':1, 'width':7}
+        unit_style= {'font':'Arial 11', 'pady':1, 'width':7}
         # ---------------------- TITLE ----------------------
         Label(self, text='INFORMAÇÕES', **title_style).grid(row=0, column=0, columnspan=4, sticky='ew')
         
@@ -306,9 +302,9 @@ class ResultDisplay(Frame):
         title_style= {'bg':'red', 'font':'Arial 11 bold','pady':4}
         sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
-        property_style= {'font':'Arial 10', 'bd':1, 'anchor':'w', 'pady':3}
-        value_style= {'font':'Arial 10', 'bd':1, 'width':9,'relief':SOLID, 'pady':1, 'bg':'gray90'}
-        unit_style= {'font':'Arial 10', 'pady':1}
+        property_style= {'font':'Arial 11', 'bd':1, 'anchor':'w', 'pady':3}
+        value_style= {'font':'Arial 11', 'bd':1, 'width':9,'relief':SOLID, 'pady':1, 'bg':'gray90'}
+        unit_style= {'font':'Arial 11', 'pady':1}
 
 
         # ---------------------- Title ----------------------
@@ -317,8 +313,8 @@ class ResultDisplay(Frame):
         # ---------------------- Energia Elétrica ----------------------
         Label(self, text='Energia Elétrica', **sub_title_style).grid(row=1, column=0, columnspan=3, sticky='ew')
         
-        Label(self, text='Potência consumida pelas bombas', **property_style).grid(row=2, column=0,sticky='ew')
-        Label(self, text='Potência consumida por outros equipamentos', **property_style).grid(row=3, column=0,sticky='ew')
+        Label(self, text='Consumo das bombas', **property_style).grid(row=2, column=0,sticky='ew')
+        Label(self, text='Consumo de outros equipamentos', **property_style).grid(row=3, column=0,sticky='ew')
         Label(self, text='Potência gerada pelas Turbinas', **property_style).grid(row=4, column=0,sticky='ew')
         Label(self, text='Excedente comercializável', **property_style).grid(row=5, column=0,sticky='ew')
         
@@ -367,11 +363,11 @@ class ResultDisplay(Frame):
         W_exceding = results.get('W_exceding') / 1000
         n_th = results.get('n_th')
 
-        self.results['Wb'].set(f'{Wb:,.1f}'.replace(',',' '))
-        self.results['Wt'].set(f'{Wt:,.1f}'.replace(',',' '))
-        self.results['Qh'].set(f'{Qh:,.1f}'.replace(',',' '))
-        self.results['Ql'].set(f'{Ql:,.1f}'.replace(',',' '))
-        self.results['Qp'].set(f'{Qp:,.1f}'.replace(',',' '))
-        self.results['W_other_equip'].set(f'{W_other_equip:,.1f}'.replace(',',' '))
-        self.results['W_exceding'].set(f'{W_exceding:,.1f}'.replace(',',' '))
+        self.results['Wb'].set(f'{Wb:,.0f}'.replace(',',' '))
+        self.results['Wt'].set(f'{Wt:,.0f}'.replace(',',' '))
+        self.results['Qh'].set(f'{Qh:,.0f}'.replace(',',' '))
+        self.results['Ql'].set(f'{Ql:,.0f}'.replace(',',' '))
+        self.results['Qp'].set(f'{Qp:,.0f}'.replace(',',' '))
+        self.results['W_other_equip'].set(f'{W_other_equip:,.0f}'.replace(',',' '))
+        self.results['W_exceding'].set(f'{W_exceding:,.0f}'.replace(',',' '))
         self.results['n_th'].set(f'{100*n_th:.2f}')

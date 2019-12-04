@@ -21,6 +21,9 @@ class PageOne(Frame):
     def __init__(self,parent, master):
         Frame.__init__(self,parent)
         self.master = master
+
+        button_style= {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
+
         
         # 1) -------- HEAD -------- #
         self.head = Head(self)
@@ -32,7 +35,7 @@ class PageOne(Frame):
         
         # 3) ----- Info Display ----
         self.info_display = InfoDisplay(self)
-        self.info_display.grid(row=1, column=2, sticky='nw', padx=10, pady=10)
+        self.info_display.grid(row=1, column=2, sticky='nw', padx=10, pady=25)
                 
         # 4) ----- Result Display ----
         self.result_display = ResultDisplay(self)
@@ -43,7 +46,9 @@ class PageOne(Frame):
         self.canvas.grid(row=1, column=1,rowspan=2,sticky='new',pady=25)
         
         # ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
+        Button(self, command = lambda: self.calculate(),**button_style).grid(row=3,column=1)
         
+
         # --------------- Cycle Inicializaion ---------------
         entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68', 'p3': '2.5', 'p5': '.08', 
         'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '40', 'W_process': '30','W_other_equip':'10'}
@@ -117,9 +122,9 @@ class Rankine_App(Tk):
         
         self.frames = {}
                 
-        for F in [PageOne,PageTwo]:
-            frame = F(container,self)
-            self.frames[F]=frame
+        for Page_frame in [PageOne,PageTwo]:
+            frame = Page_frame(container,self)
+            self.frames[Page_frame]=frame
             frame.grid(row=0,column=0,sticky='nswe')
         
         self.show_frame(PageOne)

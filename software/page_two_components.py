@@ -11,6 +11,7 @@ class ComponentsMenu(Frame):
         self.parent = parent
         self.component_model = {}
         self.component_data = {}
+        self.grid_columnconfigure(0, weight=1)
 
         self.import_data()
 
@@ -26,19 +27,19 @@ class ComponentsMenu(Frame):
             self.component_data[c_data] = StringVar()
 
         # --------------------- Styles ---------------------
-        title_style= {'bg':'red', 'font':("Arial", 10,'bold'), 'pady':4}
-        sub_title_style= {'bg':'gray', 'font':("Arial", 8,'bold'), 'pady':2}
+        title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4}
+        sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
-        property_style= {'bd':1, 'anchor':'w', 'pady':4, 'width':30}
-        value_style= {'bd':1, 'relief':SOLID, 'bg':'gray90', 'pady':2,'padx':1}
-        unit_style= {'bd':1, 'pady':4}
+        property_style= {'font':'Arial 11', 'anchor':'w', 'pady':2, 'width':30}
+        value_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID, 'bg':'gray90','padx':1,'width':11}
+        unit_style= {'font':'Arial 11','width':6}
 
         property_grid = {'column':0 , 'sticky':'ew'}
         value_grid = {'column':1, 'sticky':'ew'}
         unit_grid = {'column':2 , 'sticky':'ew'}
         
         # --------------------- Title ------------------------------
-        Label(self, text="Especificação dos componentes", **title_style).grid(row=0,column=0, columnspan=3, sticky='we')
+        Label(self, text="ESPECIFICAÇÂO DOS COMPONENTES", **title_style).grid(row=0,column=0, columnspan=3, sticky='we')
         
         # --------------------- Caldeira ---------------------
         row = 1
