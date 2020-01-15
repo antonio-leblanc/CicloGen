@@ -1,6 +1,5 @@
 
-from page_one_components import*
-from page_two_components import*
+from parameters_menu import*
 
 from tkinter import *
 from tkinter import ttk 
@@ -8,7 +7,6 @@ import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-
 
 
 WINDOW_TITLE = 'COGEN_SOFTWARE_V_09'
@@ -29,9 +27,9 @@ class PageOne(Frame):
         self.head = Head(self)
         self.head.grid(row=0, column=0, columnspan=4, sticky='ew')
         
-        # 2) ------ Left Menu ---------
-        self.left_menu = LeftMenu(self)
-        self.left_menu.grid(row=1, column=0,rowspan=2, sticky='nw', padx=10, pady=5)
+        # 2) ------ Parameters Menu ---------
+        self.parameters_menu = ParametersMenu(self)
+        self.parameters_menu.grid(row=1, column=0,rowspan=2, sticky='nw', padx=10, pady=5)
         
         # 3) ----- Info Display ----
         self.info_display = InfoDisplay(self)
@@ -45,14 +43,12 @@ class PageOne(Frame):
         self.canvas = Canvas_cycle(self)
         self.canvas.grid(row=1, column=1,rowspan=2,sticky='new',pady=25)
         
-        # ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
+        ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
         Button(self, command = lambda: self.calculate(),**button_style).grid(row=3,column=1)
         
 
         # --------------- Cycle Inicializaion ---------------
-        entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68', 'p3': '2.5', 'p5': '.08', 
-        'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '40', 'W_process': '30','W_other_equip':'10'}
-        self.left_menu.set_entries(entries_init_values)
+
         self.cycle = Rankine_cycle()
         self.calculate()
         self.update_cycle()
@@ -60,10 +56,8 @@ class PageOne(Frame):
         self.show_component_info('Caldeira')
     
     def calculate(self):
-        cycle_parameters = self.left_menu.get_cycle_params()
-        
-        component_parameters = self.left_menu.get_components_params()
-        
+        cycle_parameters = self.parameters_menu.get_cycle_params()
+        component_parameters = self.parameters_menu.get_components_params()
         self.cycle.calculate(cycle_parameters,component_parameters)
 
         cycle_results = self.cycle.get_results()
@@ -79,9 +73,9 @@ class PageOne(Frame):
         self.info_display.set_component_info(info)
     
     def update_cycle(self):
-        cycle_type = self.left_menu.get_cycle_type()
+        cycle_type = self.parameters_menu.get_cycle_type()
 
-        self.left_menu.set_cycle_type(cycle_type)
+        self.parameters_menu.set_cycle_type(cycle_type)
         self.canvas.set_cycle_type(cycle_type)
         self.calculate()
 
@@ -98,13 +92,7 @@ class PageTwo(Frame):
         self.head = Head(self)
         self.head.grid(row=0, column=0, columnspan=3, sticky='ew')
         
-        # 2 -------- Components Menu -------- #
-        self.components_menu = ComponentsMenu(self)
-        self.components_menu.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky='w')
-
         ttk.Button(self, text='Página Principal',command = lambda: master.show_frame(PageOne)).grid(row=2,column=0, sticky='w')
-
-
 
 
 ##################################################################################
