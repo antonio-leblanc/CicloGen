@@ -66,7 +66,7 @@ class PageOne(Frame):
         # --------------- Cycle Inicializaion ---------------
 
         self.cycle = Rankine_cycle()
-        self.calculate()
+        # self.calculate()
         self.update_cycle()
         self.show_state_info('E1')
         self.show_component_info('Caldeira')
@@ -74,7 +74,8 @@ class PageOne(Frame):
     def calculate(self):
         cycle_parameters = self.parameters_menu.get_cycle_params()
         component_parameters = self.parameters_menu.get_components_params()
-        self.cycle.calculate(cycle_parameters,component_parameters)
+        process_parameters = self.parameters_menu.get_process_params()
+        self.cycle.calculate(cycle_parameters,component_parameters,process_parameters)
 
         cycle_results = self.cycle.get_results()
         self.result_display.set_results(cycle_results)

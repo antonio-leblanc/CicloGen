@@ -109,7 +109,7 @@ class ComponentsMenu(Frame):
         params_dic = {}
         for n in ['n_caldeira','n_t1','n_t2','n_b1','n_b2']:
             params_dic[n] = float(self.display[n].get())/100 
-        print (params_dic)
+        # print (params_dic)
         return params_dic
 
     def import_data(self):

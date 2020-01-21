@@ -14,6 +14,8 @@ class ThermoMenu(Frame):
 
         self.parent = parent
         self.inputs = {}
+        self.grid_columnconfigure(0, weight=1)
+
                 
         # --------------------- Styles ---------------------
         self.title_style= {'font':'Arial 11 bold','bg':'red', 'pady':4}
@@ -73,16 +75,59 @@ class ThermoMenu(Frame):
         # --------------------- Processo ---------------------
         
         row = self.create_title('Processo', self.sub_title_style,row)
-        row = self.create_input('w_process','Calor fornecido ao processo','MW',row)
-        row = self.create_input('w_other_equip','Potência demandada por outros equipamentos','MW',row)
+        row = self.create_input('w_other_equip','Demanda energética dos equipamentos','MW',row)
+ 
 
         # ------------------ Initialization -------------------
         self.set_cycle_type(1)
     
-        entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68', 'p3': '2.5', 'p5': '.08', 
-        'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '40', 'w_process': '30','w_other_equip':'10'}
+        entries_init_values = {'t1': '530',
+                               'delta_t': '0',
+                               'p1': '68',
+                               'p3': '2.5',
+                               'p5': '.08',
+                               'delta_p': '-10',
+                               'm1': '160',
+                               'f2_10': '60',
+                               'f14': '10',
+                               'f9': '10',
+                               'w_other_equip':'10'}
         self.set_inputs(entries_init_values)
     
+############################### METHODS ###############################
+
+    def get_cycle_params(self):
+        temperatures = ['t1']
+        pressures = ['p1','p3','p5','delta_p']
+        flow = ['m1']
+        percentages = ['f2_10','f14','f9']
+        work = ['w_process','w_other_equip']
+        params_dic = {}
+        for key, v in self.inputs.items():
+            value = float(v.get())
+            value = value + 273.15 if key in temperatures else value  # Convert [C] to [K]
+            value = value * 1e5 if key in pressures else value        # Convert [bar] to [Pa]
+            value = value / 3.6 if key in flow else value             # Convert [ton/h] to [kg/s]
+            value = value/100 if key in percentages else value        # Convert % to number
+            # value = value * 1e6 if key in work else value             # Convert to [MW] to [W]
+
+            params_dic[key] = value
+
+        params_dic['cycle_type'] = self.get_cycle_type()
+        # print(params_dic)
+        return params_dic
+    
+    def get_cycle_type(self):
+        if self.cycle_type.get() == TITULO_CICLO_1:
+            return 1
+        return 2
+
+    def set_cycle_type(self, cycle_config):
+        if cycle_config == 1:
+            self.label_vazao_2_4.set('(2) - Fração de (1) enviada a Turbina 1')
+        else:
+            self.label_vazao_2_4.set('(10) - Fração de extração da Turbina')
+
     def create_input(self,id,text,unit,row):
         Label(self, text=text, **self.property_style).grid(row=row, **self.property_grid)
         Label(self, text=unit, **self.unit_style).grid(row=row, **self.unit_grid)
@@ -97,35 +142,3 @@ class ThermoMenu(Frame):
     def set_inputs(self, inputs_dict):
         for entry,value in inputs_dict.items():
             self.inputs[entry].insert(0,value)
-
-    def get_cycle_params(self):
-        temperatures = ['t1']
-        pressures = ['p1','p3','p5','delta_p']
-        flow = ['m1']
-        percentages = ['f2_10','f14','f9']
-        work = ['w_process','w_other_equip']
-        params_dic = {}
-        for key, v in self.inputs.items():
-            value = float(v.get())
-            value = value + 273.15 if key in temperatures else value  # Convert [C] to [K]
-            value = value * 1e5 if key in pressures else value        # Convert [bar] to [Pa]
-            value = value / 3.6 if key in flow else value             # Convert [ton/h] to [kg/s]
-            value = value * 1e6 if key in work else value             # Convert to [MW] to [W]
-            value = value/100 if key in percentages else value        # Convert % to number
-
-            params_dic[key] = value
-
-        params_dic['cycle_type'] = self.get_cycle_type()
-        print(params_dic)
-        return params_dic
-    
-    def get_cycle_type(self):
-        if self.cycle_type.get() == TITULO_CICLO_1:
-            return 1
-        return 2
-
-    def set_cycle_type(self, cycle_config):
-        if cycle_config == 1:
-            self.label_vazao_2_4.set('(2) - Fração de (1) enviada a Turbina 1')
-        else:
-            self.label_vazao_2_4.set('(10) - Fração de extração da Turbina')

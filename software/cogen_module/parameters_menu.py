@@ -18,7 +18,7 @@ class ParametersMenu(ttk.Notebook):
         self.components_tab = ComponentsMenu(self)
         self.process_tab = ProcessMenu(self)
     
-        self.add(self.thermo_tab, text = 'Parâmetros')
+        self.add(self.thermo_tab, text = 'Ciclo')
         self.add(self.components_tab, text = 'Componentes')
         self.add(self.process_tab, text = 'Processo')    
 
@@ -30,6 +30,9 @@ class ParametersMenu(ttk.Notebook):
 
     def get_components_params(self):
         return self.components_tab.get_components_params()
+    
+    def get_process_params(self):
+        return self.process_tab.get_process_params()
     
     def calculate(self):
         self.parent.calculate()

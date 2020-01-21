@@ -175,7 +175,7 @@ class Mixer:
  #------------------ 6) PROCESSO    
 
 class Process:
-    def __init__(self, state_in, w=None, h_out = 100_000, name=''):
+    def __init__(self, state_in, w=None, t_out = 90+273.15, name=''):
         self.state_in = state_in
         self.name = name
         m_in = state_in.get_m()
@@ -185,8 +185,8 @@ class Process:
             h_out = state_in.get_H() - w/m_in
             self.state_out = State('P',state_in.get_P(), 'H', h_out, m = m_in )
         else:
-            self.w = m_in*(state_in.get_H()-h_out)
-            self.state_out = State('P',state_in.get_P(), 'H', h_out, m = m_in )
+            self.state_out = State('P',state_in.get_P(), 'T', t_out, m = m_in )
+            self.w = m_in*(state_in.get_H()-self.state_out.get_H())
 
     
     def get_Q(self):

@@ -212,8 +212,8 @@ class Canvas_cycle(Canvas):
         desaerador = Canvas_box(self,x_s+dx_proc, y_s+dy_proc, comp_tag='Desaerador', fill='#0040a1',activefill='#002c6e', text='Desaerador')
             # Linha estado 13
         x_e,y_e = desaerador.get_E_coords()
-        self.create_line(x_s,y_s, x_s,y_e-5, x_e,y_e-5, tags='E13', arrow='last', **red_line)
-        Canvas_state(self,x_s,y_s+20, 13)
+        self.create_line(x_s,y_s, x_s,y_e-5, x_e,y_e-5, tags='E13', arrow='last', **blue_line)
+        Canvas_state(self,x_s,y_s+20, 13, color='blue')
             # Linha estado 14
         x_n,y_n = desaerador.get_N_coords()
         self.create_line(x_te,y_estado_10, x_n,y_estado_10, x_n,y_n, tags='E14', arrow='last', **red_line)
