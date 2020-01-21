@@ -1,16 +1,34 @@
 
-from parameters_menu import*
+from cogen_module.parameters_menu import *
+from cogen_module.thermo_cycle import *
+
+from cogen_module.result_display import *
+from cogen_module.info_display import *
+from cogen_module.canvas_display import*
 
 from tkinter import *
 from tkinter import ttk 
-import matplotlib
-matplotlib.use('TkAgg')
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
+
+# import matplotlib
+# matplotlib.use('TkAgg')
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+# from matplotlib.figure import Figure
 
 
 WINDOW_TITLE = 'COGEN_SOFTWARE_V_09'
+HEAD_TITLE = 'SOFTWARE DE SIMULAÇÂO E ANALISE DE CICLOS DE RANKINE COM COGERAÇÂO [v0.9]'
 
+#############################################################################################
+## 1)       HEAD 
+#############################################################################################
+
+class Head(Frame):
+    def __init__(self, parent):
+        Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
+
+        self.title = Label(self, text=HEAD_TITLE,font='Helvetica 16 bold',pady=8, bg='#244AC6')
+        self.grid_columnconfigure(0, weight=1)
+        self.title.grid(sticky='ew')
 ##############################################################################################
 ##################                       MAIN PAGE ONE                      ##################
 ##############################################################################################
@@ -20,9 +38,6 @@ class PageOne(Frame):
         Frame.__init__(self,parent)
         self.master = master
 
-        button_style= {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
-
-        
         # 1) -------- HEAD -------- #
         self.head = Head(self)
         self.head.grid(row=0, column=0, columnspan=4, sticky='ew')
@@ -43,7 +58,8 @@ class PageOne(Frame):
         self.canvas = Canvas_cycle(self)
         self.canvas.grid(row=1, column=1,rowspan=2,sticky='new',pady=25)
         
-        ttk.Button(self, text='Escolha de componentes',command = lambda: master.show_frame(PageTwo)).grid(row=5,column=0)
+
+        button_style= {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
         Button(self, command = lambda: self.calculate(),**button_style).grid(row=3,column=1)
         
 
@@ -121,17 +137,4 @@ class Rankine_App(Tk):
         frame = self.frames[cont]
         frame.tkraise()
     
-    
-        
-########################## RUNNING THE MAIN APP ###########################
-root = Rankine_App()
-root.mainloop()
-###########################################################################
 
-# FOR TESTING THE CANVAS ONLY
-# master = Tk()
-
-# canvas = Canvas_cycle(master)
-# canvas.pack()
-
-# mainloop()

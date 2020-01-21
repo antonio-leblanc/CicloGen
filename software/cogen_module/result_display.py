@@ -32,9 +32,9 @@ class ResultDisplay(Frame):
         # ---------------------- Energia Elétrica ----------------------
         row = self.create_title('Energia Elétrica', self.sub_title_style,row)
         row = self.create_display('Wb','Consumo das bombas','kW',row)
-        row = self.create_display('W_other_equip','Consumo de outros equipamentos','kW',row)
+        row = self.create_display('w_other_equip','Consumo de outros equipamentos','kW',row)
         row = self.create_display('Wt','Potência gerada pelas Turbinas','kW',row)
-        row = self.create_display('W_exceding','Excedente comercializável','kW',row)
+        row = self.create_display('w_exceding','Excedente comercializável','kW',row)
         
         # ---------------------- Energia Térmica ----------------------
         row = self.create_title('Energia Térmica', self.sub_title_style,row)
@@ -64,8 +64,8 @@ class ResultDisplay(Frame):
         Ql = results.get('Ql') / 1000
         Qp = results.get('Qp') / 1000
         
-        W_other_equip = results.get('W_other_equip') / 1000
-        W_exceding = results.get('W_exceding') / 1000
+        w_other_equip = results.get('w_other_equip') / 1000
+        w_exceding = results.get('w_exceding') / 1000
         n_th = results.get('n_th')
 
         self.display['Wb'].set(f'{Wb:,.0f}'.replace(',',' '))
@@ -73,6 +73,6 @@ class ResultDisplay(Frame):
         self.display['Qh'].set(f'{Qh:,.0f}'.replace(',',' '))
         self.display['Ql'].set(f'{Ql:,.0f}'.replace(',',' '))
         self.display['Qp'].set(f'{Qp:,.0f}'.replace(',',' '))
-        self.display['W_other_equip'].set(f'{W_other_equip:,.0f}'.replace(',',' '))
-        self.display['W_exceding'].set(f'{W_exceding:,.0f}'.replace(',',' '))
+        self.display['w_other_equip'].set(f'{w_other_equip:,.0f}'.replace(',',' '))
+        self.display['w_exceding'].set(f'{w_exceding:,.0f}'.replace(',',' '))
         self.display['n_th'].set(f'{100*n_th:.2f}')

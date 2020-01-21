@@ -1,4 +1,4 @@
-from thermo_classes import *
+from cogen_module.thermo_classes import *
 
 #############################################################################################
 ################################## DEFININDO O CICLO EM QUESTAO #############################
@@ -25,7 +25,7 @@ class Rankine_cycle:
 
         w_process = None
         
-        self.w_other_equip = params['W_other_equip']
+        self.w_other_equip = params['w_other_equip']
         cycle_type = params['cycle_type']
 
         n_b1 = components_params['n_b1']
@@ -120,12 +120,11 @@ class Rankine_cycle:
         results['Qh'] = self.componentes['Caldeira'].get_Qh()
         results['Ql'] = self.componentes['Condensador'].get_Ql()
         
-        results['W_other_equip'] = self.w_other_equip
-        results['W_exceding'] = results['Wt']-results['Wb']-results['W_other_equip']
+        results['w_other_equip'] = self.w_other_equip
+        results['w_exceding'] = results['Wt']-results['Wb']-results['w_other_equip']
 
         results['n_th'] = (results['Wt']-results['Wb']+results['Qp'])/results['Qh']
         
-
         return (results)
     
     def get_state_info(self,state):

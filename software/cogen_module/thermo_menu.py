@@ -1,73 +1,12 @@
 from tkinter import *
-from tkinter import ttk 
-
-from components_menu import *
-from process_menu import *
-from result_display import *
-from info_display import *
-
-from canvas_display import*
-from thermo_cycle import *
+from tkinter import ttk
 
 #############################################################################################
-####################################### PAGINA 1 ############################################
-#############################################################################################
 
-TITULO_SOFTWARE = 'SOFTWARE DE SIMULAÇÂO E ANALISE DE CICLOS DE RANKINE COM COGERAÇÂO [v0.9]'
 TITULO_CICLO_1 = 'Ciclo 1: Turbinas de contrapressão e condensação'
 TITULO_CICLO_2 = 'Ciclo 2: Turbina de extração-condensação'
 
 #############################################################################################
-## 1)       HEAD 
-#############################################################################################
-
-class Head(Frame):
-    def __init__(self, parent):
-        Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
-
-        self.title = Label(self, text=TITULO_SOFTWARE,font='Helvetica 16 bold',pady=8, bg='#244AC6')
-        self.grid_columnconfigure(0, weight=1)
-        self.title.grid(sticky='ew')
-
-#############################################################################################
-## 2)       PARAMETERS MENU 
-#############################################################################################
-
-class ParametersMenu(ttk.Notebook):
-    def __init__(self,parent):
-        ttk.Notebook.__init__(self,parent)
-        self.parent = parent
-        
-        self.parameters_tab = ThermoMenu(self)
-        self.components_tab = ComponentsMenu(self)
-        self.process_tab = ProcessMenu(self)
-    
-        self.add(self.parameters_tab, text = 'Parâmetros')
-        self.add(self.components_tab, text = 'Componentes')
-        self.add(self.process_tab, text = 'DadosProcesso')    
-
-    def update_cycle(self,value):
-        self.parent.update_cycle()
-    
-    def get_cycle_params(self):
-        return self.parameters_tab.get_cycle_params()
-
-    def get_components_params(self):
-        return self.components_tab.get_components_params()
-    
-    def calculate(self):
-        self.parent.calculate()
-    
-    def get_cycle_type(self):
-        return self.parameters_tab.get_cycle_type()
-    
-    def set_entries(self, inputs_dict):
-        self.parameters_tab.set_entries(inputs_dict)
-    
-    def set_cycle_type(self, cycle_type):
-        self.parameters_tab.set_cycle_type(cycle_type)
-
-#2.1 ################################# Thermo tab #################################
 
 class ThermoMenu(Frame):
     def __init__(self, parent):
@@ -134,14 +73,14 @@ class ThermoMenu(Frame):
         # --------------------- Processo ---------------------
         
         row = self.create_title('Processo', self.sub_title_style,row)
-        row = self.create_input('W_process','Calor fornecido ao processo','MW',row)
-        row = self.create_input('W_other_equip','Potência demandada por outros equipamentos','MW',row)
+        row = self.create_input('w_process','Calor fornecido ao processo','MW',row)
+        row = self.create_input('w_other_equip','Potência demandada por outros equipamentos','MW',row)
 
         # ------------------ Initialization -------------------
         self.set_cycle_type(1)
     
         entries_init_values = {'t1': '530', 'delta_t': '0', 'p1': '68', 'p3': '2.5', 'p5': '.08', 
-        'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '40', 'W_process': '30','W_other_equip':'10'}
+        'delta_p': '-10', 'm1': '160', 'f2_10': '30', 'f14': '10', 'f9': '40', 'w_process': '30','w_other_equip':'10'}
         self.set_inputs(entries_init_values)
     
     def create_input(self,id,text,unit,row):
@@ -164,7 +103,7 @@ class ThermoMenu(Frame):
         pressures = ['p1','p3','p5','delta_p']
         flow = ['m1']
         percentages = ['f2_10','f14','f9']
-        work = ['W_process','W_other_equip']
+        work = ['w_process','w_other_equip']
         params_dic = {}
         for key, v in self.inputs.items():
             value = float(v.get())
@@ -190,4 +129,3 @@ class ThermoMenu(Frame):
             self.label_vazao_2_4.set('(2) - Fração de (1) enviada a Turbina 1')
         else:
             self.label_vazao_2_4.set('(10) - Fração de extração da Turbina')
-
