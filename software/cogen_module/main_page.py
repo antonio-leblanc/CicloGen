@@ -72,12 +72,17 @@ class PageOne(Frame):
         self.show_component_info('Caldeira')
     
     def calculate(self):
+        # Get parameters
         cycle_parameters = self.parameters_menu.get_cycle_params()
         component_parameters = self.parameters_menu.get_components_params()
         process_parameters = self.parameters_menu.get_process_params()
+        
+        #Cycle Calculations
         self.cycle.calculate(cycle_parameters,component_parameters,process_parameters)
-
         cycle_results = self.cycle.get_results()
+
+        #Use results
+        self.parameters_menu.set_results(cycle_results)
         self.result_display.set_results(cycle_results)
     
     def show_state_info(self,estado):
