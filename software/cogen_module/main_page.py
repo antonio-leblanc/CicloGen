@@ -15,8 +15,8 @@ from tkinter import ttk
 # from matplotlib.figure import Figure
 
 
-WINDOW_TITLE = 'COGEN_SOFTWARE_V_09'
-HEAD_TITLE = 'SOFTWARE DE SIMULAÇÂO E ANALISE DE CICLOS DE RANKINE COM COGERAÇÂO [v0.9]'
+WINDOW_TITLE = 'SSPC [1.0]'
+HEAD_TITLE = 'SOFTWARE DE SIMULAÇÂO DE PLANTAS DE COGERAÇÂO DA INDUSTRIA SUCROALCOOLEIRA [v1.0]'
 
 #############################################################################################
 ## 1)       HEAD 

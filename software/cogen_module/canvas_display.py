@@ -46,9 +46,11 @@ class Canvas_pump:
         self.s=s
         self.canvas.create_line(x+2*s, y, x+s, y, tags = in_tag, **blue_line, arrow='last')
         self.canvas.create_line(x-2*s, y, x-s, y, tags = out_tag, **blue_line)
-        self.canvas.create_oval(x-s, y-s, x+s, y+s, fill=fill, activefill=activefill, tags=comp_tag, width=2)
-        self.canvas.create_text(x,y, text=text, tags=comp_tag)
 
+        self.canvas.create_polygon(x, y, x+s, y+1.5*s, x-s, y+1.5*s, fill=fill, tags=comp_tag, outline='black', width=2)
+
+        self.canvas.create_oval(x-s, y-s, x+s, y+s, fill=fill,activefill=activefill, tags=comp_tag, width=2)
+        self.canvas.create_text(x,y+2*s, text=text, tags=comp_tag, font='Arial 9')
         
     def get_in_coords(self):
         return (self.x+2*self.s,self.y)
@@ -231,7 +233,7 @@ class Canvas_cycle(Canvas):
         # H) BOMBA 1 ____________________________________________________________________________________________________
         xc,yc = condenser.get_out_coords()
         xd,yd = desaerador.get_E_coords()
-        pump1 = Canvas_pump(self,xc-40,yd+5, in_tag='E6', out_tag='E7', comp_tag='B1', text='B1')
+        pump1 = Canvas_pump(self,xc-40,yd+5, in_tag='E6', out_tag='E7', comp_tag='B1', text='Bomba 1')
             # Linha estado 6
         xp,yp = pump1.get_in_coords()
         self.create_line(xc,yc, xp,yp, tags='E6', **blue_line)
@@ -253,7 +255,7 @@ class Canvas_cycle(Canvas):
         x_w,y_w = desaerador.get_W_coords()
         xb,yb = boiler.get_in_coords()
         dx_cald_b2 = 50
-        pump2 = Canvas_pump(self, xb+dx_cald_b2,y_w, in_tag='E15', out_tag='16', comp_tag='B2', text='B2')
+        pump2 = Canvas_pump(self, xb+dx_cald_b2,y_w, in_tag='E15', out_tag='16', comp_tag='B2', text='Bomba 2')
 
             # Linha estado 15
         xp,yp = pump2.get_in_coords()
@@ -287,14 +289,14 @@ class Canvas_cycle(Canvas):
 
     def set_cycle_type(self,cycle_type):
         if cycle_type == 1:
-            self.itemconfig(self.cycle_title, text='Ciclo 1 : 2 Turbinas - Contrapressão e Condensação')
+            self.itemconfig(self.cycle_title, text='Ciclo A : 2 Turbinas - Contrapressão e Condensação')
             self.itemconfig(self.linha_com_extrac, state='hidden' )
             self.itemconfig(self.linha_sem_extrac, state='normal' )
             self.turbine1.set_text('Turbina 1:\nContra-\npressão')
             self.turbine2.set_text('Turbina 2:\nConden-\nsação')
 
         else:
-            self.itemconfig(self.cycle_title, text='Ciclo 2 : 1 Turbina de Extração-Condensação')
+            self.itemconfig(self.cycle_title, text='Ciclo B : 1 Turbina de Extração-Condensação')
             self.itemconfig(self.linha_com_extrac, state='normal' )
             self.itemconfig(self.linha_sem_extrac, state='hidden' )
             self.turbine1.set_text('1°Estágio')

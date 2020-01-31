@@ -15,8 +15,6 @@ class ComponentsTab(Frame):
 
         self.import_data()
 
-        for component in ['caldeira','turbina1','turbina2','bomba1','bomba2']:
-            self.component_model[component] = StringVar()
 
         # --------------------- Styles ---------------------
         self.title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4}
@@ -28,7 +26,7 @@ class ComponentsTab(Frame):
 
         # --------------------- Grids ---------------------
         self.title_grid= {'column':0, 'columnspan':3, 'sticky':'we'}
-        self.sub_title_grid= {'column':0, 'sticky':'nswe'}
+        self.sub_title_grid= {'column':0,'columnspan':3, 'sticky':'nswe'}
         self.opt_menu_grid= {'column':1,'columnspan':2, 'sticky':'we','pady':1}
         
         self.property_grid = {'column':0 , 'sticky':'ew'}
@@ -41,44 +39,43 @@ class ComponentsTab(Frame):
         
         # --------------------- Caldeira ---------------------
         
-        ttk.OptionMenu(self, self.component_model['caldeira'], self.boilers_list[0], *self.boilers_list,command= self.set_boiler).grid(row=row, **self.opt_menu_grid)
         row = self.create_title('Modelo de Caldeira',self.sub_title_style,row, self.sub_title_grid)
-  
 
+
+        row = self.create_optmenu('caldeira',  self.boilers_list[0], self.boilers_list, self.set_boiler,row)
         row = self.create_display('t_saida_caldeira','Temperatura de saída','°C',row)
         row = self.create_display('p_saida_caldeira','Pressão de saída','bar',row)
         row = self.create_display('n_caldeira','Rendimento','%',row)
     
         # --------------------- Turbina 1 ---------------------
         
-        ttk.OptionMenu(self, self.component_model['turbina1'], self.turbines_list[0], *self.turbines_list,command= self.set_turbine).grid(row=row,**self.opt_menu_grid)
         row = self.create_title('Modelo da Turbina 1',self.sub_title_style,row, self.sub_title_grid)
 
+        row = self.create_optmenu('turbina1',  self.turbines_list[0], self.turbines_list, self.set_turbine,row)
         # row = self.create_display('p_max_t1','Pressão máxima de entrada','°C',row)
         row = self.create_display('p_saida_t1','Pressão de saída','bar',row)
         row = self.create_display('n_t1','Rendimento','%',row)
 
         # --------------------- Turbina 2 ---------------------
 
-        ttk.OptionMenu(self, self.component_model['turbina2'], self.turbines_list[0], *self.turbines_list,command= self.set_turbine).grid(row=row,column=1,columnspan=2,sticky='ew')
         row = self.create_title('Modelo da Turbina 2',self.sub_title_style,row, self.sub_title_grid)
-
-
+        
+        row = self.create_optmenu('turbina2',  self.turbines_list[0], self.turbines_list, self.set_turbine,row)
         # row = self.create_display('p_max_t2','Pressão máxima de entrada','°C',row)
         row = self.create_display('p_saida_t2','Pressão de saída','bar',row)
         row = self.create_display('n_t2','Rendimento','%',row)    
 
      # --------------------- Bomba 1 ---------------------
-        ttk.OptionMenu(self, self.component_model['bomba1'], self.pumps_list[0], *self.pumps_list,command= self.set_pump).grid(row=row,column=1,columnspan=2,sticky='ew')
         row = self.create_title('Modelo da Bomba 1',self.sub_title_style,row, self.sub_title_grid)
 
+        row = self.create_optmenu('bomba1',  self.pumps_list[0], self.pumps_list, self.set_pump,row)
         row = self.create_display('n_b1','Rendimento','%',row)   
 
       # --------------------- Bomba 2 ---------------------
 
-        ttk.OptionMenu(self, self.component_model['bomba2'], self.pumps_list[0], *self.pumps_list,command= self.set_pump).grid(row=row,column=1,columnspan=2,sticky='ew')
         row = self.create_title('Modelo da Bomba 2',self.sub_title_style,row, self.sub_title_grid)
 
+        row = self.create_optmenu('bomba2',  self.pumps_list[0], self.pumps_list, self.set_pump,row)
         row = self.create_display('n_b2','Rendimento','%',row)    
         
         # --------------------- Botao ---------------------
@@ -155,6 +152,11 @@ class ComponentsTab(Frame):
         self.display['n_b1'].set(n_b1)
         self.display['n_b2'].set(n_b2)
 
+    def create_optmenu(self,id, init_value, options,command,row):
+        self.component_model[id] = StringVar()
+        ttk.OptionMenu(self, self.component_model[id], init_value, *options,command= command).grid(row=row, **self.opt_menu_grid)
+        Label(self, text='Modelo', **self.property_style).grid(row=row, **self.property_grid)
+        return row+1
 
     def create_display(self,id,text,unit,row):
         self.display[id] = StringVar()

@@ -3,8 +3,8 @@ from tkinter import ttk
 
 #############################################################################################
 
-TITULO_CICLO_1 = 'Ciclo 1: Turbinas de contrapressão e condensação'
-TITULO_CICLO_2 = 'Ciclo 2: Turbina de extração-condensação'
+TITULO_CICLO_1 = 'Ciclo A : Turbinas de contrapressão e condensação'
+TITULO_CICLO_2 = 'Ciclo B : Turbina de extração-condensação'
 
 #############################################################################################
 
@@ -16,7 +16,6 @@ class ThermoTab(Frame):
         self.inputs = {}
         self.displays = {}
         self.grid_columnconfigure(0, weight=1)
-
                 
         # --------------------- Styles ---------------------
         self.title_style= {'font':'Arial 11 bold','bg':'red', 'pady':4}
