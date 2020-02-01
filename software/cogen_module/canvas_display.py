@@ -143,9 +143,10 @@ CANVAS_WIDTH = 550
 CANVAS_HEIGTH = 450
 
 class Canvas_cycle(Canvas):
-    def __init__(self , parent):
+    def __init__(self , parent,master):
         Canvas.__init__(self,parent, width=CANVAS_WIDTH, height=CANVAS_HEIGTH, bg = 'white', highlightbackground = 'black')
         self.parent = parent
+        self.master = master
 
         # A) CALDEIRA __________________________________________________________________________________________
         x_caldeira = 60
@@ -282,21 +283,21 @@ class Canvas_cycle(Canvas):
         componente = list(set(tags)&set(componentes))
         if estado:
             # print (estado) 
-            self.parent.show_state_info(estado[0])
+            self.master.show_state_info(estado[0])
         else:
             # print(componente)
-            self.parent.show_component_info(componente[0])
+            self.master.show_component_info(componente[0])
 
     def set_cycle_type(self,cycle_type):
         if cycle_type == 1:
-            self.itemconfig(self.cycle_title, text='Ciclo A : 2 Turbinas - Contrapressão e Condensação')
+            self.itemconfig(self.cycle_title, text='Ciclo A : Turbinas de Contrapressão e Condensação')
             self.itemconfig(self.linha_com_extrac, state='hidden' )
             self.itemconfig(self.linha_sem_extrac, state='normal' )
             self.turbine1.set_text('Turbina 1:\nContra-\npressão')
             self.turbine2.set_text('Turbina 2:\nConden-\nsação')
 
         else:
-            self.itemconfig(self.cycle_title, text='Ciclo B : 1 Turbina de Extração-Condensação')
+            self.itemconfig(self.cycle_title, text='Ciclo B : Turbina de Extração-Condensação')
             self.itemconfig(self.linha_com_extrac, state='normal' )
             self.itemconfig(self.linha_sem_extrac, state='hidden' )
             self.turbine1.set_text('1°Estágio')

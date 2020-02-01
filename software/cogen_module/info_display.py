@@ -6,13 +6,14 @@ from tkinter import ttk
 #############################################################################################
 
 class InfoDisplay(Frame):
-    def __init__(self, parent=None):
+    def __init__(self, parent,master):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
         self.parent = parent
+        self.master = master
         self.display = {'name':StringVar(),'fluid_state':StringVar()}
 
         # ---------------------- STYLES ----------------------
-        self.title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4}
+        self.title_style= {'bg':'blue', 'font':'Arial 11 bold', 'pady':4}
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
         self.property_style= {'font':'Arial 11' ,'anchor':'w', 'pady':3}
@@ -27,7 +28,7 @@ class InfoDisplay(Frame):
 
         # ---------------------- TITLE ----------------------
         row = 0
-        row = self.create_title('INFORMAÇÕES',self.title_style,row)
+        row = self.create_title('Propriedades da Agua',self.title_style,row)
         
         # ---------------------- INFO ESTADO ----------------------
         Label(self, textvariable=self.display['name'], **self.sub_title_style).grid(row=row, column=0, columnspan=3, sticky='ew')

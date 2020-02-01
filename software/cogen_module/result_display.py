@@ -6,13 +6,14 @@ from tkinter import ttk
 #############################################################################################
 
 class ResultDisplay(Frame):
-    def __init__(self, parent=None):
+    def __init__(self, parent,master):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
         self.parent = parent
+        self.master = master
         self.display = {}
         
         # ---------------------- Styles ----------------------
-        self.title_style= {'bg':'blue', 'font':'Arial 11 bold','pady':4}
+        self.title_style= {'bg':'green', 'font':'Arial 11 bold','pady':4}
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
         self.property_style= {'font':'Arial 11', 'bd':1, 'anchor':'w', 'pady':3}
@@ -26,54 +27,89 @@ class ResultDisplay(Frame):
         self.unit_grid = {'column':2 , 'sticky':'ew'}
 
         # ---------------------- Title ----------------------
-        row = 0
-        row = self.create_title('RESULTADOS', self.title_style,row)
+        self.row = 0
+        self.create_title('RESULTADOS', self.title_style)
         
         # ---------------------- Energia Elétrica ----------------------
-        row = self.create_title('Energia Elétrica', self.sub_title_style,row)
-        row = self.create_display('Wb','Consumo das bombas','kW',row)
-        row = self.create_display('w_outros_equip','Consumo de outros equipamentos','kW',row)
-        row = self.create_display('Wt','Potência gerada pelas Turbinas','kW',row)
-        row = self.create_display('w_excedente','Excedente comercializável','kW',row)
+        self.create_title('Energia Elétrica', self.sub_title_style)
+        
+        self.create_display('Wb','Consumo das bombas','kW')
+        self.create_display('w_outros_equip','Consumo de outros equipamentos','kW')
+        self.create_display('Wt','Potência gerada pelas Turbinas','kW')
+        self.create_display('w_excedente','Excedente comercializável','kW')
         
         # ---------------------- Energia Térmica ----------------------
-        row = self.create_title('Energia Térmica', self.sub_title_style,row)
-        row = self.create_display('Qh','Calor fornecido a Caldeira','kW',row)
-        row = self.create_display('Ql','Calor cedido ao condensador','kW',row)
-        row = self.create_display('Qp','Calor cedido ao processo','kW',row)
+        self.create_title('Energia Térmica', self.sub_title_style)
         
+        self.create_display('Qh','Calor fornecido a caldeira','kW')
+        self.create_display('m_bag_cald','Bagaço consumido na caldeira','ton/h')
+        self.create_display('m_bag_tot','Bagaço total produzido','ton/h')
+        self.create_display('m_bag_exc','Bagaço excedente','ton/h')
+
+        self.create_display('Qp','Calor útil fornecido ao processo','kW')
+        self.create_display('Ql','Calor cedido ao condensador','kW')
+        
+
         # # ---------------------- Indices de desempenho ----------------------
-        row = self.create_title('Indices de desempenho', self.sub_title_style,row)
-        row = self.create_display('n_th','Eficiência Térmica','%',row)
+        self.create_title('Indices de desempenho', self.sub_title_style)
+        self.create_display('n_th','Eficiência Térmica','%')
+        self.create_display('FUE','Fator de utilização de Energia - FUE','%')
+        self.create_display('IGP','Indice de geração de Potência - IGP','%')
+        self.create_display('RPC','Relação Potência Calor - RCP','%')
         
-    def create_display(self,id,text,unit,row):
-        self.display[id] = StringVar()
-        Label(self, text=text, **self.property_style).grid(row=row, **self.property_grid)
-        Label(self, textvariable = self.display[id], **self.value_style).grid(row=row, **self.value_grid)
-        Label(self, text=unit, **self.unit_style).grid(row=row, **self.unit_grid)
-        return row+1
-
-    def create_title(self,text,style,row):
-        Label(self, text=text, **style).grid(row=row, **self.title_grid)
-        return row+1
-
     def set_results(self, results):
-        print (results)
-        Wb = results.get('Wb') / 1000
-        Wt = results.get('Wt') / 1000
-        Qh = results.get('Qh') / 1000
-        Ql = results.get('Ql') / 1000
-        Qp = results.get('Qp') / 1000
+        # print (results)
+        Wb = results.get('Wb')
+        Wt = results.get('Wt')
+        Qh = results.get('Qh')
+        Ql = results.get('Ql')
+        Qp = results.get('Qp')
         
-        w_outros_equip = results.get('w_outros_equip') / 1000
-        w_excedente = results.get('w_excedente') / 1000
+        w_outros_equip = results.get('w_outros_equip')
+        w_excedente = results.get('w_excedente')
+        
+        FUE = results.get('FUE')
+        IGP = results.get('IGP')
+        RPC = results.get('RPC')
         n_th = results.get('n_th')
 
-        self.display['Wb'].set(f'{Wb:,.0f}'.replace(',',' '))
-        self.display['Wt'].set(f'{Wt:,.0f}'.replace(',',' '))
-        self.display['Qh'].set(f'{Qh:,.0f}'.replace(',',' '))
-        self.display['Ql'].set(f'{Ql:,.0f}'.replace(',',' '))
-        self.display['Qp'].set(f'{Qp:,.0f}'.replace(',',' '))
-        self.display['w_outros_equip'].set(f'{w_outros_equip:,.0f}'.replace(',',' '))
-        self.display['w_excedente'].set(f'{w_excedente:,.0f}'.replace(',',' '))
-        self.display['n_th'].set(f'{100*n_th:.2f}')
+        m_bag_cald = results.get('m_bag_cald')
+        m_bag_tot = results.get('m_bag_tot')
+        m_bag_exc = results.get('m_bag_exc')
+
+        self.set_kdisplay('Wb',Wb)
+        self.set_kdisplay('Wt',Wt)
+        self.set_kdisplay('Qh',Qh)
+        self.set_kdisplay('Ql',Ql)
+        self.set_kdisplay('Qp',Qp)
+        
+        self.set_kdisplay('w_outros_equip',w_outros_equip)
+        self.set_kdisplay('w_excedente',w_excedente)
+        self.set_kdisplay('m_bag_cald',m_bag_cald)
+        self.set_kdisplay('m_bag_tot',m_bag_tot)
+        self.set_kdisplay('m_bag_exc',m_bag_exc)
+        
+        self.set_pctdisplay('n_th',n_th)
+        self.set_pctdisplay('FUE',FUE)
+        self.set_pctdisplay('IGP',IGP)
+        self.set_pctdisplay('RPC',RPC)
+
+
+# # ---------------------- Frontend ----------------------
+    
+    def create_display(self,id,text,unit):
+        self.display[id] = StringVar()
+        Label(self, text=text, **self.property_style).grid(row=self.row, **self.property_grid)
+        Label(self, textvariable = self.display[id], **self.value_style).grid(row=self.row, **self.value_grid)
+        Label(self, text=unit, **self.unit_style).grid(row=self.row, **self.unit_grid)
+        self.row+=1
+
+    def create_title(self,text,style):
+        Label(self, text=text, **style).grid(row=self.row, **self.title_grid)
+        self.row+=1
+
+    def set_kdisplay(self,id,value):
+        self.display[id].set(f'{value:,.0f}'.replace(',',' '))
+
+    def set_pctdisplay(self,id,value):
+        self.display[id].set(f'{value:.2f}')

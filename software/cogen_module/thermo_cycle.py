@@ -7,7 +7,7 @@ class Rankine_cycle:
     def __init__(self):
         pass
 
-    def calculate(self, cycle_p, components_p, process_p):
+    def calculate(self, cycle_p, process_p):
         estados = {}
         componentes = {}
 
@@ -26,10 +26,13 @@ class Rankine_cycle:
         
         cycle_type = cycle_p['cycle_type']
 
-        n_b1 = components_p['n_b1']
-        n_b2 = components_p['n_b2']
-        n_t1 = components_p['n_t1']
-        n_t2 = components_p['n_t2']
+        n_cald = cycle_p['n_cald']
+
+        n_t1 = cycle_p['n_t1']
+        n_t2 = cycle_p['n_t2']
+
+        n_b1 = cycle_p['n_b1']
+        n_b2 = cycle_p['n_b2']
         
         t_saida_processo = process_p['t_saida_processo']
 
@@ -62,6 +65,7 @@ class Rankine_cycle:
         estados['E2'] = State('P',p1+perda_carga, 'T',t1+perda_temperatura, m2)
         componentes['T1'] = Turbine(estados['E2'],p3, n=n_t1 ,name='Turbina1')
         estados['E3'] = componentes['T1'].get_state_out()
+        estados['E10'] = State('P',estados['E3'].get_P(), 'H',estados['E3'].get_H(), m10)
 
         #__________ Turbina 2 __________
         if cycle_type == 1:
@@ -84,7 +88,6 @@ class Rankine_cycle:
         
         #________ Dessuperaquecedor ________
         estados['E9'] = State('P',estados['E7'].get_P(), 'H',estados['E7'].get_H(), m9)
-        estados['E10'] = State('P',estados['E3'].get_P(), 'H',estados['E3'].get_H(), m10)
         estados['E11'] = State('P',estados['E10'].get_P(), 'H',estados['E10'].get_H(), m11)
 
         componentes['Dessup'] = Mixer([estados['E9'],estados['E11']], name='Dessuperaquecedor')
@@ -107,41 +110,71 @@ class Rankine_cycle:
         estados['E16'] = componentes['B2'].get_state_out()
 
         #________ Fechando o ciclo ________
-        componentes['Caldeira'] = Boiler(estados['E16'],t1, name='Caldeira')
+        componentes['Caldeira'] = Boiler(estados['E16'],t1,n=n_cald, name='Caldeira')
+        
+        
         self.estados = estados
         self.componentes = componentes
-
-        # ------------------- Calculos para resultados ----------------
-        self.w_outros_equip = process_p['potencia_demandada']
-        self.vazao_necessaria_processo = process_p['vazao_necessaria_processo']
-        energia_disponivel = process_p['energia_disponivel']
         
-        delta_h = estados['E1'].get_H() - estados['E16'].get_H()
-        self.vazao_max_disponivel = energia_disponivel/delta_h
+        self.cycle_p = cycle_p
+        self.process_p = process_p
 
-        self.vazao_disponivel_processo = m11+m9
-
-
-
-
-    
+   
     
     def get_results(self):
-        results = {}
-        results['Wb'] = self.componentes['B1'].get_work() + self.componentes['B2'].get_work()
-        results['Wt'] = self.componentes['T1'].get_work() + self.componentes['T2'].get_work()
-        results['Qp'] = self.componentes['Processo'].get_Q()
-        results['Qh'] = self.componentes['Caldeira'].get_Qh()
-        results['Ql'] = self.componentes['Condensador'].get_Ql()
-        
-        results['w_outros_equip'] = self.w_outros_equip
-        results['w_excedente'] = results['Wt']-results['Wb']-results['w_outros_equip']
+        # Calcula os resultados e converte para as unidade apropriadas
 
-        results['n_th'] = (results['Wt']-results['Wb']+results['Qp'])/results['Qh']
+        w_outros_equip = self.process_p['potencia_demandada'] /1000                     #[kW]
+        vazao_necessaria_processo = self.process_p['vazao_necessaria_processo'] *3.6    #[ton/h]
+        vazao_disponivel_processo = self.estados['E13'].get_m()  *3.6                   #[ton/h]
+        m_bag_tot = self.process_p['m_bag_tot']  *3.6                                   #[ton/h]
         
-        results['vazao_necessaria_processo'] = self.vazao_necessaria_processo
-        results['vazao_disponivel_processo'] = self.vazao_disponivel_processo
-        results['vazao_max_disponivel'] = self.vazao_max_disponivel
+        mPCI_disp = self.process_p['mPCI_disp']                                         #[W]
+        PCI = self.process_p['PCI']                                                     #[kJ/kg]
+        n_cald = self.cycle_p['n_cald']                                                 
+
+        #    Caldeira
+        delta_h_cald = self.estados['E1'].get_H() - self.estados['E16'].get_H()   #[kJ/kg]
+        vazao_max_disponivel = mPCI_disp/delta_h_cald*n_cald *3.6    #[t.vapor/h]
+        
+
+        Wb = (self.componentes['B1'].get_work() + self.componentes['B2'].get_work()) /1000  #[kW]
+        Wt = (self.componentes['T1'].get_work() + self.componentes['T2'].get_work()) /1000  #[kW]
+        Qp = (self.componentes['Processo'].get_Q()) /1000                                   #[kW]
+        Ql = (self.componentes['Condensador'].get_Ql()) /1000                               #[kW]           
+        mPCI = (self.componentes['Caldeira'].get_Qh()) /1000                                #[kW]
+        
+        
+        m_bag_cald = (mPCI / PCI) *3.6           #[ton/h]
+        m_bag_exc = m_bag_tot - m_bag_cald
+
+
+        FUE =  (Wt+Qp) / mPCI          *100
+        IGP = Wt / (mPCI - Qp/n_cald)  *100
+        RPC = Wt/Qp                    *100
+        n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
+
+        w_excedente = Wt - Wb - w_outros_equip
+
+        results = {
+            'Wb':Wb,
+            'Wt':Wt,
+            'Qp':Qp,
+            'Qh':mPCI,
+            'Ql':Ql,
+            'FUE':FUE,
+            'IGP' : IGP,
+            'RPC':RPC,
+            'w_outros_equip':w_outros_equip,
+            'w_excedente' : w_excedente,
+            'n_th' : n_th,       
+            'vazao_necessaria_processo':vazao_necessaria_processo,
+            'vazao_disponivel_processo':vazao_disponivel_processo,
+            'vazao_max_disponivel':vazao_max_disponivel,
+            'm_bag_cald':m_bag_cald,
+            'm_bag_tot':m_bag_tot,
+            'm_bag_exc':m_bag_exc }
+        
         return results
     
     

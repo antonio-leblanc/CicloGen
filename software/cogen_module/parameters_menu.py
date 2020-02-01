@@ -10,33 +10,34 @@ from cogen_module.thermo_tab import *
 #############################################################################################
 
 class ParametersMenu(ttk.Notebook):
-    def __init__(self,parent):
+    def __init__(self,parent,master):
         ttk.Notebook.__init__(self,parent)
         self.parent = parent
+        self.master = master
         
         self.thermo_tab = ThermoTab(self)
-        self.components_tab = ComponentsTab(self)
         self.process_tab = ProcessTab(self)
     
         self.add(self.thermo_tab, text = 'Ciclo')
-        self.add(self.components_tab, text = 'Componentes')
         self.add(self.process_tab, text = 'Processo')    
 
+        # self.components_tab = ComponentsTab(self)
+        # self.add(self.components_tab, text = 'Componentes')
 
 
  # ----------------- Geters ---------------------------
     def get_cycle_params(self):
         return self.thermo_tab.get_cycle_params()
-
-    def get_components_params(self):
-        return self.components_tab.get_components_params()
-    
+ 
     def get_process_params(self):
         return self.process_tab.get_process_params()
     
     def get_cycle_type(self):
         return self.thermo_tab.get_cycle_type()
     
+    # def get_components_params(self):
+    #     return self.components_tab.get_components_params()
+
  # ----------------- Seters ---------------------------
     
     def set_cycle_type(self, cycle_type):
@@ -47,20 +48,20 @@ class ParametersMenu(ttk.Notebook):
 
  # ----------------- Calculation ---------------------------
     def update_cycle(self,value):
-        self.parent.update_cycle()
+        self.master.update_cycle()
     
-    def update_components(self):
-        components_params = self.get_components_params()
-        thermo_inputs = {'p1':components_params['p_saida_caldeira'],
-                         'p3':components_params['p_saida_t1'],
-                         'p5':components_params['p_saida_t2'],
-                         't1':components_params['t_saida_caldeira']
-        }
-
-        process_inputs = {'eficiencia_caldeira':components_params['n_caldeira']}
-        
-        self.thermo_tab.set_inputs(thermo_inputs)
-        self.process_tab.set_displays(process_inputs)
-
     def calculate(self):
-        self.parent.calculate()
+        self.master.calculate()
+
+    # def update_components(self):
+    #     components_params = self.get_components_params()
+    #     thermo_inputs = {'p1':components_params['p_saida_caldeira'],
+    #                      'p3':components_params['p_saida_t1'],
+    #                      'p5':components_params['p_saida_t2'],
+    #                      't1':components_params['t_saida_caldeira']
+    #     }
+
+    #     process_inputs = {'eficiencia_caldeira':components_params['n_caldeira']}
+        
+    #     self.thermo_tab.set_inputs(thermo_inputs)
+    #     self.process_tab.set_displays(process_inputs)

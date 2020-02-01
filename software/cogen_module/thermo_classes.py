@@ -104,7 +104,10 @@ class Boiler:
         return self.state_out
     
     def get_Qh(self):
-        return (self.state_out.get_H() - self.state_in.get_H()) * self.m
+        return (self.state_out.get_H() - self.state_in.get_H()) * self.m / self.n
+
+    def get_Qin(self):
+        pass
     
     def get_info(self):
         return {'prop':'Qh','value':self.get_Qh()/1000,'unit': 'KW', 'name':self.name}
