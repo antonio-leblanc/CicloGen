@@ -14,12 +14,12 @@ class ProcessTab(Frame):
         self.grid_columnconfigure(0, weight=1)
 
         # --------------------- Styles ---------------------
-        self.title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4}
-        self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
+        self.title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4, 'relief':'solid'}
+        self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1, 'relief':'solid'}
         
-        self.property_style= {'font':'Arial 11', 'anchor':'w', 'pady':2}
-        self.entry_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID,'width':11, 'justify':CENTER}
-        self.value_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID, 'bg':'gray90','width':9}
+        self.property_style= {'font':'Arial 11', 'anchor':'w', 'pady':3}
+        self.entry_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
+        self.value_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID, 'bg':'gray90','width':8}
         self.unit_style= {'font':'Arial 11','padx':2}
 
         self.title_grid= {'column':0, 'columnspan':3, 'sticky':'we'}
@@ -30,38 +30,38 @@ class ProcessTab(Frame):
         
         # --------------------- Title ------------------------------
         self.row = 0
-        self.create_title("Dados do Processo",self.title_style,self.title_grid)
+        self.create_title("Dados do Processo Industrial",self.title_style,self.title_grid)
         
         # --------------------- Safra ---------------------
-        self.create_title("Safra",self.sub_title_style,self.title_grid)
+        self.create_title("Capacidade de produção",self.sub_title_style,self.title_grid)
 
-        self.create_input('capacidade_moagem_h','Capacidade de moagem por hora','ton/h')
-        self.create_display('capacidade_moagem_d','Capacidade de moagem por dia','ton/dia')
+        self.create_input('capacidade_moagem_h','Capacidade de moagem por hora','t.cana/h')
+        self.create_display('capacidade_moagem_d','Capacidade de moagem por dia','t.cana/dia')
         self.create_input('dias_operacao','Dias de operação','dias/ano')
-        self.create_display('capacidade_moagem_safra','Capacidade de moagem por safra','ton/safra')
+        self.create_display('capacidade_moagem_safra','Capacidade de moagem por safra','t.cana/safra')
         
         # --------------------- Energia disp ---------------------
 
         self.create_title("Energia Disponível",self.sub_title_style,self.title_grid)
 
         self.create_input('fracao_bagaco_cana',"Fração de bagaço seco na cana",'%')
-        self.create_display('m_bag_tot',"Produção total de bagaço",'ton/h')
+        self.create_display('m_bag_tot',"Produção total de bagaço",'t.bag/h')
         self.create_input('pci_bagaco',"PCI do bagaço",'kJ/kg')
         self.create_display('mPCI_disp',"Energia disponível - Base PCI",'KW')
         
         # --------------------- Energia disp ---------------------
         
-        self.create_title("Processo",self.sub_title_style,self.title_grid)
+        self.create_title("Demanda Energética do Processo",self.sub_title_style,self.title_grid)
         
         self.create_input('consumo_vapor',"Consumo de vapor no processo",'kg/t.cana')
-        self.create_display('vazao_vapor',"Vazão de vapor necessária no processo",'t/h')
-        self.create_input('t_saida_processo',"Temperatura de saída do processo",'ºC')
-        self.create_input('demanda_mecanica_equip',"Demanda energética mecânica específica",'kWh/t')
-        self.create_input('demanda_eletrica_equip',"Demanda energética elétrica específica",'kWh/t')
+        self.create_display('vazao_vapor',"Vazão de vapor necessária no processo",'t.vapor/h')
+        self.create_input('t_saida_processo',"Temperatura de saída do vapor de processo",'ºC')
+        self.create_input('demanda_mecanica_equip',"Demanda energética mecânica específica",'kWh/t.cana')
+        self.create_input('demanda_eletrica_equip',"Demanda energética elétrica específica",'kWh/t.cana')
         self.create_display('potencia_demandada',"Potência total demandada",'kW')
        
-
-        Button(self,text='Recalcular', command = lambda: self.calculate_displays(None)).grid(row=self.row+1,column=1)
+        button_style = {'text' :'Atualizar Dados','bd':1, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
+        Button(self,**button_style, command = lambda: self.calculate_displays(None)).grid(row=self.row+1,column=0, columnspan=3, pady=4, sticky='ew')
         
 
         # --------------------- Inicializando ---------------------
@@ -110,6 +110,7 @@ class ProcessTab(Frame):
 #--------------------------Geters------------------------------------#
 
     def get_process_params(self):
+        capacidade_moagem_h = self.get_input('capacidade_moagem_h') /3.6  # [kg/s]       
         mPCI_disp = self.get_display('mPCI_disp')*1e3                     # [W]
         potencia_demandada = self.get_display('potencia_demandada')*1e3   # [W]
         t_saida_processo   =  self.get_input('t_saida_processo') + 273.15 # [K]
@@ -118,12 +119,14 @@ class ProcessTab(Frame):
         m_bag_tot = self.get_display('m_bag_tot') /3.6                    # [kg/s]
 
         
-        process_params = {'mPCI_disp':mPCI_disp,
-                          't_saida_processo':t_saida_processo,
-                          'vazao_necessaria_processo':vazao_vapor,
-                          'potencia_demandada':potencia_demandada,
-                          'PCI':pci_bagaco,
-                          'm_bag_tot':m_bag_tot}
+        process_params = {
+            'mPCI_disp':mPCI_disp,
+            'capacidade_moagem_h':capacidade_moagem_h,
+            't_saida_processo':t_saida_processo,
+            'vazao_necessaria_processo':vazao_vapor,
+            'potencia_demandada':potencia_demandada,
+            'PCI':pci_bagaco,
+            'm_bag_tot':m_bag_tot}
         return process_params
 
     def get_input(self, input_id):

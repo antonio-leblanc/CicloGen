@@ -128,10 +128,12 @@ class Rankine_cycle:
         vazao_necessaria_processo = self.process_p['vazao_necessaria_processo'] *3.6    #[ton/h]
         vazao_disponivel_processo = self.estados['E13'].get_m()  *3.6                   #[ton/h]
         m_bag_tot = self.process_p['m_bag_tot']  *3.6                                   #[ton/h]
+        capacidade_moagem_h = self.process_p['capacidade_moagem_h'] *3.6                #[ton/h]
         
         mPCI_disp = self.process_p['mPCI_disp']                                         #[W]
         PCI = self.process_p['PCI']                                                     #[kJ/kg]
         n_cald = self.cycle_p['n_cald']                                                 
+        n_t1 = self.cycle_p['n_t1']                                                 
 
         #    Caldeira
         delta_h_cald = self.estados['E1'].get_H() - self.estados['E16'].get_H()   #[kJ/kg]
@@ -148,13 +150,14 @@ class Rankine_cycle:
         m_bag_cald = (mPCI / PCI) *3.6           #[ton/h]
         m_bag_exc = m_bag_tot - m_bag_cald
 
-
         FUE =  (Wt+Qp) / mPCI          *100
         IGP = Wt / (mPCI - Qp/n_cald)  *100
         RPC = Wt/Qp                    *100
+        IPE = mPCI/(Wt/.77 + Qp/.4) * 100
         n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
 
         w_excedente = Wt - Wb - w_outros_equip
+        w_exc_esp = w_excedente/capacidade_moagem_h      #[kWh/ton]
 
         results = {
             'Wb':Wb,
@@ -162,8 +165,10 @@ class Rankine_cycle:
             'Qp':Qp,
             'Qh':mPCI,
             'Ql':Ql,
+            'w_exc_esp':w_exc_esp,
             'FUE':FUE,
             'IGP' : IGP,
+            'IPE':IPE,
             'RPC':RPC,
             'w_outros_equip':w_outros_equip,
             'w_excedente' : w_excedente,

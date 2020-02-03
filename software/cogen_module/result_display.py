@@ -13,8 +13,8 @@ class ResultDisplay(Frame):
         self.display = {}
         
         # ---------------------- Styles ----------------------
-        self.title_style= {'bg':'green', 'font':'Arial 11 bold','pady':4}
-        self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
+        self.title_style= {'bg':'#244AC6', 'font':'Arial 11 bold','pady':4, 'relief':'solid'}
+        self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1, 'relief':'solid'}
         
         self.property_style= {'font':'Arial 11', 'bd':1, 'anchor':'w', 'pady':3}
         self.value_style= {'font':'Arial 11', 'bd':1, 'width':9,'relief':SOLID, 'pady':1, 'bg':'gray90'}
@@ -28,15 +28,16 @@ class ResultDisplay(Frame):
 
         # ---------------------- Title ----------------------
         self.row = 0
-        self.create_title('RESULTADOS', self.title_style)
+        self.create_title('Resultados da Simulação', self.title_style)
         
         # ---------------------- Energia Elétrica ----------------------
-        self.create_title('Energia Elétrica', self.sub_title_style)
+        self.create_title('Energia Elétrica - Mecânica', self.sub_title_style)
         
-        self.create_display('Wb','Consumo das bombas','kW')
-        self.create_display('w_outros_equip','Consumo de outros equipamentos','kW')
+        self.create_display('Wb','Potência consumida pelas bombas','kW')
+        self.create_display('w_outros_equip','Potência consumida pela planta','kW')
         self.create_display('Wt','Potência gerada pelas Turbinas','kW')
         self.create_display('w_excedente','Excedente comercializável','kW')
+        self.create_display('w_exc_esp','Capacidade de geração de energia','kWh/ton')
         
         # ---------------------- Energia Térmica ----------------------
         self.create_title('Energia Térmica', self.sub_title_style)
@@ -52,10 +53,12 @@ class ResultDisplay(Frame):
 
         # # ---------------------- Indices de desempenho ----------------------
         self.create_title('Indices de desempenho', self.sub_title_style)
-        self.create_display('n_th','Eficiência Térmica','%')
+        self.create_display('n_th','Eficiência Térmica Global','%')
         self.create_display('FUE','Fator de utilização de Energia - FUE','%')
+        self.create_display('IPE','Índice de Poupança de Energia - IPE','%')
         self.create_display('IGP','Indice de geração de Potência - IGP','%')
         self.create_display('RPC','Relação Potência Calor - RCP','%')
+        
         
     def set_results(self, results):
         # print (results)
@@ -64,6 +67,7 @@ class ResultDisplay(Frame):
         Qh = results.get('Qh')
         Ql = results.get('Ql')
         Qp = results.get('Qp')
+        w_exc_esp = results.get('w_exc_esp')
         
         w_outros_equip = results.get('w_outros_equip')
         w_excedente = results.get('w_excedente')
@@ -71,6 +75,7 @@ class ResultDisplay(Frame):
         FUE = results.get('FUE')
         IGP = results.get('IGP')
         RPC = results.get('RPC')
+        IPE = results.get('IPE')
         n_th = results.get('n_th')
 
         m_bag_cald = results.get('m_bag_cald')
@@ -83,6 +88,7 @@ class ResultDisplay(Frame):
         self.set_kdisplay('Ql',Ql)
         self.set_kdisplay('Qp',Qp)
         
+        self.set_kdisplay('w_exc_esp',w_exc_esp)
         self.set_kdisplay('w_outros_equip',w_outros_equip)
         self.set_kdisplay('w_excedente',w_excedente)
         self.set_kdisplay('m_bag_cald',m_bag_cald)
@@ -91,6 +97,7 @@ class ResultDisplay(Frame):
         
         self.set_pctdisplay('n_th',n_th)
         self.set_pctdisplay('FUE',FUE)
+        self.set_pctdisplay('IPE',IPE)
         self.set_pctdisplay('IGP',IGP)
         self.set_pctdisplay('RPC',RPC)
 

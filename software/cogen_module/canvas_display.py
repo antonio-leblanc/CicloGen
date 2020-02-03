@@ -144,13 +144,13 @@ CANVAS_HEIGTH = 450
 
 class Canvas_cycle(Canvas):
     def __init__(self , parent,master):
-        Canvas.__init__(self,parent, width=CANVAS_WIDTH, height=CANVAS_HEIGTH, bg = 'white', highlightbackground = 'black')
+        Canvas.__init__(self,parent, width=CANVAS_WIDTH, height=CANVAS_HEIGTH, bg = 'white', highlightbackground = 'black', cursor='right_ptr')
         self.parent = parent
         self.master = master
 
         # A) CALDEIRA __________________________________________________________________________________________
         x_caldeira = 60
-        y_caldeira = 150
+        y_caldeira = 180
         boiler = Canvas_boiler(self,x_caldeira,y_caldeira,in_tag='E16',out_tag='E1', comp_tag='Caldeira')
             # Texto estado 1
         xb,yb = boiler.get_out_coords()

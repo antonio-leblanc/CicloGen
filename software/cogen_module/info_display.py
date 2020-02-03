@@ -13,42 +13,44 @@ class InfoDisplay(Frame):
         self.display = {'name':StringVar(),'fluid_state':StringVar()}
 
         # ---------------------- STYLES ----------------------
-        self.title_style= {'bg':'blue', 'font':'Arial 11 bold', 'pady':4}
+        self.title_style= {'bg':'#244AC6', 'font':'Arial 11 bold', 'pady':2, 'relief':'solid'}
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
         self.property_style= {'font':'Arial 11' ,'anchor':'w', 'pady':3}
-        self.value_style= {'font':'Arial 10','bd':1, 'width':11,'relief':SOLID, 'bg':'gray90','pady':1,'padx':1}
+        self.value_style= {'font':'Arial 10','bd':1, 'width':10,'relief':SOLID, 'bg':'gray90','pady':1}
         self.unit_style= {'font':'Arial 11', 'pady':1, 'width':7}
         
         # ---------------------- Grids ----------------------
-        self.title_grid= {'column':0, 'columnspan':3, 'sticky':'we'}
-        self.property_grid = {'column':0 , 'sticky':'ew'}
-        self.value_grid = {'column':1, 'sticky':'ew'}
-        self.unit_grid = {'column':2 , 'sticky':'ew'}
+        self.title_grid= {'column':0, 'columnspan':6, 'sticky':'we'}
+        self.property_grid = {'sticky':'ew', 'padx':2}
+        self.value_grid = {'padx':2}
+        self.unit_grid = {'sticky':'ew','padx':2}
 
         # ---------------------- TITLE ----------------------
         row = 0
         row = self.create_title('Propriedades da Agua',self.title_style,row)
         
         # ---------------------- INFO ESTADO ----------------------
-        Label(self, textvariable=self.display['name'], **self.sub_title_style).grid(row=row, column=0, columnspan=3, sticky='ew')
-        row+=1
-        Label(self, text='Estado', **self.property_style).grid(row=2, column=0,sticky='ew')
-        Label(self, textvariable=self.display['fluid_state'], **self.value_style).grid(row=row, column=1, columnspan=2, sticky='ew')
-        row+=1
+        Label(self, text='Ponto', **self.property_style).grid(row=1, column=0,sticky='ew')
+        Label(self, textvariable=self.display['name'], **self.value_style).grid(row=row, column=1,columnspan=1, sticky='ew')
+  
+        Label(self, text='Estado', **self.property_style).grid(row=1, column=3,sticky='ew')
+        Label(self, textvariable=self.display['fluid_state'], **self.value_style).grid(row=1, column=4, columnspan=2, sticky='ew')
+
         
-        row = self.create_display('T','Temperatura','ºC',row)
-        row = self.create_display('P','Pressão','bar',row)
-        row = self.create_display('H','Entalpia','kJ/kg',row)
-        row = self.create_display('S','Entropia','kJ/kgK',row)
-        row = self.create_display('X','Título','%',row)
-        row = self.create_display('m','Vazão','ton/h',row)
+        self.create_display('m','Vazão','ton/h',2,0)
+        self.create_display('T','Temperatura','ºC',3,0)
+        self.create_display('P','Pressão','bar',4,0)
+        
+        self.create_display('H','Entalpia','kJ/kg',2,3)
+        self.create_display('S','Entropia','kJ/kgK',3,3)
+        self.create_display('X','Título','%',4,3)
     
-    def create_display(self,id,text,unit,row):
+    def create_display(self,id,text,unit,row,col):
         self.display[id] = StringVar()
-        Label(self, text=text, **self.property_style).grid(row=row, **self.property_grid)
-        Label(self, textvariable = self.display[id], **self.value_style).grid(row=row, **self.value_grid)
-        Label(self, text=unit, **self.unit_style).grid(row=row, **self.unit_grid)
+        Label(self, text=text, **self.property_style).grid(row=row, column=col, **self.property_grid)
+        Label(self, textvariable = self.display[id], **self.value_style).grid(row=row, column=col+1, **self.value_grid)
+        Label(self, text=unit, **self.unit_style).grid(row=row, column=col+2,**self.unit_grid)
         return row+1
 
     def create_title(self,text,style,row):

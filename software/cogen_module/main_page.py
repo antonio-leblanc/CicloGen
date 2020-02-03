@@ -10,8 +10,8 @@ from tkinter import *
 from tkinter import ttk 
 
 
-WINDOW_TITLE = 'SSPC [1.0]'
-HEAD_TITLE = 'SOFTWARE DE SIMULAÇÂO DE PLANTAS DE COGERAÇÂO DA INDUSTRIA SUCROALCOOLEIRA [v1.0]'
+WINDOW_TITLE = 'CicloGen [1.0]'
+HEAD_TITLE = 'CICLOGEN : SIMULADOR DE PLANTAS DE COGERAÇÂO DA INDUSTRIA SUCROALCOOLEIRA [v1.0]'
 
 #############################################################################################
 ## 1)       HEAD 
@@ -46,6 +46,8 @@ class PageOne(Frame):
         self.parameters_menu = ParametersMenu(self.col_0, self)
         self.parameters_menu.grid(row=0, column=0, sticky='nw')
                 
+        button_style = {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
+        Button(self.col_0, command = lambda: self.calculate(),**button_style).grid(row=1,column=0, pady=5, sticky='ew')
         #  ------ Column 1 -----
         
         self.col_1 = Frame(self)
@@ -57,8 +59,6 @@ class PageOne(Frame):
         self.info_display = InfoDisplay(self.col_1, self)
         self.info_display.grid(row=1, column=1, sticky='nw')
         
-        button_style = {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
-        Button(self.col_1, command = lambda: self.calculate(),**button_style).grid(row=1,column=0)
 
 
         # ------ Column 2 ---------
@@ -68,7 +68,9 @@ class PageOne(Frame):
         self.result_display = ResultDisplay(self.col_2, self)
         self.result_display.grid(row=0, column=0, sticky='nw')   
         
-
+        button_style = {'text' :"Exportar Resultados",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':20}
+        Button(self.col_2, command = lambda: self.export_results(),**button_style).grid(row=1,column=0,pady=5, sticky='ew')
+        
         # --------------- Cycle Inicializaion ---------------
 
         self.cycle = Rankine_cycle()
@@ -107,6 +109,8 @@ class PageOne(Frame):
         self.canvas.set_cycle_type(cycle_type)
         self.calculate()
 
+    def export_results(self):
+        pass
 
 ##############################################################################################
 ##################                       MAIN PAGE TWO                      ##################

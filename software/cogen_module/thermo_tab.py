@@ -20,8 +20,8 @@ class ThermoTab(Frame):
         self.grid_columnconfigure(0, weight=1)
                 
         # --------------------- Styles ---------------------
-        self.title_style= {'font':'Arial 11 bold','bg':'red', 'pady':4}
-        self.sub_title_style= {'font':'Arial 10 bold','bg':'gray', 'pady':1}
+        self.title_style= {'font':'Arial 11 bold','bg':'red', 'pady':4, 'relief':'solid'}
+        self.sub_title_style= {'font':'Arial 10 bold','bg':'gray', 'pady':1, 'relief':'solid'}
 
         self.property_style= {'font':'Arial 11','anchor':'w', 'pady':2, 'padx':1}
         self.entry_style= {'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
@@ -33,11 +33,11 @@ class ThermoTab(Frame):
         self.property_grid = {'column':0 , 'sticky':'ew'}
         self.entry_grid = {'column':1}
         self.value_grid = {'column':1,'sticky':'ew'}
-        self.unit_grid = {'column':2 , 'sticky':'ew'}
+        self.unit_grid = {'column':2 , 'sticky':'ew','padx':1}
 
         # --------------------- Title ------------------------------
         self.row = 0
-        self.create_title("Parâmetros do ciclo Termodinâmico", self.title_style)
+        self.create_title("Parâmetros do Ciclo Termodinâmico", self.title_style)
         # --------------------- Tipo de ciclo ---------------------
         self.create_title('Tipo de ciclo', self.sub_title_style)
 
