@@ -2,14 +2,14 @@
 <img width="270" alt="ciclogen-software" src="https://github.com/antonio-leblanc/CicloGen/blob/master/images/ciclogen_logo1.png">
 </p>
 
-# CicloGen
+# CicloGen 
 
-CicloGen é um Software para Simulação de Plantas de Cogeração da Industria Sucroalcooleira. Ele foi desenvolvido por Antonio Leblanc, como projeto de graduação em Engenharia Mecnica na UFRJ, sob orientação do professo Sílvio Carlos Aníbal de Almeida. 
+CicloGen é um Software para **Simulação de Plantas de Cogeração da Industria Sucroalcooleira**. Ele foi desenvolvido por **Antonio Leblanc**, como projeto de graduação em **Engenharia Mecânica na Escola Politécnica da UFRJ**, sob orientação do professor **Sílvio Carlos Aníbal de Almeida**. 
 
 <img width="997" alt="ciclogen-software" src="https://github.com/antonio-leblanc/CicloGen/blob/master/images/ciclogenFull.png">
 
 
-## Prerequisitos
+## Prérequisitos
 
 - Python 3.6 (ou mais recente)
 - [pip](https://pip.pypa.io/en/stable/)
