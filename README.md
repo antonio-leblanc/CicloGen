@@ -1,5 +1,5 @@
 <p align="center">
-<img width="270" alt="ciclogen-software" src="https://github.com/antonio-leblanc/CicloGen/blob/master/images/ciclogen_logo1.png">
+<img width="212" alt="ciclogen-software" src="https://github.com/antonio-leblanc/CicloGen/blob/master/images/ciclogen_logo1.png">
 </p>
 
 # CicloGen 
