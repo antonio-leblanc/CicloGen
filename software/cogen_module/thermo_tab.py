@@ -20,7 +20,7 @@ class ThermoTab(Frame):
         self.grid_columnconfigure(0, weight=1)
                 
         # --------------------- Styles ---------------------
-        self.title_style= {'font':'Arial 11 bold','bg':'red', 'pady':4, 'relief':'solid'}
+        self.title_style= {'font':'Arial 11 bold','bg':'#5c7399', 'pady':4, 'relief':'solid'}
         self.sub_title_style= {'font':'Arial 10 bold','bg':'gray', 'pady':1, 'relief':'solid'}
 
         self.property_style= {'font':'Arial 11','anchor':'w', 'pady':2, 'padx':1}
@@ -82,12 +82,12 @@ class ThermoTab(Frame):
 
                 
         # --------------------- Eficiencias ---------------------
-        self.create_title('Eficiências', self.sub_title_style)
-        self.create_input('n_cald','Eficiência da Caldeira','%')
-        self.create_input('n_t1','Eficiência da Turbina 1','%')
-        self.create_input('n_t2','Eficiência da Turbina 2','%')
-        self.create_input('n_b1','Eficiência da Bomba 1','%')
-        self.create_input('n_b2','Eficiência da Bomba 2','%')
+        self.create_title('Eficiências dos Equipamentos', self.sub_title_style)
+        self.create_input('n_cald','Caldeira','%')
+        self.create_input('n_t1','Turbina 1','%')
+        self.create_input('n_t2','Turbina 2','%')
+        self.create_input('n_b1','Bomba 1','%')
+        self.create_input('n_b2','Bomba 2','%')
 
 
         # ------------------ Initialization -------------------

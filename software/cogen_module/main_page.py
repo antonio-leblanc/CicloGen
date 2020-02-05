@@ -8,10 +8,11 @@ from cogen_module.canvas_display import*
 
 from tkinter import *
 from tkinter import ttk 
+from tkinter import messagebox
 
 
 WINDOW_TITLE = 'CicloGen [1.0]'
-HEAD_TITLE = 'CICLOGEN : SIMULADOR DE PLANTAS DE COGERAÇÂO DA INDUSTRIA SUCROALCOOLEIRA [v1.0]'
+HEAD_TITLE = 'CICLOGEN - SIMULADOR DE PLANTAS DE COGERAÇÂO DA INDUSTRIA SUCROALCOOLEIRA'
 
 #############################################################################################
 ## 1)       HEAD 
@@ -21,7 +22,7 @@ class Head(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
 
-        self.title = Label(self, text=HEAD_TITLE,font='Helvetica 16 bold',pady=8, bg='#244AC6')
+        self.title = Label(self, text=HEAD_TITLE,font='Helvetica 16 bold',pady=8, bg='#5c855d')
         self.grid_columnconfigure(0, weight=1)
         self.title.grid(sticky='ew')
 
@@ -46,7 +47,7 @@ class PageOne(Frame):
         self.parameters_menu = ParametersMenu(self.col_0, self)
         self.parameters_menu.grid(row=0, column=0, sticky='nw')
                 
-        button_style = {'text' :"Simular",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':14}
+        button_style = {'text' :"Simular",'bd':2, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
         Button(self.col_0, command = lambda: self.calculate(),**button_style).grid(row=1,column=0, pady=5, sticky='ew')
         #  ------ Column 1 -----
         
@@ -54,10 +55,10 @@ class PageOne(Frame):
         self.col_1.grid(row=1, column=1, sticky='nw', padx=10, pady=25)
         
         self.canvas = Canvas_cycle(self.col_1, self)
-        self.canvas.grid(row=0, column=0, columnspan=2,sticky='new', pady=10)
+        self.canvas.grid(row=0, column=0, columnspan=2,sticky='new', pady=5)
 
         self.info_display = InfoDisplay(self.col_1, self)
-        self.info_display.grid(row=1, column=1, sticky='nw')
+        self.info_display.grid(row=1, column=1, sticky='nw', pady=5)
         
 
 
@@ -66,9 +67,9 @@ class PageOne(Frame):
         self.col_2.grid(row=1, column=2, sticky='nw', padx=10, pady=25)
 
         self.result_display = ResultDisplay(self.col_2, self)
-        self.result_display.grid(row=0, column=0, sticky='nw')   
+        self.result_display.grid(row=0, column=0, sticky='nw', pady=5)   
         
-        button_style = {'text' :"Exportar Resultados",'bd':2, 'cursor':'dot', 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white', 'width':20}
+        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
         Button(self.col_2, command = lambda: self.export_results(),**button_style).grid(row=1,column=0,pady=5, sticky='ew')
         
         # --------------- Cycle Inicializaion ---------------
@@ -110,7 +111,14 @@ class PageOne(Frame):
         self.calculate()
 
     def export_results(self):
-        pass
+        df_export = self.cycle.export_results()
+        print (df_export)
+        try:
+            df_export.to_excel('resultados_ciclogen.xlsx',index=False)
+            messagebox.showinfo("Export", "Os resultados foram exportados com sucesso para o arquivo : 'resultados_ciclogen.xlsx'")
+        except Exception as E:
+            messagebox.showinfo("Export", f"Erro na exportação : {E}")
+
 
 ##############################################################################################
 ##################                       MAIN PAGE TWO                      ##################

@@ -13,7 +13,7 @@ class ResultDisplay(Frame):
         self.display = {}
         
         # ---------------------- Styles ----------------------
-        self.title_style= {'bg':'#244AC6', 'font':'Arial 11 bold','pady':4, 'relief':'solid'}
+        self.title_style= {'bg':'#5c7399', 'font':'Arial 11 bold','pady':4, 'relief':'solid'}
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1, 'relief':'solid'}
         
         self.property_style= {'font':'Arial 11', 'bd':1, 'anchor':'w', 'pady':3}

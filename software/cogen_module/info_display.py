@@ -13,10 +13,10 @@ class InfoDisplay(Frame):
         self.display = {'name':StringVar(),'fluid_state':StringVar()}
 
         # ---------------------- STYLES ----------------------
-        self.title_style= {'bg':'#244AC6', 'font':'Arial 11 bold', 'pady':2, 'relief':'solid'}
+        self.title_style= {'bg':'#5c7399', 'font':'Arial 11 bold', 'pady':2, 'relief':'solid'}
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
-        self.property_style= {'font':'Arial 11' ,'anchor':'w', 'pady':3}
+        self.property_style= {'font':'Arial 11' ,'anchor':'e', 'pady':3, 'padx':2}
         self.value_style= {'font':'Arial 10','bd':1, 'width':10,'relief':SOLID, 'bg':'gray90','pady':1}
         self.unit_style= {'font':'Arial 11', 'pady':1, 'width':7}
         
@@ -59,14 +59,13 @@ class InfoDisplay(Frame):
                
     def set_state_info(self,info):
         E = info.get('E')[1:]
-        E = f'Ponto {E}'
         fluid_state = info.get('fluid_state')
-        T = info.get('T') - 273.15
-        P = info.get('P') / 1e5
-        H = info.get('H') / 1e3
-        S = info.get('S') / 1e3
-        X = info.get('X') *100
-        m = info.get('m') * 3.6        
+        T = info.get('T')
+        P = info.get('P')
+        H = info.get('H')
+        S = info.get('S')
+        X = info.get('X')
+        m = info.get('m')        
         
         self.display['name'].set(E)
         self.display['fluid_state'].set(fluid_state)
@@ -74,7 +73,7 @@ class InfoDisplay(Frame):
         self.display['P'].set(f'{P:.2f}')
         self.display['H'].set(f'{H:.2f}')
         self.display['S'].set(f'{S:.4f}')
-        self.display['X'].set(f'{X:.1f}') if X>=0 else self.display['X'].set('-')
+        self.display['X'].set(f'{X:.1f}') if type(X)==float else self.display['X'].set('-')
         self.display['m'].set(f'{m:.1f}')
   
     def set_component_info(self,info):

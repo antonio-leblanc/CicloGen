@@ -18,13 +18,13 @@ class ParametersMenu(ttk.Notebook):
         self.thermo_tab = ThermoTab(self)
         self.process_tab = ProcessTab(self)
     
-        self.add(self.thermo_tab, text = 'Ciclo')
-        self.add(self.process_tab, text = 'Processo')    
+        self.add(self.thermo_tab, text = '        Parâmetros do Ciclo            ')
+        self.add(self.process_tab, text ='        Parâmetros do Processo         ')    
 
         # self.components_tab = ComponentsTab(self)
         # self.add(self.components_tab, text = 'Componentes')
 
-
+  
  # ----------------- Geters ---------------------------
     def get_cycle_params(self):
         return self.thermo_tab.get_cycle_params()

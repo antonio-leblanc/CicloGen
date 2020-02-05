@@ -1,4 +1,5 @@
 from cogen_module.thermo_classes import *
+import pandas as pd
 
 #############################################################################################
 ################################## DEFININDO O CICLO EM QUESTAO #############################
@@ -184,8 +185,51 @@ class Rankine_cycle:
     
     
     def get_state_info(self,state):
-        return self.estados[state].get_info()
+        info = self.estados[state].get_info()
+        info['T'] = info['T'] - 273.15   #[ºC]
+        info['P'] = info['P'] / 1e5      #[bar]
+        info['H'] = info['H'] / 1e3      #[kj/kg]
+        info['S'] = info['S'] / 1e3      #[kj/kgK]
+        info['m'] = info['m'] * 3.6      #[t/h]
+        info['X'] = info['X'] *100 if info['X'] >=0 else '-'   #[%]
+        return info
+
     
     def get_component_info(self,component):
         return self.componentes[component].get_info()
+
+    def export_results(self):
+        T_list = []
+        P_list = []
+        H_list = []
+        S_list = []
+        X_list = []
+        m_list = []
+        fluid_state_list = []
+         
+        for state_num in range (1,17):
+            state = f'E{state_num}'
+            info = self.get_state_info(state)
+
+            T_list.append(info['T'])
+            P_list.append(info['P'])
+            H_list.append(info['H'])
+            S_list.append(info['S'])
+            X_list.append(info['X'])
+            m_list.append(info['m'])
+            fluid_state_list.append(info['fluid_state'])
+        
+        dic_export = { 
+            'Ponto do Ciclo' : list(range (1,17)),
+            'Vazão [ton/h]' : m_list,
+            'T [ºC]'     : T_list,
+            'P [bar]'    : P_list,
+            'H [kJ/kg]'  : H_list,
+            'S [kJ/kgK]' : S_list,
+            'Estado da água' : fluid_state_list,
+            'X [%]'      : X_list
+        }
+            
+        df_export = pd.DataFrame(data=dic_export)
+        return df_export
 

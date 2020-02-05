@@ -14,7 +14,7 @@ class ProcessTab(Frame):
         self.grid_columnconfigure(0, weight=1)
 
         # --------------------- Styles ---------------------
-        self.title_style= {'bg':'red', 'font':'Arial 11 bold', 'pady':4, 'relief':'solid'}
+        self.title_style= {'bg':'#5c7399', 'font':'Arial 11 bold', 'pady':4, 'relief':'solid'}
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1, 'relief':'solid'}
         
         self.property_style= {'font':'Arial 11', 'anchor':'w', 'pady':3}
@@ -30,7 +30,7 @@ class ProcessTab(Frame):
         
         # --------------------- Title ------------------------------
         self.row = 0
-        self.create_title("Dados do Processo Industrial",self.title_style,self.title_grid)
+        self.create_title("Parâmetros do Processo Industrial",self.title_style,self.title_grid)
         
         # --------------------- Safra ---------------------
         self.create_title("Capacidade de produção",self.sub_title_style,self.title_grid)
