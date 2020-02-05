@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-import cogen_module.init_values as init_values
+import ciclogen_module.init_values as init_values
 
 #############################################################################################
 

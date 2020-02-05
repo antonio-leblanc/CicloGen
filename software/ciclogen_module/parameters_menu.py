@@ -1,9 +1,9 @@
 from tkinter import *
 from tkinter import ttk 
 
-from cogen_module.components_tab import *
-from cogen_module.process_tab import *
-from cogen_module.thermo_tab import *
+from ciclogen_module.components_tab import *
+from ciclogen_module.process_tab import *
+from ciclogen_module.thermo_tab import *
 
 ############################################################################################
 #    PARAMETERS MENU 

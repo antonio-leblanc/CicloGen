@@ -1,4 +1,4 @@
-from cogen_module.thermo_classes import *
+from ciclogen_module.thermo_classes import *
 import pandas as pd
 
 #############################################################################################

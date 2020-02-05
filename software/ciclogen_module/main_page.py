@@ -1,10 +1,10 @@
 
-from cogen_module.parameters_menu import *
-from cogen_module.thermo_cycle import *
+from ciclogen_module.parameters_menu import *
+from ciclogen_module.thermo_cycle import *
 
-from cogen_module.result_display import *
-from cogen_module.info_display import *
-from cogen_module.canvas_display import*
+from ciclogen_module.result_display import *
+from ciclogen_module.info_display import *
+from ciclogen_module.canvas_display import*
 
 from tkinter import *
 from tkinter import ttk 
