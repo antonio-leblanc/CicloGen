@@ -35,9 +35,9 @@ class ResultDisplay(Frame):
         
         self.create_display('Wb','Potência consumida pelas bombas','kW')
         self.create_display('w_outros_equip','Potência consumida pela planta','kW')
-        self.create_display('Wt','Potência gerada pelas Turbinas','kW')
+        self.create_display('Wt','Potência gerada pelas turbinas','kW')
         self.create_display('w_excedente','Excedente comercializável','kW')
-        self.create_display('w_exc_esp','Capacidade de geração de energia','kWh/ton')
+        self.create_display('w_exc_esp','Capacidade de geração de eletricidade','kWh/ton')
         
         # ---------------------- Energia Térmica ----------------------
         self.create_title('Energia Térmica', self.sub_title_style)
@@ -52,12 +52,12 @@ class ResultDisplay(Frame):
         
 
         # # ---------------------- Indices de desempenho ----------------------
-        self.create_title('Indices de desempenho', self.sub_title_style)
-        self.create_display('n_th','Eficiência Térmica Global','%')
-        self.create_display('FUE','Fator de utilização de Energia - FUE','%')
-        self.create_display('IPE','Índice de Poupança de Energia - IPE','%')
-        self.create_display('IGP','Indice de geração de Potência - IGP','%')
-        self.create_display('RPC','Relação Potência Calor - RCP','%')
+        self.create_title('Indicadores de desempenho', self.sub_title_style)
+        self.create_display('n_th','Eficiência térmica global','%')
+        self.create_display('FUE','Fator de utilização de energia - FUE','%')
+        self.create_display('IPE','Índice de poupança de energia - IPE','%')
+        self.create_display('IGP','Indice de geração de potência - IGP','%')
+        self.create_display('RPC','Relação potência calor - RCP','%')
         
         
     def set_results(self, results):

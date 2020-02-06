@@ -4,7 +4,7 @@ import ciclogen_module.init_values as init_values
 
 process_inputs = init_values.dourados_process_inputs
 
-class ProcessTab(Frame):
+class ProcessParamsTab(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
         self.parent = parent
@@ -33,7 +33,7 @@ class ProcessTab(Frame):
         self.create_title("Parâmetros do Processo Industrial",self.title_style,self.title_grid)
         
         # --------------------- Safra ---------------------
-        self.create_title("Capacidade de produção",self.sub_title_style,self.title_grid)
+        self.create_title("Capacidade de Produção",self.sub_title_style,self.title_grid)
 
         self.create_input('capacidade_moagem_h','Capacidade de moagem por hora','t.cana/h')
         self.create_display('capacidade_moagem_d','Capacidade de moagem por dia','t.cana/dia')
@@ -47,14 +47,14 @@ class ProcessTab(Frame):
         self.create_input('fracao_bagaco_cana',"Fração de bagaço seco na cana",'%')
         self.create_display('m_bag_tot',"Produção total de bagaço",'t.bag/h')
         self.create_input('pci_bagaco',"PCI do bagaço",'kJ/kg')
-        self.create_display('mPCI_disp',"Energia disponível - Base PCI",'KW')
+        self.create_display('mPCI_disp',"Energia disponível - base PCI",'KW')
         
         # --------------------- Energia disp ---------------------
         
         self.create_title("Demanda Energética do Processo",self.sub_title_style,self.title_grid)
         
-        self.create_input('consumo_vapor',"Consumo de vapor no processo",'kg/t.cana')
-        self.create_display('vazao_vapor',"Vazão de vapor necessária no processo",'t.vapor/h')
+        self.create_input('consumo_vapor',"Consumo de vapor no processo",'kg.vap/t.cana')
+        self.create_display('vazao_vapor',"Vazão de vapor necessária no processo",'t.vap/h')
         self.create_input('t_saida_processo',"Temperatura de saída do vapor de processo",'ºC')
         self.create_input('demanda_mecanica_equip',"Demanda energética mecânica específica",'kWh/t.cana')
         self.create_input('demanda_eletrica_equip',"Demanda energética elétrica específica",'kWh/t.cana')

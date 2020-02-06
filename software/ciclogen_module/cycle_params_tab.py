@@ -10,7 +10,7 @@ TITULO_CICLO_2 = 'Ciclo B : Turbina de extração-condensação'
 cycle_inputs = init_values.dourados_cycle_inputs
 #############################################################################################
 
-class ThermoTab(Frame):
+class CycleParamsTab(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
 
@@ -39,7 +39,7 @@ class ThermoTab(Frame):
         self.row = 0
         self.create_title("Parâmetros do Ciclo Termodinâmico", self.title_style)
         # --------------------- Tipo de ciclo ---------------------
-        self.create_title('Tipo de ciclo', self.sub_title_style)
+        self.create_title('Tipo de Ciclo', self.sub_title_style)
 
         self.cycle_type = StringVar()
         cycle_opts = [TITULO_CICLO_1, TITULO_CICLO_2]
@@ -49,7 +49,7 @@ class ThermoTab(Frame):
         # --------------------- Temperaturas ---------------------
         self.create_title('Temperaturas', self.sub_title_style)
         
-        self.create_input('t1','(1) - Saida da Caldeira','°C')
+        self.create_input('t1','(1) - Temperatura de saida da caldeira','°C')
         self.create_input('delta_t','Perda de temperatura entre os pontos (1) e (2)','°C')
 
 
@@ -65,7 +65,7 @@ class ThermoTab(Frame):
         # --------------------- Vazões ---------------------
         self.create_title('Vazões', self.sub_title_style)
         self.create_input('m1','(1) - Vazão total do ciclo','ton/h')
-        self.create_display('vazao_max_disponivel','Capacidade de geração de vapor - Base PCI','ton/h')
+        self.create_display('vazao_max_disponivel','Capacidade de geração de vapor - base PCI','ton/h')
         
         self.label_vazao_2_4 = StringVar()
         Label(self, textvariable =self.label_vazao_2_4, **self.property_style).grid(row=self.row, **self.property_grid)
@@ -74,8 +74,8 @@ class ThermoTab(Frame):
         self.inputs['f2_10'].grid(row=self.row,column=1)
         self.row+=1
         
-        self.create_input('f14','(14) - Fração de (10) enviada ao Desaerador','%')
-        self.create_input('f9','(9) - Fração de (7) enviada ao Dessuperaquecedor','%')
+        self.create_input('f14','(14) - Fração de (10) enviada ao desaerador','%')
+        self.create_input('f9','(9) - Fração de (7) enviada ao dessuperaquecedor','%')
         
         self.create_display('vazao_necessaria_processo','Vazão necessária no processo','ton/h')
         self.create_display('vazao_disponivel_processo','Vazão disponível no processo','ton/h')
@@ -83,11 +83,11 @@ class ThermoTab(Frame):
                 
         # --------------------- Eficiencias ---------------------
         self.create_title('Eficiências dos Equipamentos', self.sub_title_style)
-        self.create_input('n_cald','Caldeira','%')
-        self.create_input('n_t1','Turbina 1','%')
-        self.create_input('n_t2','Turbina 2','%')
-        self.create_input('n_b1','Bomba 1','%')
-        self.create_input('n_b2','Bomba 2','%')
+        self.create_input('n_cald','Eficiência da caldeira','%')
+        self.create_input('n_t1','Eficiência da turbina 1','%')
+        self.create_input('n_t2','Eficiência da turbina 2','%')
+        self.create_input('n_b1','Eficiência da bomba 1','%')
+        self.create_input('n_b2','Eficiência da bomba 2','%')
 
 
         # ------------------ Initialization -------------------
@@ -125,9 +125,9 @@ class ThermoTab(Frame):
 
     def set_cycle_type(self, cycle_config):
         if cycle_config == 1:
-            self.label_vazao_2_4.set('(2) - Fração de (1) enviada a Turbina 1')
+            self.label_vazao_2_4.set('(2) - Fração de (1) enviada a turbina 1')
         else:
-            self.label_vazao_2_4.set('(10) - Fração de extração da Turbina')
+            self.label_vazao_2_4.set('(10) - Fração de extração da turbina')
 
     def set_inputs(self, inputs_dict):
         for key,value in inputs_dict.items():

@@ -4,11 +4,12 @@ from ciclogen_module.thermo_cycle import *
 
 from ciclogen_module.result_display import *
 from ciclogen_module.info_display import *
-from ciclogen_module.canvas_display import*
+from ciclogen_module.cycle_canvas_display import*
 
 from tkinter import *
 from tkinter import ttk 
 from tkinter import messagebox
+from os import path
 
 
 WINDOW_TITLE = 'CicloGen [1.0]'
@@ -81,19 +82,21 @@ class PageOne(Frame):
         self.show_component_info('Caldeira')
     
     def calculate(self):
-        # Get parameters
-        cycle_parameters = self.parameters_menu.get_cycle_params()
-        process_parameters = self.parameters_menu.get_process_params()
-        # component_parameters = self.parameters_menu.get_components_params()
-        
-        #Cycle Calculations
-        self.cycle.calculate(cycle_parameters,process_parameters)
-        cycle_results = self.cycle.get_results()
+        try:
+            # Get parameters
+            cycle_parameters = self.parameters_menu.get_cycle_params()
+            process_parameters = self.parameters_menu.get_process_params()
+            
+            #Cycle Calculations
+            self.cycle.calculate(cycle_parameters,process_parameters)
+            cycle_results = self.cycle.get_results()
 
-        #Use results
-        self.parameters_menu.set_results(cycle_results)
-        self.result_display.set_results(cycle_results)
+            #Use results
+            self.parameters_menu.set_results(cycle_results)
+            self.result_display.set_results(cycle_results)
     
+        except Exception as E:
+            messagebox.showerror("Erro", f"Um erro foi identificado :\n{E}")
     def show_state_info(self,estado):
         info = self.cycle.get_state_info(estado)
         info['E'] = estado
@@ -112,9 +115,9 @@ class PageOne(Frame):
 
     def export_results(self):
         df_export = self.cycle.export_results()
-        print (df_export)
+        # print (df_export)
         try:
-            df_export.to_excel('resultados_ciclogen.xlsx',index=False)
+            df_export.to_excel(path.join(sys.path[0],'resultados_ciclogen.xlsx'),index=False)
             messagebox.showinfo("Export", "Os resultados foram exportados com sucesso para o arquivo : 'resultados_ciclogen.xlsx'")
         except Exception as E:
             messagebox.showinfo("Export", f"Erro na exportação : {E}")
