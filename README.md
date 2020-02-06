@@ -42,8 +42,8 @@ O **link** estará disponível em breve.
 
 ## Uso do Software
 
-CicloGen é um software OpenSource (Software livre) sob a **Licença Pública Geral GNU** [GNU General Public License v3.0](https://www.gnu.org/licenses/quick-guide-gplv3.html).
-Em termos gerais a licensa baseia-se em 4 liberdades:
+CicloGen é um software OpenSource (Software livre) sob a **Licença Pública Geral GNU** ([GNU General Public License v3.0](https://www.gnu.org/licenses/quick-guide-gplv3.html)).
+Em termos gerais a licença baseia-se em 4 liberdades:
 1. A liberdade de executar o programa, para qualquer propósito
 1. A liberdade de estudar como o programa funciona e adaptá-lo às suas necessidades.
 1. A liberdade de redistribuir cópias de modo que você possa ajudar ao seu próximo.
