@@ -11,7 +11,7 @@ CicloGen é um Software para **Simulação de Plantas de Cogeração da Industri
 
 ## Prérequisitos
 
-- Python 3.6 (ou mais recente)
+- [Python 3.6](https://www.python.org/) (ou mais recente)
 - [Pip](https://pip.pypa.io/en/stable/)
 - [CoolProp](http://www.coolprop.org/) ==6.3.0 (ou mais recente)
 - [Pandas](https://pypi.org/project/pandas/) ==0.25.3 (ou mais recente)
