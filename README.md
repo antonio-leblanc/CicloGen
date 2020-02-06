@@ -31,7 +31,15 @@ pip install -r requirements.txt
 ```
 python ciclogen_software_run.py
 ```
+## Modo Operacional
+
+O software e suas funcionalidades estão detalhados no Projeto Final de Graduação 
+```
+DESENVOLVIMENTO DE UM SOFTWARE PARA SIMULAÇÃO DEPLANTAS DE COGERAÇÃO DE ENERGIA DO SETOR SUCROALCOOLEIRO
+```
+por Antonio Leblanc.
+O **link** estará disponível em breve.
+
 ## Uso do Software
 
-O software e seu modo de uso esto explicados em detalhes no Projeto Final de Graduação *DESENVOLVIMENTO DE UM SOFTWARE PARA SIMULAÇÃO DEPLANTAS DE COGERAÇÃO DE ENERGIA DO SETOR SUCROALCOOLEIRO* por Antonio Leblanc.
-O **link** estará disponível em breve.
+CicloGen é um software OpenSource (Software livre) sob a **Licença Pública Geral GNU** [GNU General Public License v3.0](https://www.gnu.org/licenses/quick-guide-gplv3.html)
