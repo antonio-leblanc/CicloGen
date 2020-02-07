@@ -4,7 +4,7 @@
 
 # CicloGen 
 
-CicloGen é um Software para **Simulação de Plantas de Cogeração da Industria Sucroalcooleira**. Ele foi desenvolvido por [Antonio Leblanc]("https://www.linkedin.com/in/antonio-leblanc/"), como projeto de graduação em **Engenharia Mecânica na Escola Politécnica da UFRJ**, sob orientação do professor [Sĺlvio Carlos Aníbal de Almeida](http://www.mecanica.ufrj.br/ufrj-em/index.php?option=com_content&view=article&id=90:silvio-carlos-anibal-de-almeida&catid=36&Itemid=148&lang=pt")
+CicloGen é um Software para **Simulação de Plantas de Cogeração da Industria Sucroalcooleira**. Ele foi desenvolvido por <a href="https://www.linkedin.com/in/antonio-leblanc/">Antonio Leblanc</a>, como projeto de graduação em **Engenharia Mecânica na Escola Politécnica da UFRJ**, sob orientação do professor [Sĺlvio Carlos Aníbal de Almeida](http://www.mecanica.ufrj.br/ufrj-em/index.php?option=com_content&view=article&id=90:silvio-carlos-anibal-de-almeida&catid=36&Itemid=148&lang=pt")
 
 <img width="997" alt="ciclogen-software" src="https://github.com/antonio-leblanc/CicloGen/blob/master/images/ciclogenFull.png">
 
