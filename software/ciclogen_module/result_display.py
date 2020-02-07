@@ -33,22 +33,26 @@ class ResultDisplay(Frame):
         # ---------------------- Energia Elétrica ----------------------
         self.create_title('Energia Elétrica - Mecânica', self.sub_title_style)
         
+        self.create_display('Wt','Potência gerada pelas turbinas','kW')
         self.create_display('Wb','Potência consumida pelas bombas','kW')
         self.create_display('w_outros_equip','Potência consumida pela planta','kW')
-        self.create_display('Wt','Potência gerada pelas turbinas','kW')
         self.create_display('w_excedente','Excedente comercializável','kW')
-        self.create_display('w_exc_esp','Capacidade de geração de eletricidade','kWh/ton')
         
         # ---------------------- Energia Térmica ----------------------
         self.create_title('Energia Térmica', self.sub_title_style)
         
         self.create_display('Qh','Calor fornecido a caldeira','kW')
-        self.create_display('m_bag_cald','Bagaço consumido na caldeira','ton/h')
-        self.create_display('m_bag_tot','Bagaço total produzido','ton/h')
-        self.create_display('m_bag_exc','Bagaço excedente','ton/h')
-
         self.create_display('Qp','Calor útil fornecido ao processo','kW')
         self.create_display('Ql','Calor cedido ao condensador','kW')
+        
+        # ---------------------- Consumo de bagaço ----------------------
+        self.create_title('Aproveitamento do Bagaço', self.sub_title_style)
+
+
+        self.create_display('m_bag_tot','Bagaço total produzido','ton/h')
+        self.create_display('m_bag_cald','Bagaço consumido na caldeira','ton/h')
+        self.create_display('m_bag_exc','Bagaço excedente - vazão mássica','ton/h')
+        self.create_display('bag_exc_safra','Bagaço excedente - safra','ton/safra')
         
 
         # # ---------------------- Indices de desempenho ----------------------
@@ -58,6 +62,8 @@ class ResultDisplay(Frame):
         self.create_display('IPE','Índice de poupança de energia - IPE','%')
         self.create_display('IGP','Indice de geração de potência - IGP','%')
         self.create_display('RPC','Relação potência calor - RCP','%')
+        self.create_display('w_exc_esp','Capacidade de geração de eletricidade','kWh/ton')
+
         
         
     def set_results(self, results):
@@ -81,25 +87,27 @@ class ResultDisplay(Frame):
         m_bag_cald = results.get('m_bag_cald')
         m_bag_tot = results.get('m_bag_tot')
         m_bag_exc = results.get('m_bag_exc')
+        bag_exc_safra = results.get('bag_exc_safra')
 
-        self.set_kdisplay('Wb',Wb)
-        self.set_kdisplay('Wt',Wt)
-        self.set_kdisplay('Qh',Qh)
-        self.set_kdisplay('Ql',Ql)
-        self.set_kdisplay('Qp',Qp)
+        self.set_display_k('Wb',Wb)
+        self.set_display_k('Wt',Wt)
+        self.set_display_k('Qh',Qh)
+        self.set_display_k('Ql',Ql)
+        self.set_display_k('Qp',Qp)
         
-        self.set_kdisplay('w_exc_esp',w_exc_esp)
-        self.set_kdisplay('w_outros_equip',w_outros_equip)
-        self.set_kdisplay('w_excedente',w_excedente)
-        self.set_kdisplay('m_bag_cald',m_bag_cald)
-        self.set_kdisplay('m_bag_tot',m_bag_tot)
-        self.set_kdisplay('m_bag_exc',m_bag_exc)
+        self.set_display_k('w_exc_esp',w_exc_esp)
+        self.set_display_k('w_outros_equip',w_outros_equip)
+        self.set_display_k('w_excedente',w_excedente)
+        self.set_display_1f('m_bag_cald',m_bag_cald)
+        self.set_display_1f('m_bag_tot',m_bag_tot)
+        self.set_display_1f('m_bag_exc',m_bag_exc)
+        self.set_display_k('bag_exc_safra',bag_exc_safra)
         
-        self.set_pctdisplay('n_th',n_th)
-        self.set_pctdisplay('FUE',FUE)
-        self.set_pctdisplay('IPE',IPE)
-        self.set_pctdisplay('IGP',IGP)
-        self.set_pctdisplay('RPC',RPC)
+        self.set_display_2f('n_th',n_th)
+        self.set_display_2f('FUE',FUE)
+        self.set_display_2f('IPE',IPE)
+        self.set_display_2f('IGP',IGP)
+        self.set_display_2f('RPC',RPC)
 
 
 # # ---------------------- Frontend ----------------------
@@ -115,8 +123,11 @@ class ResultDisplay(Frame):
         Label(self, text=text, **style).grid(row=self.row, **self.title_grid)
         self.row+=1
 
-    def set_kdisplay(self,id,value):
+    def set_display_k(self,id,value):
         self.display[id].set(f'{value:,.0f}'.replace(',',' '))
 
-    def set_pctdisplay(self,id,value):
+    def set_display_1f(self,id,value):
+        self.display[id].set(f'{value:.1f}')
+
+    def set_display_2f(self,id,value):
         self.display[id].set(f'{value:.2f}')

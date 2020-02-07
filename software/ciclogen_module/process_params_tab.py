@@ -111,6 +111,7 @@ class ProcessParamsTab(Frame):
 
     def get_process_params(self):
         capacidade_moagem_h = self.get_input('capacidade_moagem_h') /3.6  # [kg/s]       
+        dias_operacao = self.get_input('dias_operacao')                   # [dias/ano]       
         mPCI_disp = self.get_display('mPCI_disp')*1e3                     # [W]
         potencia_demandada = self.get_display('potencia_demandada')*1e3   # [W]
         t_saida_processo   =  self.get_input('t_saida_processo') + 273.15 # [K]
@@ -122,6 +123,7 @@ class ProcessParamsTab(Frame):
         process_params = {
             'mPCI_disp':mPCI_disp,
             'capacidade_moagem_h':capacidade_moagem_h,
+            'dias_operacao':dias_operacao,
             't_saida_processo':t_saida_processo,
             'vazao_necessaria_processo':vazao_vapor,
             'potencia_demandada':potencia_demandada,

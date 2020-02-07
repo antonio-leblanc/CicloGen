@@ -130,6 +130,7 @@ class Rankine_cycle:
         vazao_disponivel_processo = self.estados['E13'].get_m()  *3.6                   #[ton/h]
         m_bag_tot = self.process_p['m_bag_tot']  *3.6                                   #[ton/h]
         capacidade_moagem_h = self.process_p['capacidade_moagem_h'] *3.6                #[ton/h]
+        dias_operacao = self.process_p['dias_operacao']                                 #[dias/ano]
         
         mPCI_disp = self.process_p['mPCI_disp']                                         #[W]
         PCI = self.process_p['PCI']                                                     #[kJ/kg]
@@ -150,6 +151,7 @@ class Rankine_cycle:
         
         m_bag_cald = (mPCI / PCI) *3.6           #[ton/h]
         m_bag_exc = m_bag_tot - m_bag_cald
+        bag_exc_safra = m_bag_exc*24*dias_operacao
 
         FUE =  (Wt+Qp) / mPCI          *100
         IGP = Wt / (mPCI - Qp/n_cald)  *100
@@ -179,24 +181,20 @@ class Rankine_cycle:
             'vazao_max_disponivel':vazao_max_disponivel,
             'm_bag_cald':m_bag_cald,
             'm_bag_tot':m_bag_tot,
-            'm_bag_exc':m_bag_exc }
+            'm_bag_exc':m_bag_exc,
+            'bag_exc_safra':bag_exc_safra }
         
         return results
     
-    
-    def get_state_info(self,state):
-        info = self.estados[state].get_info()
-        info['T'] = info['T'] - 273.15   #[ºC]
-        info['P'] = info['P'] / 1e5      #[bar]
-        info['H'] = info['H'] / 1e3      #[kj/kg]
-        info['S'] = info['S'] / 1e3      #[kj/kgK]
-        info['m'] = info['m'] * 3.6      #[t/h]
-        info['X'] = info['X'] *100 if info['X'] >=0 else '-'   #[%]
-        return info
-
-    
-    def get_component_info(self,component):
-        return self.componentes[component].get_info()
+    def get_state_prop(self,state):
+        prop = self.estados[state].get_prop()
+        prop['T'] = prop['T'] - 273.15   #[ºC]
+        prop['P'] = prop['P'] / 1e5      #[bar]
+        prop['H'] = prop['H'] / 1e3      #[kj/kg]
+        prop['S'] = prop['S'] / 1e3      #[kj/kgK]
+        prop['m'] = prop['m'] * 3.6      #[t/h]
+        prop['X'] = prop['X'] *100 if prop['X'] >=0 else '-'   #[%]
+        return prop
 
     def export_results(self):
         T_list = []
@@ -209,7 +207,7 @@ class Rankine_cycle:
          
         for state_num in range (1,17):
             state = f'E{state_num}'
-            info = self.get_state_info(state)
+            info = self.get_state_prop(state)
 
             T_list.append(info['T'])
             P_list.append(info['P'])

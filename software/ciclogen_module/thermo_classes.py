@@ -35,7 +35,7 @@ class State:
     def set_m(self,m):
         self.m = m
         
-    def get_info(self):
+    def get_prop(self):
         return {'T':self.get_T(),'P':self.get_P(),'H':self.get_H(),'S':self.get_S(),
                'X':self.get_Q(),'m':self.get_m(),'fluid_state':self.get_fluid_state()}
     

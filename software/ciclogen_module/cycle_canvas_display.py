@@ -276,17 +276,12 @@ class Canvas_cycle(Canvas):
     def click(self,event):
         item = self.find_closest(event.x, event.y)
         tags = self.gettags(item)
-        estados = [f'E{i}' for i in range(1,19)]
-        componentes = ['Caldeira','T1','T2','T3','B1','B2','M1','M2','Dessup','Desaerador','Condensador','Processo']
         
+        estados = [f'E{i}' for i in range(1,19)]
         estado = list(set(tags)&set(estados))
-        componente = list(set(tags)&set(componentes))
+        
         if estado:
-            # print (estado) 
-            self.master.show_state_info(estado[0])
-        else:
-            # print(componente)
-            self.master.show_component_info(componente[0])
+            self.master.set_info_display_state(estado[0])
 
     def set_cycle_type(self,cycle_type):
         if cycle_type == 1:

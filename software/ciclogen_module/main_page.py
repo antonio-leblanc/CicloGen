@@ -76,10 +76,8 @@ class PageOne(Frame):
         # --------------- Cycle Inicializaion ---------------
 
         self.cycle = Rankine_cycle()
-        # self.calculate()
         self.update_cycle()
-        self.show_state_info('E1')
-        self.show_component_info('Caldeira')
+        
     
     def calculate(self):
         try:
@@ -94,17 +92,21 @@ class PageOne(Frame):
             #Use results
             self.parameters_menu.set_results(cycle_results)
             self.result_display.set_results(cycle_results)
-    
+            self.show_state_prop()
+
         except Exception as E:
             messagebox.showerror("Erro", f"Um erro foi identificado :\n{E}")
-    def show_state_info(self,estado):
-        info = self.cycle.get_state_info(estado)
-        info['E'] = estado
-        self.info_display.set_state_info(info)
     
-    def show_component_info(self,component):
-        info = self.cycle.get_component_info(component)
-        self.info_display.set_component_info(info)
+    def set_info_display_state(self,estado):
+        self.info_display.set_state(estado)
+        self.show_state_prop()
+    
+    def show_state_prop(self):
+        state = self.info_display.get_state()
+        prop = self.cycle.get_state_prop(state)
+        prop['E'] = state
+        self.info_display.set_state_prop(prop)
+    
     
     def update_cycle(self):
         cycle_type = self.parameters_menu.get_cycle_type()
