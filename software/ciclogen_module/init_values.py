@@ -44,9 +44,9 @@ dourados_cycle_inputs = {
     'f2_10': '82.27',
     'f14': '3.3',
     'f9': '0',
-    'n_cald': '85' ,
-    'n_t1': '80',
-    'n_t2': '80',
+    'n_cald': 77 ,
+    'n_t1': 84.4,
+    'n_t2': 84.4,
     'n_b1': '75',
     'n_b2': '75' 
     }
@@ -54,12 +54,12 @@ dourados_cycle_inputs = {
 dourados_process_inputs = {
     'capacidade_moagem_h':416.66,
     'dias_operacao':225,
-    'fracao_bagaco_cana':24.8,
+    'fracao_bagaco_cana':24.73 ,
     'pci_bagaco':7736,
     'consumo_vapor':420,
     't_saida_processo':127.4,
     'demanda_mecanica_equip':15,
-    'demanda_eletrica_equip':12
+    'demanda_eletrica_equip':12.5
 }
 
 #  ------------------ passolongo ------------------------
@@ -95,5 +95,5 @@ passolongo_process_inputs = {
 
 # ------------ ESCOLHA DOS DADOS USADOS PARA INICIAR O CICLO ----------------
 
-process_inputs = passolongo_process_inputs
 cycle_inputs = passolongo_cycle_inputs
+process_inputs = passolongo_process_inputs

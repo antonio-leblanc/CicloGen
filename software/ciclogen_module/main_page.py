@@ -121,8 +121,10 @@ class PageOne(Frame):
         df_export = self.cycle.export_results()
         # print (df_export)
         try:
-            df_export.to_excel(path.join(sys.path[0],'resultados_ciclogen.xlsx'),index=False)
-            messagebox.showinfo("Export", "Os resultados foram exportados com sucesso para o arquivo : 'resultados_ciclogen.xlsx'")
+            export_path = path.join(sys.path[0],'resultados_ciclogen.xlsx')
+            df_export.to_excel(export_path,index=False)
+            messagebox.showinfo("Export", f"Os resultados foram exportados com sucesso para o arquivo : 'resultados_ciclogen.xlsx'\n" 
+                              f"No endereço : {sys.path[0]}")
         except Exception as E:
             messagebox.showinfo("Export", f"Erro na exportação : {E}")
 
