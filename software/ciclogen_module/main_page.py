@@ -50,6 +50,7 @@ class PageOne(Frame):
                 
         button_style = {'text' :"Simular",'bd':2, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
         Button(self.col_0, command = lambda: self.calculate(),**button_style).grid(row=1,column=0, pady=5, sticky='ew')
+        
         #  ------ Column 1 -----
         
         self.col_1 = Frame(self)
@@ -61,7 +62,6 @@ class PageOne(Frame):
         self.info_display = InfoDisplay(self.col_1, self)
         self.info_display.grid(row=1, column=1, sticky='nw', pady=5)
         
-
 
         # ------ Column 2 ---------
         self.col_2 = Frame(self)

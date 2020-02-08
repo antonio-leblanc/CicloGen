@@ -33,7 +33,9 @@ class ResultDisplay(Frame):
         # ---------------------- Energia Elétrica ----------------------
         self.create_title('Energia Elétrica - Mecânica', self.sub_title_style)
         
-        self.create_display('Wt','Potência gerada pelas turbinas','kW')
+        self.create_display('Wt1','Potência gerada pela turbina 1','kW')
+        self.create_display('Wt2','Potência gerada pela turbina 2','kW')
+        self.create_display('Wt','Potência total gerada','kW')
         self.create_display('Wb','Potência consumida pelas bombas','kW')
         self.create_display('w_outros_equip','Potência consumida pela planta','kW')
         self.create_display('w_excedente','Excedente comercializável','kW')
@@ -68,8 +70,10 @@ class ResultDisplay(Frame):
         
     def set_results(self, results):
         # print (results)
-        Wb = results.get('Wb')
         Wt = results.get('Wt')
+        Wt1 = results.get('Wt1')
+        Wt2 = results.get('Wt2')
+        Wb = results.get('Wb')
         Qh = results.get('Qh')
         Ql = results.get('Ql')
         Qp = results.get('Qp')
@@ -89,8 +93,10 @@ class ResultDisplay(Frame):
         m_bag_exc = results.get('m_bag_exc')
         bag_exc_safra = results.get('bag_exc_safra')
 
-        self.set_display_k('Wb',Wb)
+        self.set_display_k('Wt1',Wt1)
+        self.set_display_k('Wt2',Wt2)
         self.set_display_k('Wt',Wt)
+        self.set_display_k('Wb',Wb)
         self.set_display_k('Qh',Qh)
         self.set_display_k('Ql',Ql)
         self.set_display_k('Qp',Qp)

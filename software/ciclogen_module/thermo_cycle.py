@@ -141,9 +141,11 @@ class Rankine_cycle:
         delta_h_cald = self.estados['E1'].get_H() - self.estados['E16'].get_H()   #[kJ/kg]
         vazao_max_disponivel = mPCI_disp/delta_h_cald*n_cald *3.6    #[t.vapor/h]
         
+        Wt1 = self.componentes['T1'].get_work() / 1000                                      #[kW]
+        Wt2 = self.componentes['T2'].get_work() / 1000                                      #[kW]
+        Wt = Wt1 + Wt2
 
         Wb = (self.componentes['B1'].get_work() + self.componentes['B2'].get_work()) /1000  #[kW]
-        Wt = (self.componentes['T1'].get_work() + self.componentes['T2'].get_work()) /1000  #[kW]
         Qp = (self.componentes['Processo'].get_Q()) /1000                                   #[kW]
         Ql = (self.componentes['Condensador'].get_Ql()) /1000                               #[kW]           
         mPCI = (self.componentes['Caldeira'].get_Qh()) /1000                                #[kW]
@@ -163,8 +165,10 @@ class Rankine_cycle:
         w_exc_esp = w_excedente/capacidade_moagem_h      #[kWh/ton]
 
         results = {
-            'Wb':Wb,
             'Wt':Wt,
+            'Wt1':Wt1,
+            'Wt2':Wt2,
+            'Wb':Wb,
             'Qp':Qp,
             'Qh':mPCI,
             'Ql':Ql,

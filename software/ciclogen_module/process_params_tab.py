@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import ciclogen_module.init_values as init_values
 
-process_inputs = init_values.dourados_process_inputs
+process_inputs = init_values.process_inputs
 
 class ProcessParamsTab(Frame):
     def __init__(self, parent):
@@ -94,7 +94,7 @@ class ProcessParamsTab(Frame):
 
         self.set_kdisplay('capacidade_moagem_d',capacidade_moagem_d)
         self.set_kdisplay('capacidade_moagem_safra',capacidade_moagem_safra)
-        self.set_kdisplay('m_bag_tot',m_bag_tot)
+        self.set_display_1f('m_bag_tot',m_bag_tot)
         self.set_kdisplay('mPCI_disp',mPCI_disp)
         self.set_kdisplay('vazao_vapor',vazao_vapor)
         self.set_kdisplay('potencia_demandada',potencia_demandada)
@@ -105,7 +105,8 @@ class ProcessParamsTab(Frame):
     
     def set_kdisplay(self,id,value):
         self.displays[id].set(f'{value:,.0f}'.replace(',',' '))
-
+    def set_display_1f(self,id,value):
+        self.displays[id].set(f'{value:,.1f}')
 
 #--------------------------Geters------------------------------------#
 

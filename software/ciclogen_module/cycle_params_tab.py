@@ -7,7 +7,7 @@ import ciclogen_module.init_values as init_values
 TITULO_CICLO_1 = 'Ciclo A : Turbinas de contrapressão e condensação'
 TITULO_CICLO_2 = 'Ciclo B : Turbina de extração-condensação'
 
-cycle_inputs = init_values.dourados_cycle_inputs
+cycle_inputs = init_values.cycle_inputs
 #############################################################################################
 
 class CycleParamsTab(Frame):
