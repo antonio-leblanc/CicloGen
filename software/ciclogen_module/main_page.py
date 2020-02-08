@@ -54,24 +54,26 @@ class PageOne(Frame):
         #  ------ Column 1 -----
         
         self.col_1 = Frame(self)
-        self.col_1.grid(row=1, column=1, sticky='nw', padx=10, pady=25)
+        self.col_1.grid(row=1, column=1, sticky='nw', padx=10, pady=(24,0))
         
         self.canvas = Canvas_cycle(self.col_1, self)
-        self.canvas.grid(row=0, column=0, columnspan=2,sticky='new', pady=5)
+        self.canvas.grid(row=0, column=0, sticky='new', pady=5)
 
         self.info_display = InfoDisplay(self.col_1, self)
-        self.info_display.grid(row=1, column=1, sticky='nw', pady=5)
+        self.info_display.grid(row=1, column=0, pady=2)
+
+        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'width':60,'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
+        Button(self.col_1, command = lambda: self.export_results(),**button_style).grid(row=2,column=0,pady=5)
         
 
         # ------ Column 2 ---------
         self.col_2 = Frame(self)
-        self.col_2.grid(row=1, column=2, sticky='nw', padx=10, pady=25)
+        self.col_2.grid(row=1, column=2, sticky='nw', padx=10, pady=(24,0))
 
         self.result_display = ResultDisplay(self.col_2, self)
         self.result_display.grid(row=0, column=0, sticky='nw', pady=5)   
         
-        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
-        Button(self.col_2, command = lambda: self.export_results(),**button_style).grid(row=1,column=0,pady=5, sticky='ew')
+
         
         # --------------- Cycle Inicializaion ---------------
 

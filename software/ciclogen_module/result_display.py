@@ -38,7 +38,6 @@ class ResultDisplay(Frame):
         self.create_display('Wt','Potência total gerada','kW')
         self.create_display('Wb','Potência consumida pelas bombas','kW')
         self.create_display('w_outros_equip','Potência consumida pela planta','kW')
-        self.create_display('w_excedente','Excedente comercializável','kW')
         
         # ---------------------- Energia Térmica ----------------------
         self.create_title('Energia Térmica', self.sub_title_style)
@@ -64,7 +63,9 @@ class ResultDisplay(Frame):
         self.create_display('IPE','Índice de poupança de energia - IPE','%')
         self.create_display('IGP','Indice de geração de potência - IGP','%')
         self.create_display('RPC','Relação potência calor - RCP','%')
-        self.create_display('w_exc_esp','Capacidade de geração de eletricidade','kWh/ton')
+        self.create_display('r_bag_vap','Relação bagaço vapor','kg/kg')
+        self.create_display('w_excedente','Potência excedente comercializável','kW')
+        self.create_display('r_pot_ele_cana','Relação potência elétrica cana','kWh/ton')
 
         
         
@@ -77,10 +78,11 @@ class ResultDisplay(Frame):
         Qh = results.get('Qh')
         Ql = results.get('Ql')
         Qp = results.get('Qp')
-        w_exc_esp = results.get('w_exc_esp')
         
         w_outros_equip = results.get('w_outros_equip')
         w_excedente = results.get('w_excedente')
+        r_pot_ele_cana = results.get('r_pot_ele_cana')
+        r_bag_vap = results.get('r_bag_vap')
         
         FUE = results.get('FUE')
         IGP = results.get('IGP')
@@ -101,7 +103,8 @@ class ResultDisplay(Frame):
         self.set_display_k('Ql',Ql)
         self.set_display_k('Qp',Qp)
         
-        self.set_display_k('w_exc_esp',w_exc_esp)
+        self.set_display_2f('r_bag_vap',r_bag_vap)
+        self.set_display_k('r_pot_ele_cana',r_pot_ele_cana)
         self.set_display_k('w_outros_equip',w_outros_equip)
         self.set_display_k('w_excedente',w_excedente)
         self.set_display_1f('m_bag_cald',m_bag_cald)

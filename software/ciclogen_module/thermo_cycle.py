@@ -128,6 +128,7 @@ class Rankine_cycle:
         w_outros_equip = self.process_p['potencia_demandada'] /1000                     #[kW]
         vazao_necessaria_processo = self.process_p['vazao_necessaria_processo'] *3.6    #[ton/h]
         vazao_disponivel_processo = self.estados['E13'].get_m()  *3.6                   #[ton/h]
+        vazao_vapor_caldeira = self.cycle_p['m1']*3.6                                      #[ton/h]                                     
         m_bag_tot = self.process_p['m_bag_tot']  *3.6                                   #[ton/h]
         capacidade_moagem_h = self.process_p['capacidade_moagem_h'] *3.6                #[ton/h]
         dias_operacao = self.process_p['dias_operacao']                                 #[dias/ano]
@@ -135,11 +136,11 @@ class Rankine_cycle:
         mPCI_disp = self.process_p['mPCI_disp']                                         #[W]
         PCI = self.process_p['PCI']                                                     #[kJ/kg]
         n_cald = self.cycle_p['n_cald']                                                 
-        n_t1 = self.cycle_p['n_t1']                                                 
+        n_t1 = self.cycle_p['n_t1']     
 
         #    Caldeira
-        delta_h_cald = self.estados['E1'].get_H() - self.estados['E16'].get_H()   #[kJ/kg]
-        vazao_max_disponivel = mPCI_disp/delta_h_cald*n_cald *3.6    #[t.vapor/h]
+        delta_h_cald = self.estados['E1'].get_H() - self.estados['E16'].get_H()        #[kJ/kg]
+        vazao_max_disponivel = mPCI_disp/delta_h_cald*n_cald *3.6                      #[t.vapor/h]
         
         Wt1 = self.componentes['T1'].get_work() / 1000                                      #[kW]
         Wt2 = self.componentes['T2'].get_work() / 1000                                      #[kW]
@@ -151,35 +152,38 @@ class Rankine_cycle:
         mPCI = (self.componentes['Caldeira'].get_Qh()) /1000                                #[kW]
         
         
-        m_bag_cald = (mPCI / PCI) *3.6           #[ton/h]
-        m_bag_exc = m_bag_tot - m_bag_cald
-        bag_exc_safra = m_bag_exc*24*dias_operacao
+        m_bag_cald = (mPCI / PCI) *3.6                        #[ton/h]
+        m_bag_exc = m_bag_tot - m_bag_cald                    #[ton/h]
+        bag_exc_safra = m_bag_exc*24*dias_operacao            #[ton/safra]
 
         FUE =  (Wt+Qp) / mPCI          *100
+        IPE = mPCI/(Wt/.77 + Qp/.4) * 100
         IGP = Wt / (mPCI - Qp/n_cald)  *100
         RPC = Wt/Qp                    *100
-        IPE = mPCI/(Wt/.77 + Qp/.4) * 100
         n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
 
+
         w_excedente = Wt - Wb - w_outros_equip
-        w_exc_esp = w_excedente/capacidade_moagem_h      #[kWh/ton]
+        r_pot_ele_cana = w_excedente/capacidade_moagem_h      #[kWh/ton] #relacao potenciaEcana
+        r_bag_vap = m_bag_cald/vazao_vapor_caldeira
 
         results = {
             'Wt':Wt,
             'Wt1':Wt1,
             'Wt2':Wt2,
             'Wb':Wb,
+            'w_outros_equip':w_outros_equip,
             'Qp':Qp,
             'Qh':mPCI,
             'Ql':Ql,
-            'w_exc_esp':w_exc_esp,
+            'n_th' : n_th,       
             'FUE':FUE,
             'IGP' : IGP,
             'IPE':IPE,
             'RPC':RPC,
-            'w_outros_equip':w_outros_equip,
             'w_excedente' : w_excedente,
-            'n_th' : n_th,       
+            'r_pot_ele_cana':r_pot_ele_cana,
+            'r_bag_vap':r_bag_vap,
             'vazao_necessaria_processo':vazao_necessaria_processo,
             'vazao_disponivel_processo':vazao_disponivel_processo,
             'vazao_max_disponivel':vazao_max_disponivel,

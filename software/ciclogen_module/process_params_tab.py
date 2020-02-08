@@ -37,7 +37,7 @@ class ProcessParamsTab(Frame):
 
         self.create_input('capacidade_moagem_h','Capacidade de moagem por hora','t.cana/h')
         self.create_display('capacidade_moagem_d','Capacidade de moagem por dia','t.cana/dia')
-        self.create_input('dias_operacao','Dias de operação','dias/ano')
+        self.create_input('dias_operacao','Dias de operação','dias/safra')
         self.create_display('capacidade_moagem_safra','Capacidade de moagem por safra','t.cana/safra')
         
         # --------------------- Energia disp ---------------------
@@ -61,17 +61,16 @@ class ProcessParamsTab(Frame):
         self.create_display('potencia_demandada',"Potência total demandada",'kW')
        
         button_style = {'text' :'Atualizar Dados','bd':1, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
-        Button(self,**button_style, command = lambda: self.calculate_displays(None)).grid(row=self.row+1,column=0, columnspan=3, pady=4, sticky='ew')
+        Button(self,**button_style, command = lambda: self.calculate_displays()).grid(row=self.row+1,column=0, columnspan=3, pady=4, sticky='ew')
         
 
         # --------------------- Inicializando ---------------------
         
         self.set_inputs(process_inputs)
-        self.calculate_displays(None)
 
 ############################### METHODS ###############################
    
-    def calculate_displays(self,value):
+    def calculate_displays(self):
         capacidade_moagem_h = self.get_input('capacidade_moagem_h')
         dias_operacao       = self.get_input('dias_operacao')
         pci_bagaco          = self.get_input('pci_bagaco')
@@ -111,6 +110,8 @@ class ProcessParamsTab(Frame):
 #--------------------------Geters------------------------------------#
 
     def get_process_params(self):
+        self.calculate_displays()
+
         capacidade_moagem_h = self.get_input('capacidade_moagem_h') /3.6  # [kg/s]       
         dias_operacao = self.get_input('dias_operacao')                   # [dias/ano]       
         mPCI_disp = self.get_display('mPCI_disp')*1e3                     # [W]

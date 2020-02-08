@@ -10,6 +10,8 @@ class InfoDisplay(Frame):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
         self.parent = parent
         self.master = master
+
+        
         self.display = {'name':StringVar(),'fluid_state':StringVar()}
         self.state = 'E1'
 
@@ -18,7 +20,8 @@ class InfoDisplay(Frame):
         self.sub_title_style= {'bg':'gray', 'font':'Arial 10 bold', 'pady':1}
         
         self.property_style= {'font':'Arial 11' ,'anchor':'e', 'pady':3, 'padx':2}
-        self.value_style= {'font':'Arial 10','bd':1, 'width':10,'relief':SOLID, 'bg':'gray90','pady':1}
+        self.value_style= {'font':'Arial 10','bd':1, 'width':10,'relief':SOLID, 'bg':'gray90','pady':1,'padx':2}
+        self.estado_value_style= {'font':'Arial 10','bd':1, 'width':19,'relief':SOLID, 'bg':'gray90','pady':1,'padx':2}
         self.unit_style= {'font':'Arial 11', 'pady':1, 'width':7}
         
         # ---------------------- Grids ----------------------
@@ -36,7 +39,7 @@ class InfoDisplay(Frame):
         Label(self, textvariable=self.display['name'], **self.value_style).grid(row=row, column=1,columnspan=1, sticky='ew')
   
         Label(self, text='Estado', **self.property_style).grid(row=1, column=3,sticky='ew')
-        Label(self, textvariable=self.display['fluid_state'], **self.value_style).grid(row=1, column=4, columnspan=2, sticky='ew')
+        Label(self, textvariable=self.display['fluid_state'], **self.estado_value_style).grid(row=1, column=4, columnspan=2, sticky='w')
 
         
         self.create_display('m','Vazão','ton/h',2,0)
