@@ -28,7 +28,7 @@ class ResultDisplay(Frame):
 
         # ---------------------- Title ----------------------
         self.row = 0
-        self.create_title('Resultados da Simulação', self.title_style)
+        self.create_title('Resultados', self.title_style)
         
         # ---------------------- Energia Elétrica ----------------------
         self.create_title('Energia Elétrica - Mecânica', self.sub_title_style)
@@ -36,15 +36,15 @@ class ResultDisplay(Frame):
         self.create_display('Wt1','Potência gerada pela turbina 1','kW')
         self.create_display('Wt2','Potência gerada pela turbina 2','kW')
         self.create_display('Wt','Potência total gerada','kW')
-        self.create_display('Wb','Potência consumida pelas bombas','kW')
-        self.create_display('w_outros_equip','Potência consumida pela planta','kW')
+        self.create_display('Wb','Potência demandada pelas bombas','kW')
+        self.create_display('W_planta','Potência demandada pelo processo','kW')
         
         # ---------------------- Energia Térmica ----------------------
         self.create_title('Energia Térmica', self.sub_title_style)
         
-        self.create_display('Qh','Calor fornecido a caldeira','kW')
-        self.create_display('Qp','Calor útil fornecido ao processo','kW')
-        self.create_display('Ql','Calor cedido ao condensador','kW')
+        self.create_display('mPCI','Consumo energético da caldeira','kW')
+        self.create_display('Qp','Calor útil consumido pelo processo','kW')
+        self.create_display('Ql','Calor rejeitado pelo condensador','kW')
         
         # ---------------------- Consumo de bagaço ----------------------
         self.create_title('Aproveitamento do Bagaço', self.sub_title_style)
@@ -75,11 +75,11 @@ class ResultDisplay(Frame):
         Wt1 = results.get('Wt1')
         Wt2 = results.get('Wt2')
         Wb = results.get('Wb')
-        Qh = results.get('Qh')
+        mPCI = results.get('mPCI')
         Ql = results.get('Ql')
         Qp = results.get('Qp')
         
-        w_outros_equip = results.get('w_outros_equip')
+        W_planta = results.get('W_planta')
         w_excedente = results.get('w_excedente')
         r_pot_ele_cana = results.get('r_pot_ele_cana')
         r_bag_vap = results.get('r_bag_vap')
@@ -99,13 +99,13 @@ class ResultDisplay(Frame):
         self.set_display_k('Wt2',Wt2)
         self.set_display_k('Wt',Wt)
         self.set_display_k('Wb',Wb)
-        self.set_display_k('Qh',Qh)
+        self.set_display_k('mPCI',mPCI)
         self.set_display_k('Ql',Ql)
         self.set_display_k('Qp',Qp)
         
         self.set_display_2f('r_bag_vap',r_bag_vap)
         self.set_display_k('r_pot_ele_cana',r_pot_ele_cana)
-        self.set_display_k('w_outros_equip',w_outros_equip)
+        self.set_display_k('W_planta',W_planta)
         self.set_display_k('w_excedente',w_excedente)
         self.set_display_1f('m_bag_cald',m_bag_cald)
         self.set_display_1f('m_bag_tot',m_bag_tot)

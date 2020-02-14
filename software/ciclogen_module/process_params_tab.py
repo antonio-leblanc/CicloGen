@@ -35,30 +35,30 @@ class ProcessParamsTab(Frame):
         # --------------------- Safra ---------------------
         self.create_title("Capacidade de Produção",self.sub_title_style,self.title_grid)
 
-        self.create_input('capacidade_moagem_h','Capacidade de moagem por hora','t.cana/h')
-        self.create_display('capacidade_moagem_d','Capacidade de moagem por dia','t.cana/dia')
-        self.create_input('dias_operacao','Dias de operação','dias/safra')
-        self.create_display('capacidade_moagem_safra','Capacidade de moagem por safra','t.cana/safra')
+        self.create_input('m_cana_hora','Vazão mássica de cana moída - hora','t.cana/h')
+        self.create_display('m_cana_dia','Vazão mássica de cana moída - dia','t.cana/dia')
+        self.create_input('dias_operacao','Dias de operação por safra','dias/safra')
+        self.create_display('m_cana_safra','Cana processada por safra','t.cana/safra')
         
         # --------------------- Energia disp ---------------------
 
-        self.create_title("Energia Disponível",self.sub_title_style,self.title_grid)
+        self.create_title("Fonte Primária de Energia",self.sub_title_style,self.title_grid)
 
         self.create_input('fracao_bagaco_cana',"Fração de bagaço seco na cana",'%')
         self.create_display('m_bag_tot',"Produção total de bagaço",'t.bag/h')
         self.create_input('pci_bagaco',"PCI do bagaço",'kJ/kg')
-        self.create_display('mPCI_disp',"Energia disponível - base PCI",'KW')
+        self.create_display('Q_disp',"Potência térmica disponível - base PCI",'KW')
         
         # --------------------- Energia disp ---------------------
         
         self.create_title("Demanda Energética do Processo",self.sub_title_style,self.title_grid)
         
         self.create_input('consumo_vapor',"Consumo de vapor no processo",'kg.vap/t.cana')
-        self.create_display('vazao_vapor',"Vazão de vapor necessária no processo",'t.vap/h')
+        self.create_display('m_vapor_p_necessario',"Vazão de vapor necessária no processo",'t.vap/h')
         self.create_input('t_saida_processo',"Temperatura de saída do vapor de processo",'ºC')
         self.create_input('demanda_mecanica_equip',"Demanda energética mecânica específica",'kWh/t.cana')
         self.create_input('demanda_eletrica_equip',"Demanda energética elétrica específica",'kWh/t.cana')
-        self.create_display('potencia_demandada',"Potência total demandada",'kW')
+        self.create_display('W_planta',"Potência total demandada",'kW')
        
         button_style = {'text' :'Atualizar Dados','bd':1, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
         Button(self,**button_style, command = lambda: self.calculate_displays()).grid(row=self.row+1,column=0, columnspan=3, pady=4, sticky='ew')
@@ -71,32 +71,32 @@ class ProcessParamsTab(Frame):
 ############################### METHODS ###############################
    
     def calculate_displays(self):
-        capacidade_moagem_h = self.get_input('capacidade_moagem_h')
+        m_cana_hora = self.get_input('m_cana_hora')
         dias_operacao       = self.get_input('dias_operacao')
-        pci_bagaco          = self.get_input('pci_bagaco')
+        pci_bagaco          = self.get_input('pci_bagaco')                 #[kj/kg]
         fracao_bagaco_cana  = self.get_input('fracao_bagaco_cana') /100
-        consumo_vapor       = self.get_input('consumo_vapor')
-        demanda_mecanica_equip = self.get_input('demanda_mecanica_equip')
-        demanda_eletrica_equip = self.get_input('demanda_eletrica_equip')
+        consumo_vapor       = self.get_input('consumo_vapor')             #[kg/ton]
+        demanda_mecanica_equip = self.get_input('demanda_mecanica_equip') #[kWh/ton]
+        demanda_eletrica_equip = self.get_input('demanda_eletrica_equip') #[kWh/ton]
 
 
-        capacidade_moagem_d = capacidade_moagem_h*24         #[t/dia]
-        capacidade_moagem_safra = capacidade_moagem_d*dias_operacao
+        m_cana_dia = m_cana_hora*24         #[t/dia]
+        m_cana_safra = m_cana_dia*dias_operacao
         
-        m_bag_tot = fracao_bagaco_cana*capacidade_moagem_h   #[t/h]
+        m_bag_tot = fracao_bagaco_cana*m_cana_hora     #[t/h]
        
-        mPCI_disp = m_bag_tot*pci_bagaco/3.6     #[KW]
+        Q_disp = m_bag_tot*pci_bagaco/3.6                   #[KW]
 
-        vazao_vapor = capacidade_moagem_h*consumo_vapor/1000   #[t.vapor/h]
+        m_vapor_p_necessario = m_cana_hora*consumo_vapor/1000   #[t.vapor/h]
 
-        potencia_demandada=(demanda_mecanica_equip+demanda_eletrica_equip)*capacidade_moagem_h #[kW]
+        W_planta=(demanda_mecanica_equip+demanda_eletrica_equip)*m_cana_hora #[kW]
 
-        self.set_kdisplay('capacidade_moagem_d',capacidade_moagem_d)
-        self.set_kdisplay('capacidade_moagem_safra',capacidade_moagem_safra)
+        self.set_kdisplay('m_cana_dia',m_cana_dia)
+        self.set_kdisplay('m_cana_safra',m_cana_safra)
         self.set_display_1f('m_bag_tot',m_bag_tot)
-        self.set_kdisplay('mPCI_disp',mPCI_disp)
-        self.set_kdisplay('vazao_vapor',vazao_vapor)
-        self.set_kdisplay('potencia_demandada',potencia_demandada)
+        self.set_kdisplay('Q_disp',Q_disp)
+        self.set_kdisplay('m_vapor_p_necessario',m_vapor_p_necessario)
+        self.set_kdisplay('W_planta',W_planta)
         
     def set_inputs(self, inputs_dict):
         for key,value in inputs_dict.items():
@@ -112,23 +112,23 @@ class ProcessParamsTab(Frame):
     def get_process_params(self):
         self.calculate_displays()
 
-        capacidade_moagem_h = self.get_input('capacidade_moagem_h') /3.6  # [kg/s]       
-        dias_operacao = self.get_input('dias_operacao')                   # [dias/ano]       
-        mPCI_disp = self.get_display('mPCI_disp')*1e3                     # [W]
-        potencia_demandada = self.get_display('potencia_demandada')*1e3   # [W]
-        t_saida_processo   =  self.get_input('t_saida_processo') + 273.15 # [K]
-        vazao_vapor        = self.get_display('vazao_vapor') / 3.6        # [kg/s]
-        pci_bagaco          = self.get_input('pci_bagaco')                # [kJ/kg]
-        m_bag_tot = self.get_display('m_bag_tot') /3.6                    # [kg/s]
+        m_cana_hora = self.get_input('m_cana_hora') /3.6                      # [kg/s]       
+        dias_operacao = self.get_input('dias_operacao')                       # [dias/ano]       
+        Q_disp = self.get_display('Q_disp')*1e3                               # [W]
+        W_planta = self.get_display('W_planta')*1e3                           # [W]
+        t_saida_processo   =  self.get_input('t_saida_processo') + 273.15     # [K]
+        m_vapor_p_necessario = self.get_display('m_vapor_p_necessario') / 3.6 # [kg/s]
+        pci_bagaco          = self.get_input('pci_bagaco') *1000              # [J/kg]
+        m_bag_tot = self.get_display('m_bag_tot') /3.6                        # [kg/s]
 
         
         process_params = {
-            'mPCI_disp':mPCI_disp,
-            'capacidade_moagem_h':capacidade_moagem_h,
+            'Q_disp':Q_disp,
+            'm_cana_hora':m_cana_hora,
             'dias_operacao':dias_operacao,
             't_saida_processo':t_saida_processo,
-            'vazao_necessaria_processo':vazao_vapor,
-            'potencia_demandada':potencia_demandada,
+            'm_vapor_p_necessario':m_vapor_p_necessario,
+            'W_planta':W_planta,
             'PCI':pci_bagaco,
             'm_bag_tot':m_bag_tot}
         return process_params

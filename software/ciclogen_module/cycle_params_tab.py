@@ -77,8 +77,8 @@ class CycleParamsTab(Frame):
         self.create_input('f14','(14) - Fração de (10) enviada ao desaerador','%')
         self.create_input('f9','(9) - Fração de (7) enviada ao dessuperaquecedor','%')
         
-        self.create_display('vazao_necessaria_processo','Vazão necessária no processo','ton/h')
-        self.create_display('vazao_disponivel_processo','Vazão disponível no processo','ton/h')
+        self.create_display('m_vapor_p_necessario','Vazão necessária no processo','ton/h')
+        self.create_display('m_vapor_p_disp','Vazão disponível no processo','ton/h')
 
                 
         # --------------------- Eficiencias ---------------------
@@ -136,12 +136,12 @@ class CycleParamsTab(Frame):
                 self.inputs[key].insert(0,value)
 
     def set_results(self, results):
-        vazao_necessaria_processo = results['vazao_necessaria_processo']
-        vazao_disponivel_processo = results['vazao_disponivel_processo']
+        m_vapor_p_necessario = results['m_vapor_p_necessario']
+        m_vapor_p_disp = results['m_vapor_p_disp']
         vazao_max_disponivel      = results['vazao_max_disponivel']
 
-        self.displays['vazao_necessaria_processo'].set(f'{vazao_necessaria_processo:.2f}')
-        self.displays['vazao_disponivel_processo'].set(f'{vazao_disponivel_processo:.2f}')
+        self.displays['m_vapor_p_necessario'].set(f'{m_vapor_p_necessario:.2f}')
+        self.displays['m_vapor_p_disp'].set(f'{m_vapor_p_disp:.2f}')
         self.displays['vazao_max_disponivel'].set(f'{vazao_max_disponivel:.2f}')
 
 

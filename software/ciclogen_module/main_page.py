@@ -13,7 +13,7 @@ from os import path
 
 
 WINDOW_TITLE = 'CicloGen [1.0]'
-HEAD_TITLE = 'CICLOGEN - SIMULADOR DE PLANTAS DE COGERAÇÂO DA INDUSTRIA SUCROALCOOLEIRA'
+HEAD_TITLE = 'CICLOGEN - SIMULADOR DE PLANTAS DE COGERAÇÃO DA INDUSTRIA SUCROALCOOLEIRA'
 
 #############################################################################################
 ## 1)       HEAD 
@@ -23,7 +23,7 @@ class Head(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, borderwidth=1.5, relief=SOLID)
 
-        self.title = Label(self, text=HEAD_TITLE,font='Helvetica 16 bold',pady=8, bg='#5c855d')
+        self.title = Label(self, text=HEAD_TITLE,font='Helvetica 16 bold',pady=8, bg='#5c7399') 
         self.grid_columnconfigure(0, weight=1)
         self.title.grid(sticky='ew')
 
@@ -48,7 +48,7 @@ class PageOne(Frame):
         self.parameters_menu = ParametersMenu(self.col_0, self)
         self.parameters_menu.grid(row=0, column=0, sticky='nw')
                 
-        button_style = {'text' :"Simular",'bd':2, 'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
+        button_style = {'text' :"Simular",'bd':2, 'relief':SOLID, 'font':'Arial 11 bold', 'bg':'white', 'cursor':'right_ptr'}
         Button(self.col_0, command = lambda: self.calculate(),**button_style).grid(row=1,column=0, pady=5, sticky='ew')
         
         #  ------ Column 1 -----
@@ -62,7 +62,7 @@ class PageOne(Frame):
         self.info_display = InfoDisplay(self.col_1, self)
         self.info_display.grid(row=1, column=0, pady=2)
 
-        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'width':60,'relief':SOLID, 'font':'Arial 10 bold', 'bg':'white'}
+        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'width':53, 'relief':SOLID, 'font':'Arial 11 bold', 'bg':'white','cursor':'right_ptr'}
         Button(self.col_1, command = lambda: self.export_results(),**button_style).grid(row=2,column=0,pady=5)
         
 
@@ -77,7 +77,7 @@ class PageOne(Frame):
         
         # --------------- Cycle Inicializaion ---------------
 
-        self.cycle = Rankine_cycle()
+        self.cycle = Ciclogen_thermo_cycle()
         self.update_cycle()
         
     
@@ -148,7 +148,7 @@ class PageTwo(Frame):
 ################################# MAIN APP #######################################
 ##################################################################################
 
-class Rankine_App(Tk):
+class Ciclogen(Tk):
     def __init__(self):
     
         Tk.__init__(self)

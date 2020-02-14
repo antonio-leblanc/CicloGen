@@ -9,10 +9,10 @@ generic_cycle_inputs = {
     'p3': 2.5,
     'p5': 0.08,
     'delta_p': 0,
-    'm1': 240.6,
-    'f2_10': 72.21,
+    'm1': 240,
+    'f2_10': 69.2,
     'f14': 3.3,
-    'f9': 0,
+    'f9': 10,
     'n_cald': 85 ,
     'n_t1': 55,
     'n_t2': 70,
@@ -21,10 +21,10 @@ generic_cycle_inputs = {
     }
 
 generic_process_inputs = {
-    'capacidade_moagem_h':500,
+    'm_cana_hora':500,
     'dias_operacao':200,
     'fracao_bagaco_cana':25,
-    'pci_bagaco':6990,
+    'pci_bagaco':7500,
     'consumo_vapor':335,
     't_saida_processo':90,
     'demanda_mecanica_equip':15,
@@ -52,7 +52,7 @@ dourados_cycle_inputs = {
     }
 
 dourados_process_inputs = {
-    'capacidade_moagem_h':416.66,
+    'm_cana_hora':416.66,
     'dias_operacao':225,
     'fracao_bagaco_cana':24.73 ,
     'pci_bagaco':7736,
@@ -78,15 +78,15 @@ passolongo_cycle_inputs = {
     'n_cald': 78 ,
     'n_t1': 84,
     'n_t2': 86,
-    'n_b1': 80,
-    'n_b2': 80 
+    'n_b1': 75,
+    'n_b2': 75 
     }
 
 passolongo_process_inputs = {
-    'capacidade_moagem_h':286,
+    'm_cana_hora':286,
     'dias_operacao':240,
     'fracao_bagaco_cana':28.5,
-    'pci_bagaco':7736,
+    'pci_bagaco':7990,
     'consumo_vapor':454,
     't_saida_processo':124.7,
     'demanda_mecanica_equip':15,
@@ -95,5 +95,5 @@ passolongo_process_inputs = {
 
 # ------------ ESCOLHA DOS DADOS USADOS PARA INICIAR O CICLO ----------------
 
-cycle_inputs = passolongo_cycle_inputs
-process_inputs = passolongo_process_inputs
+cycle_inputs = generic_cycle_inputs
+process_inputs = generic_process_inputs

@@ -1,10 +1,10 @@
 from ciclogen_module.thermo_classes import *
 import pandas as pd
 
-#############################################################################################
-################################## DEFININDO O CICLO EM QUESTAO #############################
 
-class Rankine_cycle:
+################### MODELO DO CICLO TERMODINAMICO ###################
+
+class Ciclogen_thermo_cycle:
     def __init__(self):
         pass
 
@@ -36,6 +36,7 @@ class Rankine_cycle:
         n_b2 = cycle_p['n_b2']
         
         t_saida_processo = process_p['t_saida_processo']
+        PCI = process_p['PCI']    
 
         #------------------ Calculo das massas ------------------
         
@@ -111,7 +112,7 @@ class Rankine_cycle:
         estados['E16'] = componentes['B2'].get_state_out()
 
         #________ Fechando o ciclo ________
-        componentes['Caldeira'] = Boiler(estados['E16'],t1,n=n_cald, name='Caldeira')
+        componentes['Caldeira'] = Boiler(estados['E16'],t1,n=n_cald, PCI=PCI, name='Caldeira')
         
         
         self.estados = estados
@@ -125,22 +126,23 @@ class Rankine_cycle:
     def get_results(self):
         # Calcula os resultados e converte para as unidade apropriadas
 
-        w_outros_equip = self.process_p['potencia_demandada'] /1000                     #[kW]
-        vazao_necessaria_processo = self.process_p['vazao_necessaria_processo'] *3.6    #[ton/h]
-        vazao_disponivel_processo = self.estados['E13'].get_m()  *3.6                   #[ton/h]
-        vazao_vapor_caldeira = self.cycle_p['m1']*3.6                                      #[ton/h]                                     
-        m_bag_tot = self.process_p['m_bag_tot']  *3.6                                   #[ton/h]
-        capacidade_moagem_h = self.process_p['capacidade_moagem_h'] *3.6                #[ton/h]
-        dias_operacao = self.process_p['dias_operacao']                                 #[dias/ano]
+        W_planta = self.process_p['W_planta'] /1000                                 #[kW]
+        m_vapor_p_necessario = self.process_p['m_vapor_p_necessario'] *3.6          #[t.vapor/h]
+        m_vapor_p_disp = self.estados['E13'].get_m()  *3.6                          #[t.vapor/h]
+        m_vapor_caldeira = self.cycle_p['m1']*3.6                                   #[t.vapor/h]                                     
+        m_bag_tot = self.process_p['m_bag_tot']  *3.6                               #[t.bag/h]
+        m_cana_hora = self.process_p['m_cana_hora'] *3.6                            #[t.cana/h]
+        dias_operacao = self.process_p['dias_operacao']                             #[dias/ano]
         
-        mPCI_disp = self.process_p['mPCI_disp']                                         #[W]
-        PCI = self.process_p['PCI']                                                     #[kJ/kg]
-        n_cald = self.cycle_p['n_cald']                                                 
-        n_t1 = self.cycle_p['n_t1']     
+        n_cald = self.cycle_p['n_cald']                             #[dias/ano]
+        Q_disp = self.process_p['Q_disp']  /1000                                    #[kW]                                            
+
 
         #    Caldeira
-        delta_h_cald = self.estados['E1'].get_H() - self.estados['E16'].get_H()        #[kJ/kg]
-        vazao_max_disponivel = mPCI_disp/delta_h_cald*n_cald *3.6                      #[t.vapor/h]
+        m_bag_cald = self.componentes['Caldeira'].get_m_comb() * 3.6                         #[t.bag/h]
+        delta_h_cald = self.componentes['Caldeira'].get_delta_H() /1000                     #[kJ/kg]
+        vazao_max_disponivel = Q_disp/delta_h_cald*n_cald *3.6                              #[t.vapor/h]
+        mPCI = self.componentes['Caldeira'].get_mPCI() /1000                                #[kW]
         
         Wt1 = self.componentes['T1'].get_work() / 1000                                      #[kW]
         Wt2 = self.componentes['T2'].get_work() / 1000                                      #[kW]
@@ -149,10 +151,8 @@ class Rankine_cycle:
         Wb = (self.componentes['B1'].get_work() + self.componentes['B2'].get_work()) /1000  #[kW]
         Qp = (self.componentes['Processo'].get_Q()) /1000                                   #[kW]
         Ql = (self.componentes['Condensador'].get_Ql()) /1000                               #[kW]           
-        mPCI = (self.componentes['Caldeira'].get_Qh()) /1000                                #[kW]
         
         
-        m_bag_cald = (mPCI / PCI) *3.6                        #[ton/h]
         m_bag_exc = m_bag_tot - m_bag_cald                    #[ton/h]
         bag_exc_safra = m_bag_exc*24*dias_operacao            #[ton/safra]
 
@@ -163,18 +163,18 @@ class Rankine_cycle:
         n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
 
 
-        w_excedente = Wt - Wb - w_outros_equip
-        r_pot_ele_cana = w_excedente/capacidade_moagem_h      #[kWh/ton] #relacao potenciaEcana
-        r_bag_vap = m_bag_cald/vazao_vapor_caldeira
+        w_excedente = Wt - Wb - W_planta
+        r_pot_ele_cana = w_excedente/m_cana_hora      #[kWh/ton] #relacao potenciaEcana
+        r_bag_vap = m_bag_cald/m_vapor_caldeira
 
         results = {
             'Wt':Wt,
             'Wt1':Wt1,
             'Wt2':Wt2,
             'Wb':Wb,
-            'w_outros_equip':w_outros_equip,
+            'W_planta':W_planta,
             'Qp':Qp,
-            'Qh':mPCI,
+            'mPCI':mPCI,
             'Ql':Ql,
             'n_th' : n_th,       
             'FUE':FUE,
@@ -184,8 +184,8 @@ class Rankine_cycle:
             'w_excedente' : w_excedente,
             'r_pot_ele_cana':r_pot_ele_cana,
             'r_bag_vap':r_bag_vap,
-            'vazao_necessaria_processo':vazao_necessaria_processo,
-            'vazao_disponivel_processo':vazao_disponivel_processo,
+            'm_vapor_p_necessario':m_vapor_p_necessario,
+            'm_vapor_p_disp':m_vapor_p_disp,
             'vazao_max_disponivel':vazao_max_disponivel,
             'm_bag_cald':m_bag_cald,
             'm_bag_tot':m_bag_tot,

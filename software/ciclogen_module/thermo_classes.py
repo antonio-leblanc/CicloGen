@@ -1,12 +1,11 @@
 import CoolProp.CoolProp as CP
-# import CoolProp.Plots as CPP
 
 ############################################################################################
-############ CONJUNTO DE CLASSES UTILIZADAS NA MODELIZACAO DO CICLO TERMODINAMICO ##########
+############ CONJUNTO DE CLASSES QUE PERMITEM MODELAR DO CICLO TERMODINAMICO      ##########
 ############################################################################################
 
 
-' ---------- CLASSE QUE MODELIZA UM ESTADO TERMODINAMICO ------------- '
+' ---------- CLASSE QUE MODELA UM ESTADO TERMODINAMICO : ENTIDADE "PONTO DO CICLO"------------- '
 
 class State:
     def __init__(self,prop1,value1,prop2,value2, m=1, fluid='Water'):
@@ -69,9 +68,9 @@ class State:
         return text
         
 
-'--------------------- MODELIZAÇAO DOS DIFERENTES COMPONENTES ---------------------'        
+'--------------------- MODELAGEM DOS DIFERENTES COMPONENTES PRESENTES NO CICLO ---------------------'        
 
-#------------------ 1) BOMBA
+#------------------ BOMBA
 class Pump:
     def __init__(self, state_in, p_out, n=1, name=''):
         self.name = name
@@ -91,29 +90,42 @@ class Pump:
     def get_info(self):
         return {'prop':'W','value':self.get_work()/1000,'unit': 'KW', 'name':self.name}      
 
-#------------------ 2) CALDEIRA
+#------------------ CALDEIRA
 class Boiler:
-    def __init__(self, state_in, t_out, n=1, name=''):
+    def __init__(self, state_in, t_out, n=1, PCI=None, name=''):
         self.name = name
         self.state_in = state_in
         self.n=n
+        self.pci = PCI        #[J/Kg]  
         self.m = state_in.get_m()
         self.state_out = State('T',t_out,'P',state_in.get_P(), m=self.m)
     
     def get_state_out(self):
         return self.state_out
     
-    def get_Qh(self):
-        return (self.state_out.get_H() - self.state_in.get_H()) * self.m / self.n
+    def get_m(self):
+        return self.m
 
-    def get_Qin(self):
-        pass
+    def get_delta_H(self):
+        return self.state_out.get_H() - self.state_in.get_H()
+
+    def get_Qh(self):
+        return self.get_delta_H() * self.m      #[W]
+
+    def get_mPCI(self): 
+        return self.get_Qh() / self.n  #[W]     
+    
+    def get_m_comb(self):
+        if self.pci:
+            return self.get_mPCI() / self.pci #[kg/s]
+        else:
+            return None
     
     def get_info(self):
-        return {'prop':'Qh','value':self.get_Qh()/1000,'unit': 'KW', 'name':self.name}
+        return {'prop':'mPCI','value':self.get_mPCI()/1000,'unit': 'KW', 'name':self.name}
                
 
-#------------------ 3) TURBINA
+#------------------ TURBINA
 class Turbine:
     def __init__(self, state_in, p_out, n=1, name=''):
         self.name = name
@@ -135,7 +147,7 @@ class Turbine:
     def get_info(self):
         return {'prop':'W','value':self.get_work()/1000,'unit': 'KW', 'name':self.name}
     
-#------------------ 4) CONDENSADOR    
+#------------------  CONDENSADOR    
 class Condenser:
     def __init__(self,state_in, n=1, Q_out = 0, name=''):
         self.name = name
@@ -153,7 +165,7 @@ class Condenser:
     def get_info(self):
         return {'prop':'Ql','value':self.get_Ql()/1000,'unit': 'KW', 'name':self.name}
 
-#------------------ 5) MISTURADOR    
+#------------------  MISTURADOR    
 class Mixer:
     def __init__(self, states_in_list, name=''):
         self.states_in_list = states_in_list
@@ -173,23 +185,18 @@ class Mixer:
         return self.state_out
 
     def get_info(self):
-        return {'prop':'Nao sei','value':0,'unit': 'kJ/Kg', 'name':self.name}
+        return None
  
- #------------------ 6) PROCESSO    
+ #------------------  PROCESSO    
 
 class Process:
-    def __init__(self, state_in, w=None, t_out = 90+273.15, name=''):
+    def __init__(self, state_in, t_out, name=''):
         self.state_in = state_in
         self.name = name
         m_in = state_in.get_m()
-        
-        if w:
-            self.w = w
-            h_out = state_in.get_H() - w/m_in
-            self.state_out = State('P',state_in.get_P(), 'H', h_out, m = m_in )
-        else:
-            self.state_out = State('P',state_in.get_P(), 'T', t_out, m = m_in )
-            self.w = m_in*(state_in.get_H()-self.state_out.get_H())
+
+        self.state_out = State('P',state_in.get_P(), 'T', t_out, m = m_in )
+        self.w = m_in*(state_in.get_H()-self.state_out.get_H())
 
     
     def get_Q(self):
