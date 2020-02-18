@@ -1,36 +1,4 @@
 
-
-#  ------------------ Ciclo Genérico ------------------------
-
-generic_cycle_inputs = { 
-    't1': 320,
-    'delta_t':0 ,
-    'p1': 22,
-    'p3': 2.5,
-    'p5': 0.08,
-    'delta_p': 0,
-    'm1': 240,
-    'f2_10': 69.2,
-    'f14': 3.3,
-    'f9': 10,
-    'n_cald': 85 ,
-    'n_t1': 55,
-    'n_t2': 70,
-    'n_b1': 45,
-    'n_b2': 45 
-    }
-
-generic_process_inputs = {
-    'm_cana_hora':500,
-    'dias_operacao':200,
-    'fracao_bagaco_cana':25,
-    'pci_bagaco':7500,
-    'consumo_vapor':335,
-    't_saida_processo':90,
-    'demanda_mecanica_equip':15,
-    'demanda_eletrica_equip':12.5
-}
-
 #  ------------------ DOURADOS ------------------------
 
 dourados_cycle_inputs = { 
@@ -93,7 +61,41 @@ passolongo_process_inputs = {
     'demanda_eletrica_equip':12
 }
 
+#  ------------------ Ciclo Genérico ------------------------
+
+generic_cycle_inputs = { 
+    't1': 320,
+    'delta_t':0 ,
+    'p1': 22,
+    'p3': 2.5,
+    'p5': 0.08,
+    'delta_p': 0,
+    'm1': 250,
+    'f2_10': 88.6,
+    'f14': 2.7,
+    'f9': 33.3,
+    'n_cald': 85 ,
+    'n_t1': 55,
+    'n_t2': 80,
+    'n_b1': 75,
+    'n_b2': 75 
+    }
+
+generic_process_inputs = {
+    'm_cana_hora':500,
+    'dias_operacao':200,
+    'fracao_bagaco_cana':25,
+    'pci_bagaco':7500,
+    'consumo_vapor':450,
+    't_saida_processo':90,
+    'demanda_mecanica_equip':15,
+    'demanda_eletrica_equip':12.5
+}
+
+
+
 # ------------ ESCOLHA DOS DADOS USADOS PARA INICIAR O CICLO ----------------
+
 
 cycle_inputs = generic_cycle_inputs
 process_inputs = generic_process_inputs

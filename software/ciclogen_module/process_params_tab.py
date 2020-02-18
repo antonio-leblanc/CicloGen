@@ -134,7 +134,7 @@ class ProcessParamsTab(Frame):
         return process_params
 
     def get_input(self, input_id):
-        return float(self.inputs[input_id].get())
+        return float(self.inputs[input_id].get().replace(',','.'))
 
     def get_display(self, display_id):
         return float(self.displays[display_id].get().replace(' ',''))

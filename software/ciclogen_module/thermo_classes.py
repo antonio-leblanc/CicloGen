@@ -58,16 +58,6 @@ class State:
             return 'Vapor Superaquecido'
 
 
-    def __str__(self):
-        t = self.get_T()-271.15
-        p = self.get_P()/1000
-        h = self.get_H()/1000
-        s = self.get_S()/1000
-        m = self.get_m()
-        text = f'Properties of the point:\n• Temperature [C] = {t:.2f}\n• Pressure [kPa] = {p:,}\n• Enthalpy [kJ/kg] = {h:.2f}\n• Entropy [kJ/Kg.K] = {s:.4f}\n• M [kg/s] = {m:.2f}'.replace(',',' ')
-        return text
-        
-
 '--------------------- MODELAGEM DOS DIFERENTES COMPONENTES PRESENTES NO CICLO ---------------------'        
 
 #------------------ BOMBA
@@ -121,8 +111,6 @@ class Boiler:
         else:
             return None
     
-    def get_info(self):
-        return {'prop':'mPCI','value':self.get_mPCI()/1000,'unit': 'KW', 'name':self.name}
                
 
 #------------------ TURBINA
@@ -144,9 +132,6 @@ class Turbine:
     def get_work(self):
         return (self.state_in.get_H() - self.state_out.get_H()) * self.m
     
-    def get_info(self):
-        return {'prop':'W','value':self.get_work()/1000,'unit': 'KW', 'name':self.name}
-    
 #------------------  CONDENSADOR    
 class Condenser:
     def __init__(self,state_in, n=1, Q_out = 0, name=''):
@@ -162,8 +147,6 @@ class Condenser:
     def get_Ql(self):
         return (self.state_in.get_H() - self.state_out.get_H()) * self.m
     
-    def get_info(self):
-        return {'prop':'Ql','value':self.get_Ql()/1000,'unit': 'KW', 'name':self.name}
 
 #------------------  MISTURADOR    
 class Mixer:
@@ -184,8 +167,6 @@ class Mixer:
     def get_state_out(self):
         return self.state_out
 
-    def get_info(self):
-        return None
  
  #------------------  PROCESSO    
 
@@ -205,5 +186,3 @@ class Process:
     def get_state_out(self):
         return self.state_out
 
-    def get_info(self):
-        return {'prop':'W','value':self.w/1e6,'unit': 'MW','name':self.name}

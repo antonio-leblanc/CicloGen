@@ -18,7 +18,7 @@ class ResultDisplay(Frame):
         
         self.property_style= {'font':'Arial 11', 'bd':1, 'anchor':'w', 'pady':3}
         self.value_style= {'font':'Arial 11', 'bd':1, 'width':9,'relief':SOLID, 'pady':1, 'bg':'gray90'}
-        self.unit_style= {'font':'Arial 11', 'pady':1,'padx':1}
+        self.unit_style= {'font':'Arial 11', 'pady':1,'padx':2}
         
         # ---------------------- Grids ----------------------
         self.title_grid= {'column':0, 'columnspan':3, 'sticky':'we'}
@@ -50,22 +50,22 @@ class ResultDisplay(Frame):
         self.create_title('Aproveitamento do Bagaço', self.sub_title_style)
 
 
-        self.create_display('m_bag_tot','Bagaço total produzido','ton/h')
-        self.create_display('m_bag_cald','Bagaço consumido na caldeira','ton/h')
-        self.create_display('m_bag_exc','Bagaço excedente - vazão mássica','ton/h')
-        self.create_display('bag_exc_safra','Bagaço excedente - safra','ton/safra')
+        self.create_display('m_bag_tot','Bagaço total produzido','t/h')
+        self.create_display('m_bag_cald','Bagaço consumido na caldeira','t/h')
+        self.create_display('m_bag_exc','Bagaço excedente - vazão mássica','t/h')
+        self.create_display('bag_exc_safra','Bagaço excedente - safra','t/safra')
+        self.create_display('r_bag_vap','Relação bagaço vapor','kg/kg')
         
 
         # # ---------------------- Indices de desempenho ----------------------
         self.create_title('Indicadores de desempenho', self.sub_title_style)
         self.create_display('n_th','Eficiência térmica global','%')
         self.create_display('FUE','Fator de utilização de energia - FUE','%')
-        self.create_display('IPE','Índice de poupança de energia - IPE','%')
         self.create_display('IGP','Indice de geração de potência - IGP','%')
-        self.create_display('RPC','Relação potência calor - RCP','%')
-        self.create_display('r_bag_vap','Relação bagaço vapor','kg/kg')
+        self.create_display('RPC','Relação potência calor - RPC','%')
         self.create_display('w_excedente','Potência excedente comercializável','kW')
-        self.create_display('r_pot_ele_cana','Relação potência elétrica cana','kWh/ton')
+        self.create_display('r_pot_cana','Relação potência cana','kWh/t')
+        self.create_display('r_pot_ele_cana','Relação potência excedente cana','kWh/t')
 
         
         
@@ -81,13 +81,13 @@ class ResultDisplay(Frame):
         
         W_planta = results.get('W_planta')
         w_excedente = results.get('w_excedente')
+        r_pot_cana = results.get('r_pot_cana')
         r_pot_ele_cana = results.get('r_pot_ele_cana')
         r_bag_vap = results.get('r_bag_vap')
         
         FUE = results.get('FUE')
         IGP = results.get('IGP')
         RPC = results.get('RPC')
-        IPE = results.get('IPE')
         n_th = results.get('n_th')
 
         m_bag_cald = results.get('m_bag_cald')
@@ -104,7 +104,8 @@ class ResultDisplay(Frame):
         self.set_display_k('Qp',Qp)
         
         self.set_display_2f('r_bag_vap',r_bag_vap)
-        self.set_display_k('r_pot_ele_cana',r_pot_ele_cana)
+        self.set_display_1f('r_pot_cana',r_pot_cana)
+        self.set_display_1f('r_pot_ele_cana',r_pot_ele_cana)
         self.set_display_k('W_planta',W_planta)
         self.set_display_k('w_excedente',w_excedente)
         self.set_display_1f('m_bag_cald',m_bag_cald)
@@ -112,11 +113,10 @@ class ResultDisplay(Frame):
         self.set_display_1f('m_bag_exc',m_bag_exc)
         self.set_display_k('bag_exc_safra',bag_exc_safra)
         
-        self.set_display_2f('n_th',n_th)
-        self.set_display_2f('FUE',FUE)
-        self.set_display_2f('IPE',IPE)
-        self.set_display_2f('IGP',IGP)
-        self.set_display_2f('RPC',RPC)
+        self.set_display_1f('n_th',n_th)
+        self.set_display_1f('FUE',FUE)
+        self.set_display_1f('IGP',IGP)
+        self.set_display_1f('RPC',RPC)
 
 
 # # ---------------------- Frontend ----------------------

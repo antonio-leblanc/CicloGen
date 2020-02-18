@@ -26,7 +26,7 @@ class CycleParamsTab(Frame):
         self.property_style= {'font':'Arial 11','anchor':'w', 'pady':2, 'padx':1}
         self.entry_style= {'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
         self.value_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID, 'bg':'gray90','width':9}
-        self.unit_style= {'font':'Arial 11', 'pady':2}
+        self.unit_style= {'font':'Arial 11', 'pady':2, 'padx':4}
         
         # ---------------------- Grids ----------------------
         self.title_grid= {'column':0, 'columnspan':3, 'sticky':'we'}
@@ -64,8 +64,8 @@ class CycleParamsTab(Frame):
         
         # --------------------- Vazões ---------------------
         self.create_title('Vazões', self.sub_title_style)
-        self.create_input('m1','(1) - Vazão total do ciclo','ton/h')
-        self.create_display('vazao_max_disponivel','Capacidade de geração de vapor - base PCI','ton/h')
+        self.create_input('m1','(1) - Vazão total do ciclo','t/h')
+        self.create_display('vazao_max_disponivel','Capacidade de geração de vapor - base PCI','t/h')
         
         self.label_vazao_2_4 = StringVar()
         Label(self, textvariable =self.label_vazao_2_4, **self.property_style).grid(row=self.row, **self.property_grid)
@@ -77,8 +77,8 @@ class CycleParamsTab(Frame):
         self.create_input('f14','(14) - Fração de (10) enviada ao desaerador','%')
         self.create_input('f9','(9) - Fração de (7) enviada ao dessuperaquecedor','%')
         
-        self.create_display('m_vapor_p_necessario','Vazão necessária no processo','ton/h')
-        self.create_display('m_vapor_p_disp','Vazão disponível no processo','ton/h')
+        self.create_display('m_vapor_p_necessario','Vazão necessária no processo','t/h')
+        self.create_display('m_vapor_p_disp','Vazão disponível no processo','t/h')
 
                 
         # --------------------- Eficiencias ---------------------
@@ -104,10 +104,10 @@ class CycleParamsTab(Frame):
         percentages = ['f2_10','f14','f9','n_cald','n_t1','n_t2','n_b1','n_b2']
         params_dic = {}
         for key, v in self.inputs.items():
-            value = float(v.get())
+            value = float(v.get().replace(',','.'))
             value = value + 273.15 if key in temperatures else value  # Convert [C] to [K]
             value = value * 1e5 if key in pressures else value        # Convert [bar] to [Pa]
-            value = value / 3.6 if key in flow else value             # Convert [ton/h] to [kg/s]
+            value = value / 3.6 if key in flow else value             # Convert [t/h] to [kg/s]
             value = value/100 if key in percentages else value        # Convert % to number
 
             params_dic[key] = value
@@ -140,9 +140,9 @@ class CycleParamsTab(Frame):
         m_vapor_p_disp = results['m_vapor_p_disp']
         vazao_max_disponivel      = results['vazao_max_disponivel']
 
-        self.displays['m_vapor_p_necessario'].set(f'{m_vapor_p_necessario:.2f}')
-        self.displays['m_vapor_p_disp'].set(f'{m_vapor_p_disp:.2f}')
-        self.displays['vazao_max_disponivel'].set(f'{vazao_max_disponivel:.2f}')
+        self.displays['m_vapor_p_necessario'].set(f'{m_vapor_p_necessario:.1f}')
+        self.displays['m_vapor_p_disp'].set(f'{m_vapor_p_disp:.1f}')
+        self.displays['vazao_max_disponivel'].set(f'{vazao_max_disponivel:.1f}')
 
 
 # ------------------------------Frontend-------------------------------- "

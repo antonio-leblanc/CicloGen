@@ -43,7 +43,7 @@ class PageOne(Frame):
 
         # ------ Column 0 ---------
         self.col_0 = Frame(self)
-        self.col_0.grid(row=1, column=0, sticky='nw', padx=10, pady=5)
+        self.col_0.grid(row=1, column=0, sticky='nw', padx=8, pady=5)
 
         self.parameters_menu = ParametersMenu(self.col_0, self)
         self.parameters_menu.grid(row=0, column=0, sticky='nw')
@@ -54,7 +54,7 @@ class PageOne(Frame):
         #  ------ Column 1 -----
         
         self.col_1 = Frame(self)
-        self.col_1.grid(row=1, column=1, sticky='nw', padx=10, pady=(24,0))
+        self.col_1.grid(row=1, column=1, sticky='nw', padx=5, pady=(24,0))
         
         self.canvas = Canvas_cycle(self.col_1, self)
         self.canvas.grid(row=0, column=0, sticky='new', pady=5)
@@ -68,7 +68,7 @@ class PageOne(Frame):
 
         # ------ Column 2 ---------
         self.col_2 = Frame(self)
-        self.col_2.grid(row=1, column=2, sticky='nw', padx=10, pady=(24,0))
+        self.col_2.grid(row=1, column=2, sticky='nw', padx=8, pady=(24,0))
 
         self.result_display = ResultDisplay(self.col_2, self)
         self.result_display.grid(row=0, column=0, sticky='nw', pady=5)   

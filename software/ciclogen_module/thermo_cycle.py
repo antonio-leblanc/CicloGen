@@ -156,14 +156,14 @@ class Ciclogen_thermo_cycle:
         m_bag_exc = m_bag_tot - m_bag_cald                    #[ton/h]
         bag_exc_safra = m_bag_exc*24*dias_operacao            #[ton/safra]
 
+        n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
         FUE =  (Wt+Qp) / mPCI          *100
-        IPE = mPCI/(Wt/.77 + Qp/.4) * 100
         IGP = Wt / (mPCI - Qp/n_cald)  *100
         RPC = Wt/Qp                    *100
-        n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
 
 
         w_excedente = Wt - Wb - W_planta
+        r_pot_cana = Wt/m_cana_hora
         r_pot_ele_cana = w_excedente/m_cana_hora      #[kWh/ton] #relacao potenciaEcana
         r_bag_vap = m_bag_cald/m_vapor_caldeira
 
@@ -179,8 +179,8 @@ class Ciclogen_thermo_cycle:
             'n_th' : n_th,       
             'FUE':FUE,
             'IGP' : IGP,
-            'IPE':IPE,
             'RPC':RPC,
+            'r_pot_cana':r_pot_cana,
             'w_excedente' : w_excedente,
             'r_pot_ele_cana':r_pot_ele_cana,
             'r_bag_vap':r_bag_vap,

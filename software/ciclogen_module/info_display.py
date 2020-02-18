@@ -42,7 +42,7 @@ class InfoDisplay(Frame):
         Label(self, textvariable=self.display['fluid_state'], **self.estado_value_style).grid(row=1, column=4, columnspan=2, sticky='w')
 
         
-        self.create_display('m','Vazão','ton/h',2,0)
+        self.create_display('m','Vazão','t/h',2,0)
         self.create_display('T','Temperatura','ºC',3,0)
         self.create_display('P','Pressão','bar',4,0)
         
@@ -70,7 +70,7 @@ class InfoDisplay(Frame):
         self.display['fluid_state'].set(fluid_state)
         self.display['T'].set(f'{T:.1f}')
         self.display['P'].set(f'{P:.2f}')
-        self.display['H'].set(f'{H:.2f}')
+        self.display['H'].set(f'{H:.1f}')
         self.display['S'].set(f'{S:.4f}')
         self.display['X'].set(f'{X:.1f}') if type(X)==float else self.display['X'].set('-')
         self.display['m'].set(f'{m:.1f}')
