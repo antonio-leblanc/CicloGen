@@ -15,6 +15,7 @@ CicloGen é um Software de **Simulação de Plantas de Cogeração da Industria 
 - [Pip](https://pip.pypa.io/en/stable/) 9.0.1 (ou mais recente)
 - [CoolProp](http://www.coolprop.org/) 6.3.0 (ou mais recente)
 - [Pandas](https://pypi.org/project/pandas/) 0.25.3 (ou mais recente)
+- [Openpyxl](https://openpyxl.readthedocs.io/en/stable/) 3.0.3 (ou mais recente)
 
 
 ## Instalação
