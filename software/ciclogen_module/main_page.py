@@ -62,7 +62,7 @@ class PageOne(Frame):
         self.info_display = InfoDisplay(self.col_1, self)
         self.info_display.grid(row=1, column=0, pady=2)
 
-        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'width':53, 'relief':SOLID, 'font':'Arial 11 bold', 'bg':'white','cursor':'right_ptr'}
+        button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'width':53, 'relief':SOLID, 'font':'Arial 11 bold', 'bg':'white','cursor':'left_ptr'}
         Button(self.col_1, command = lambda: self.export_results(),**button_style).grid(row=2,column=0,pady=5)
         
 
@@ -153,7 +153,12 @@ class Ciclogen(Tk):
     
         Tk.__init__(self)
         self.title(WINDOW_TITLE)
-        
+
+        try:
+            self.iconbitmap(path.join(sys.path[0],'..','images','ciclogen_icon.ico'))
+        except:
+            print ('icone nao encontrado')
+
         container = Frame(self)
         container.grid()
         

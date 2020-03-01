@@ -24,10 +24,13 @@ class CycleParamsTab(Frame):
         self.sub_title_style= {'font':'Arial 10 bold','bg':'gray', 'pady':1, 'relief':'solid'}
 
         self.property_style= {'font':'Arial 11','anchor':'w', 'pady':2, 'padx':1}
-        self.entry_style= {'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
+        self.entry_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID,'width':10, 'justify':CENTER}
         self.value_style= {'font':'Arial 11', 'bd':1, 'relief':SOLID, 'bg':'gray90','width':9}
         self.unit_style= {'font':'Arial 11', 'pady':2, 'padx':4}
         
+        style = ttk.Style()
+        style.configure('my.TMenubutton', font=('Helvetica', 11))
+
         # ---------------------- Grids ----------------------
         self.title_grid= {'column':0, 'columnspan':3, 'sticky':'we'}
         self.property_grid = {'column':0 , 'sticky':'ew'}
@@ -43,7 +46,7 @@ class CycleParamsTab(Frame):
 
         self.cycle_type = StringVar()
         cycle_opts = [TITULO_CICLO_1, TITULO_CICLO_2]
-        ttk.OptionMenu(self, self.cycle_type, cycle_opts[0], *cycle_opts,command= self.parent.update_cycle ).grid(row=self.row,column=0,columnspan=3,sticky='ew')
+        ttk.OptionMenu(self, self.cycle_type, cycle_opts[0], *cycle_opts,command= self.parent.update_cycle, style='my.TMenubutton' ).grid(row=self.row,column=0,columnspan=3,sticky='ew')
         self.row+=1
 
         # --------------------- Temperaturas ---------------------
