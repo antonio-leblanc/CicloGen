@@ -44,7 +44,7 @@ class ProcessParamsTab(Frame):
 
         self.create_title("Fonte Primária de Energia",self.sub_title_style,self.title_grid)
 
-        self.create_input('fracao_bagaco_cana',"Fração de bagaço seco na cana",'%')
+        self.create_input('fracao_bagaco_cana',"Fração de bagaço na cana",'%')
         self.create_display('m_bag_tot',"Produção total de bagaço",'t.bag/h')
         self.create_input('pci_bagaco',"PCI do bagaço",'kJ/kg')
         self.create_display('Q_disp',"Potência térmica disponível - base PCI",'KW')

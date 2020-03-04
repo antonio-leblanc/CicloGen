@@ -43,7 +43,7 @@ class PageOne(Frame):
 
         # ------ Column 0 ---------
         self.col_0 = Frame(self)
-        self.col_0.grid(row=1, column=0, sticky='nw', padx=8, pady=5)
+        self.col_0.grid(row=1, column=0, sticky='nw', padx=5, pady=5)
 
         self.parameters_menu = ParametersMenu(self.col_0, self)
         self.parameters_menu.grid(row=0, column=0, sticky='nw')
@@ -63,12 +63,12 @@ class PageOne(Frame):
         self.info_display.grid(row=1, column=0, pady=2)
 
         button_style = {'text' :"Exportar Propriedades da Agua",'bd':2, 'width':53, 'relief':SOLID, 'font':'Arial 11 bold', 'bg':'white','cursor':'left_ptr'}
-        Button(self.col_1, command = lambda: self.export_results(),**button_style).grid(row=2,column=0,pady=5)
+        Button(self.col_1, command = lambda: self.export_results(),**button_style).grid(row=2,column=0,pady=(5,0))
         
 
         # ------ Column 2 ---------
         self.col_2 = Frame(self)
-        self.col_2.grid(row=1, column=2, sticky='nw', padx=8, pady=(24,0))
+        self.col_2.grid(row=1, column=2, sticky='nw', padx=5, pady=(24,0))
 
         self.result_display = ResultDisplay(self.col_2, self)
         self.result_display.grid(row=0, column=0, sticky='nw', pady=5)   

@@ -156,8 +156,7 @@ class Ciclogen_thermo_cycle:
         m_bag_exc = m_bag_tot - m_bag_cald                    #[ton/h]
         bag_exc_safra = m_bag_exc*24*dias_operacao            #[ton/safra]
 
-        n_th = (Wt+Qp-Wb-Ql) / mPCI    *100
-        FUE =  (Wt+Qp) / mPCI          *100
+        n_th = (Wt+Qp-Wb) / mPCI       *100
         IGP = Wt / (mPCI - Qp/n_cald)  *100
         RPC = Wt/Qp                    *100
 
@@ -177,7 +176,6 @@ class Ciclogen_thermo_cycle:
             'mPCI':mPCI,
             'Ql':Ql,
             'n_th' : n_th,       
-            'FUE':FUE,
             'IGP' : IGP,
             'RPC':RPC,
             'r_pot_cana':r_pot_cana,

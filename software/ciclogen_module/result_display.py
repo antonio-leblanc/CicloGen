@@ -59,8 +59,7 @@ class ResultDisplay(Frame):
 
         # # ---------------------- Indices de desempenho ----------------------
         self.create_title('Indicadores de desempenho', self.sub_title_style)
-        self.create_display('n_th','Eficiência térmica global','%')
-        self.create_display('FUE','Fator de utilização de energia - FUE','%')
+        self.create_display('n_th','Eficiência térmica de primeira lei','%')
         self.create_display('IGP','Indice de geração de potência - IGP','%')
         self.create_display('RPC','Relação potência calor - RPC','%')
         self.create_display('w_excedente','Potência excedente comercializável','kW')
@@ -85,7 +84,6 @@ class ResultDisplay(Frame):
         r_pot_ele_cana = results.get('r_pot_ele_cana')
         r_bag_vap = results.get('r_bag_vap')
         
-        FUE = results.get('FUE')
         IGP = results.get('IGP')
         RPC = results.get('RPC')
         n_th = results.get('n_th')
@@ -114,7 +112,6 @@ class ResultDisplay(Frame):
         self.set_display_k('bag_exc_safra',bag_exc_safra)
         
         self.set_display_1f('n_th',n_th)
-        self.set_display_1f('FUE',FUE)
         self.set_display_1f('IGP',IGP)
         self.set_display_1f('RPC',RPC)
 
