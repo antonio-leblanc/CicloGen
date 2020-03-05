@@ -20,14 +20,14 @@ CicloGen é um Software de **Simulação de Plantas de Cogeração da Industria 
 
 ## Instalação
 
-- Clonar o repositório
-- De dentro do diretório raiz instalar os prérequisitos, disponiveis no arquivo **requirements.txt**
+- Clonar o repositório, o programa está dentro do diretório **Software**
+- Instalar os prérequisitos, disponiveis no arquivo **requirements.txt** com o comando:
 
 ```
 pip install -r requirements.txt
 ```
 
-- De dentro do diretório **Software** executar o arquivo **ciclogen_software_run.py** com o python
+- Executar o arquivo **ciclogen_software_run.py** com o python:
 
 ```
 python ciclogen_software_run.py
